@@ -8,6 +8,7 @@
     "dev": "nodemon server"
   },
   "dependencies": {
+    "cbuslibrary": "^2.1.1",
     "jsonfile": "^4.0.0",
     "serialport": "^9.0.3",
     "socket.io": "^4.4.0",

@@ -212,7 +212,7 @@ exports.socketServer = function() {
     })
 
     node.on('nodes', function (nodes) {
-		winston.info({message: `Nodes Sent :${JSON.stringify(nodes)}`});
+		//winston.info({message: `Nodes Sent :${JSON.stringify(nodes)}`});
         io.emit('nodes', nodes);
     })
 
@@ -222,7 +222,7 @@ exports.socketServer = function() {
     })
 
     node.on('dccError', function (error) {
-		winston.info({message: `CBUS - ERROR :${JSON.stringify(error)}`});
+		winston.info({message: `DCC - ERROR :${JSON.stringify(error)}`});
         io.emit('dccError', error);
     })
 

@@ -1,0 +1,27 @@
+{
+  "layoutDetails": {
+    "title": "Test Board",
+    "subTitle": "Setup",
+    "nextNodeId": 206,
+    "assignId": false
+  },
+  "nodeDetails": {
+    "1000": {
+      "name": "Node 1000",
+      "colour": "cyan",
+      "group": "Universal"
+    },
+    "2500": {
+      "name": "Node 2500",
+      "colour": "teal",
+      "group": "Universal"
+    }
+  },
+  "eventDetails": {
+    "09C40010": {
+      "name": "NodeId : 2500 Event : 16",
+      "colour": "black",
+      "group": ""
+    }
+  }
+}

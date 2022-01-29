@@ -14,6 +14,6 @@ const socketServer = require('./socketServer')
 //const NET_ADDRESS = config.server.address
 
 cbusServer.cbusServer()
-jsonServer.jsonServer()
+jsonServer
 socketServer.socketServer()
 

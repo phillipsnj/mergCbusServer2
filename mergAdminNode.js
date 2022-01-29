@@ -28,7 +28,7 @@ class cbusAdmin extends EventEmitter {
         this.pr1 = 2
         this.pr2 = 3
         this.canId = 60
-        //this.config.nodes = {}
+        this.config.nodes = {}
         this.config.events = {}
         this.cbusErrors = {}
         this.cbusNoSupport = {}
@@ -42,15 +42,15 @@ class cbusAdmin extends EventEmitter {
         })
         this.client.on('data', function (data) { //Receives packets from network and process individual Messages
             //const outMsg = data.toString().split(";")
-            let indata = data.toString().replace(/}{/g,"};{")
+            let indata = data.toString().replace(/}{/g,"}|{")
             //winston.info({message: `AdminNode CBUS Receive <<<  ${indata}`})
-            const outMsg = indata.toString().split(";")
+            const outMsg = indata.toString().split("|")
             //const outMsg = JSON.parse(data)
             //winston.info({message: `AdminNode Split <<<  ${outMsg.length}`})
             for (let i = 0; i < outMsg.length; i++) {
 
                 //let cbusMsg = cbusLib.decode(outMsg[i].concat(";"))     // replace terminator removed by 'split' method
-				winston.info({message: `AdminNode JSON Action <<<  ${outMsg[i]}`})
+				winston.info({message: `AdminNode JSON Action >>>  ${outMsg[i]}`})
 				//this.emit('cbusTraffic', {direction: 'In', raw: cbusMsg.encoded, translated: cbusMsg.text});
                 this.action_message(JSON.parse(outMsg[i]))
 
@@ -203,19 +203,19 @@ class cbusAdmin extends EventEmitter {
                 this.emit('cbusError', this.cbusErrors)
             },
             '74': (cbusMsg) => { // NUMEV
-                winston.info({message: 'AdminNode: 74: ' + JSON.stringify(this.config.nodes[cbusMsg.nodeId])})
-                if (this.config.nodes[cbusMsg.nodeId].EvCount != null) {
-                    if (this.config.nodes[cbusMsg.nodeId].EvCount != cbusMsg.events) {
-                        this.config.nodes[cbusMsg.nodeId].EvCount = cbusMsg.events
+                winston.info({message: 'AdminNode: 74: ' + JSON.stringify(this.config.nodes[cbusMsg.nodeNumber])})
+                if (this.config.nodes[cbusMsg.nodeNumber].eventCount != null) {
+                    if (this.config.nodes[cbusMsg.nodeNumber].eventCount != cbusMsg.eventCount) {
+                        this.config.nodes[cbusMsg.nodeNumber].eventCount = cbusMsg.eventCount
                         this.saveConfig()
                     } else {
 						winston.debug({message: `AdminNode: NUMEV: EvCount value has not changed`});
                     }
                 } else {
-                    this.config.nodes[cbusMsg.nodeId].EvCount = cbusMsg.events
+                    this.config.nodes[cbusMsg.nodeNumber].eventCount = cbusMsg.eventCount
                     this.saveConfig()
                 }
-        		winston.debug({message: 'AdminNode: NUMEV: ' + JSON.stringify(this.config.nodes[cbusMsg.nodeId])});
+        		winston.debug({message: 'AdminNode: NUMEV: ' + JSON.stringify(this.config.nodes[cbusMsg.nodeNumber])});
             },
             '90': (cbusMsg) => {//Accessory On Long Event
                 winston.info({message: `AdminNode: 90 recieved`})
@@ -315,20 +315,21 @@ class cbusAdmin extends EventEmitter {
                 }
             },
             'B6': (cbusMsg) => { //PNN Recieved from Node
-                const ref = cbusMsg.nodeId
+                const ref = cbusMsg.nodeNumber
+                const moduleIdentifier = cbusMsg.encoded.subst(15,4)
                 if (ref in this.config.nodes) {
                     winston.debug({message: `PNN (B6) Node found ` + JSON.stringify(this.config.nodes[ref])})
-                    if (this.merg['modules'][cbusMsg.type]) {
-                        this.config.nodes[ref].module = this.merg['modules'][cbusMsg.type]['name']
-                        this.config.nodes[ref].component = this.merg['modules'][cbusMsg.type]['component']
+                    if (this.merg['modules'][cbusMsg.moduleId]) {
+                        this.config.nodes[ref].module = this.merg['modules'][cbusMsg.moduleId]['name']
+                        this.config.nodes[ref].component = this.merg['modules'][cbusMsg.moduleId]['component']
                     } else {
                         this.config.nodes[ref].component = 'mergDefault'
                     }
                 } else {
                     let output = {
-                        "node": cbusMsg.nodeId,
-                        "manuf": cbusMsg.manufId,
-                        "module": cbusMsg.moduleId,
+                        "nodeNumber": cbusMsg.nodeNumber,
+                        "manufacturerId": cbusMsg.manufacturerId,
+                        "moduleId": cbusMsg.moduleId,
                         "flags": cbusMsg.flags,
                         "consumer": false,
                         "producer": false,
@@ -336,16 +337,16 @@ class cbusAdmin extends EventEmitter {
                         "bootloader": false,
                         "coe": false,
                         "parameters": [],
-                        "variables": [],
-                        "actions": {},
+                        "nodeVariables": [],
+                        "consumedEvents": {},
                         "status": true,
-                        "EvCount": 0
+                        "eventCount": 0
                     }
-                    if (this.merg['modules'][cbusMsg.type]) {
+                    if (this.merg['modules'][cbusMsg.moduleId]) {
                         output['module'] = this.merg['modules'][cbusMsg.moduleId]['name']
                         output['component'] = this.merg['modules'][cbusMsg.moduleId]['component']
                     } else {
-                        winston.info({message: `AdminNode Module Type ${cbusMsg.type} not setup in  `})
+                        winston.info({message: `AdminNode Module Type ${cbusMsg.moduleId} not setup in  `})
                         output['component'] = 'mergDefault'
                     }
                     this.config.nodes[ref] = output
@@ -359,7 +360,7 @@ class cbusAdmin extends EventEmitter {
                 this.config.nodes[ref].coe = (cbusMsg.flags & 16) ? true : false
                 this.config.nodes[ref].learn = (cbusMsg.flags & 32) ? true : false
                 this.config.nodes[ref].status = true
-                this.cbusSend((this.RQEVN(cbusMsg.nodeId)))
+                this.cbusSend((this.RQEVN(cbusMsg.nodeNumber)))
                 this.saveConfig()
             },
             'B8': (cbusMsg) => {//Accessory On Short Event 1
@@ -457,9 +458,9 @@ class cbusAdmin extends EventEmitter {
     }
 
     action_message(cbusMsg) {
-        winston.info({message: "AdminNode Opcode " + cbusMsg.opcode + ' processed'});
-        if (this.actions[cbusMsg.opcode]) {
-            this.actions[cbusMsg.opcode](cbusMsg);
+        winston.info({message: "AdminNode Opcode " + cbusMsg.opCode + ' processed'});
+        if (this.actions[cbusMsg.opCode]) {
+            this.actions[cbusMsg.opCode](cbusMsg);
         } else {
             this.actions['DEFAULT'](cbusMsg);
         }
@@ -482,7 +483,7 @@ class cbusAdmin extends EventEmitter {
 
     cbusSend(msg) {
         if (typeof msg !== 'undefined') {
-            winston.info({message: `AdminNode cbusSend Base : ${JSON.stringify(msg)}`});
+            //winston.info({message: `AdminNode cbusSend Base : ${JSON.stringify(msg)}`});
             let output = JSON.stringify(msg)
             this.client.write(output);
 
@@ -500,7 +501,7 @@ class cbusAdmin extends EventEmitter {
 
 
     eventSend(cbusMsg, status, type) {
-        let eId = cbusMsg.msgId
+        let eId = cbusMsg.encoded.substr(9,8)
         //let eventId = ''
         if (type == 'short') {
             //cbusMsg.msgId = decToHex(cbusMsg.nodeNumber,4) + decToHex(cbusMsg.eventNumber,4)
@@ -513,8 +514,8 @@ class cbusAdmin extends EventEmitter {
         } else {
             let output = {}
             output['id'] = eId
-            output['nodeId'] = cbusMsg.nodeId
-            output['eventId'] = cbusMsg.eventId
+            output['nodeId'] = cbusMsg.nodeNumber
+            output['eventId'] = cbusMsg.eventNumber
             output['status'] = status
             output['type'] = type
             output['count'] = 1
@@ -549,7 +550,7 @@ class cbusAdmin extends EventEmitter {
             this.config.nodes[node].status = false
         }
         let output = {}
-        output['opcode'] = '0D'
+        output['mnemonic'] = 'QNN'
         return output;
     }
 
@@ -614,8 +615,8 @@ class cbusAdmin extends EventEmitter {
     RQEVN(nodeId) {// Read Node Variable
 
         let output = {}
-        output['opcode'] = '58'
-        output['nodeId'] = nodeId
+        output['mnemonic'] = 'RQEVN'
+        output['nodeNumber'] = nodeId
         winston.info({message: `AdminNode: RQEVN : ${nodeId} :${JSON.stringify(output)}`})
         return output;
         //return cbusLib.encodeRQEVN(nodeId);
