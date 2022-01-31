@@ -1,5 +1,5 @@
 const net = require('net')
-const cbusLib = require('cbusLibrary')
+const cbusLib = require('cbuslibrary')
 
 const JSON_SERVER_PORT = 5551;
 const CBUS_SERVER_ADDRESS = "localhost";

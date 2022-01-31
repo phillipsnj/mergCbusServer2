@@ -316,7 +316,7 @@ class cbusAdmin extends EventEmitter {
             },
             'B6': (cbusMsg) => { //PNN Recieved from Node
                 const ref = cbusMsg.nodeNumber
-                const moduleIdentifier = cbusMsg.encoded.subst(15,4)
+                //const moduleIdentifier = cbusMsg.encoded.subst(15,4)
                 if (ref in this.config.nodes) {
                     winston.debug({message: `PNN (B6) Node found ` + JSON.stringify(this.config.nodes[ref])})
                     if (this.merg['modules'][cbusMsg.moduleId]) {
