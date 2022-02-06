@@ -80,7 +80,7 @@
       "eventId": 8,
       "status": "off",
       "type": "long",
-      "count": 2
+      "count": 4
     },
     "03220001": {
       "id": "03220001",
@@ -88,7 +88,7 @@
       "eventId": 1,
       "status": "off",
       "type": "long",
-      "count": 4
+      "count": 6
     }
   }
 }

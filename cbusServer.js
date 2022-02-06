@@ -14,7 +14,7 @@ const parsers = serialport.parsers
 exports.cbusServer = function (USB_PORT,NET_PORT, NET_ADDRESS) {
     var clients = []
 
-    const parser = new parsers.Readline({
+/*    const parser = new parsers.Readline({
         delimiter: ';'
     })
 
@@ -57,7 +57,7 @@ exports.cbusServer = function (USB_PORT,NET_PORT, NET_ADDRESS) {
     serialPort.on("error", function (err) {
         console.log('Serial port error: ' + err.message)
         winston.info({message: `Serial port ERROR:  : ${err.message}`})
-    });
+    });*/
 
     var server = net.createServer(function (socket) {
         socket.setKeepAlive(true, 60000)
