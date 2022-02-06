@@ -9,11 +9,14 @@ const socketServer = require('./socketServer')
 
 //const config = jsonfile.readFileSync('./config/config.json')
 
-//const USB_PORT = config.usb4.port
-//const NET_PORT = config.server.port
-//const NET_ADDRESS = config.server.address
+const USB_PORT = "COM4"
+const NET_PORT = 5550
+const NET_ADDRESS = "localhost"
+const JSON_PORT = 5551
+const SERVER_PORT=5552
+const LAYOUT_NAME="Default"
 
-cbusServer.cbusServer()
-jsonServer
-socketServer.socketServer()
+cbusServer.cbusServer(USB_PORT, NET_PORT, NET_ADDRESS)
+jsonServer.jsonServer(NET_PORT, JSON_PORT, NET_ADDRESS)
+socketServer.socketServer(NET_ADDRESS, LAYOUT_NAME,JSON_PORT, SERVER_PORT)
 

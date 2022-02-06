@@ -8,11 +8,11 @@ const jsonfile = require('jsonfile')
 
 const config = jsonfile.readFileSync('./config/config.json')
 
-const SOCKET_PORT = config.socketServerPort
-const NET_PORT = config.cbusServerPort
-const NET_ADDRESS = config.serverAddress
-const JSON_PORT = config.jsonServerPort
-const LAYOUT_NAME = config.layoutName
+//const SOCKET_PORT = config.socketServerPort
+//const NET_PORT = config.cbusServerPort
+//const NET_ADDRESS = config.serverAddress
+//const JSON_PORT = config.jsonServerPort
+//const LAYOUT_NAME = config.layoutName
 
 const admin = require('./mergAdminNode.js')
 const server = require('http').createServer()
@@ -24,7 +24,7 @@ const io = require('socket.io')(server, {
 });
 
 
-exports.socketServer = function() {
+exports.socketServer = function(NET_ADDRESS,LAYOUT_NAME,JSON_PORT,SOCKET_PORT) {
     checkLayoutExists(LAYOUT_NAME)
     let layoutDetails = jsonfile.readFileSync('config/'+LAYOUT_NAME + "/layoutDetails.json")
     //const io = require('socket.io')()

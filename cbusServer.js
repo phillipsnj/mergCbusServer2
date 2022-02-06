@@ -1,17 +1,17 @@
 const net = require('net')
-const jsonfile = require('jsonfile')
+//const jsonfile = require('jsonfile')
 const serialport = require('serialport')
 const winston = require('./config/winston.js')
 const parsers = serialport.parsers
 
-const config = jsonfile.readFileSync('./config/config.json')
+//const config = jsonfile.readFileSync('./config/config.json')
 
-const USB_PORT = config.usb4Port
-const NET_PORT = config.cbusServerPort
-const NET_ADDRESS = config.serverAddress
+//const USB_PORT = config.usb4Port
+//const NET_PORT = config.cbusServerPort
+//const NET_ADDRESS = config.serverAddress
 
 
-exports.cbusServer = function () {
+exports.cbusServer = function (USB_PORT,NET_PORT, NET_ADDRESS) {
     var clients = []
 
     const parser = new parsers.Readline({
