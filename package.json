@@ -9,13 +9,17 @@
   },
   "dependencies": {
     "cbuslibrary": "^2.1.1",
+    "chai": "^4.3.6",
+    "cross-env": "^7.0.3",
     "jsonfile": "^4.0.0",
+    "mocha": "^9.2.0",
+    "mocha-param": "^2.0.1",
     "serialport": "^9.0.3",
     "socket.io": "^4.4.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15" 
+    "nodemon": "^2.0.15"
   },
   "nodemonConfig": {
     "ignore": [
