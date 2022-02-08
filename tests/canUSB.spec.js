@@ -60,7 +60,7 @@ function decToHex(num, len) {return parseInt(num).toString(16).toUpperCase().pad
 
 
 
-describe('cbusServer tests', function(){
+describe('canUSB tests', function(){
 
     var mockSerialPort;
     
@@ -68,7 +68,7 @@ describe('cbusServer tests', function(){
 	before(function() {
 		winston.info({message: ' '});
 		winston.info({message: '======================================================================'});
-		winston.info({message: '----------------------- cbusServer tests -------------------'});
+		winston.info({message: '----------------------- canUSB tests -------------------'});
 		winston.info({message: '======================================================================'});
 		winston.info({message: ' '});
 
