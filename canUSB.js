@@ -1,23 +1,33 @@
 const net = require('net');
 const serialport = require("serialport");
-const winston = require("./config/winston.js");
-const SerialPort = serialport.SerialPort;
+const MockBinding = require('@serialport/binding-mock')
+const winston = require('winston');
+//const SerialPort = serialport.SerialPort;
 const parsers = serialport.parsers
 
 //var clients = [];
+
 
 exports.canUSB = function (USB_PORT, NET_PORT, NET_ADDRESS) {
 
     const parser = new parsers.Readline({
         delimiter: ';'
     })
-
-    const serialPort = new serialport(USB_PORT, {
-        baudRate: 115200,
-        dataBits: 8,
-        parity: 'none',
-        stopBits: 1
-    })
+    
+    if(USB_PORT == "MOCK_PORT"){
+        MockBinding.createPort('MOCK_PORT', { echo: false, record: true })
+        serialport.Binding = MockBinding;
+        var serialPort = new serialport('MOCK_PORT');
+    }
+    else 
+    {
+        var serialPort = new serialport(USB_PORT, {
+            baudRate: 115200,
+            dataBits: 8,
+            parity: 'none',
+            stopBits: 1
+        })
+    }
 
     serialPort.pipe(parser)
 
@@ -41,7 +51,7 @@ exports.canUSB = function (USB_PORT, NET_PORT, NET_ADDRESS) {
         winston.info({message: `PORT : ${USB_PORT} Open`})
         //console.log('Serial Port '+USB_PORT+' Open')
     })
-
+    
     parser.on('data', function (data) {
         winston.info({message: `${USB_PORT} -> Message Parsed : ${data.toString()}`})
         //console.log('USB Received (Parsed)' + data.toString() + ";")
@@ -52,5 +62,7 @@ exports.canUSB = function (USB_PORT, NET_PORT, NET_ADDRESS) {
         //console.log('Serial port error: ' + err.message)
         winston.error({message: `Serial port ERROR:  : ${err.message}`})
     });
+    
+    return serialPort;
 };
 
