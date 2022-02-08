@@ -5,7 +5,8 @@
   "author": "Nigel Phillips",
   "scripts": {
     "start": "node server",
-    "dev": "nodemon server"
+    "dev": "nodemon server",
+    "test": "cross-env NODE_ENV=test ./node_modules/.bin/mocha ./tests/*.spec.js --timeout 30000 --exit"
   },
   "dependencies": {
     "cbuslibrary": "^2.1.1",
