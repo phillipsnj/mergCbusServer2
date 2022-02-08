@@ -52,7 +52,7 @@ exports.canUSB = function (USB_PORT, NET_PORT, NET_ADDRESS) {
         winston.info({message: `PORT : ${USB_PORT} Open`})
         //console.log('Serial Port '+USB_PORT+' Open')
     })
-
+    
     parser.on('data', function (data) {
         winston.info({message: `${USB_PORT} -> Message Parsed : ${data.toString()}`})
         //console.log('USB Received (Parsed)' + data.toString() + ";")
