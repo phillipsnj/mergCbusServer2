@@ -15,10 +15,9 @@ exports.canUSB = function (USB_PORT, NET_PORT, NET_ADDRESS) {
     })
     
     if(USB_PORT == "MOCK_PORT"){
-    MockBinding.createPort('MOCK_PORT', { echo: false, record: true })
-    serialport.Binding = MockBinding;
-    // Create a port and enable recording.
-    var serialPort = new serialport('MOCK_PORT');
+        MockBinding.createPort('MOCK_PORT', { echo: false, record: true })
+        serialport.Binding = MockBinding;
+        var serialPort = new serialport('MOCK_PORT');
     }
     else 
     {
