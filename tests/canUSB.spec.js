@@ -220,6 +220,16 @@ describe('canUSB tests', function(){
 	function GetTestCase_invalid () {
 		var testCases = [];
 		testCases.push({'message':'S1234N1;', 'error':'missing starting character'});
+		testCases.push({'message':':Z1234N1;', 'error':'unknown Identifier type'});
+		testCases.push({'message':':S1234Z1;', 'error':'unknown Transmission type'});
+		testCases.push({'message':':S1234N1N;', 'error':'unexpected N or R characters in message'});
+		testCases.push({'message':':S1234R1R;', 'error':'unexpected N or R characters in message'});
+		testCases.push({'message':':S1234N1R;', 'error':'unexpected N or R characters in message'});
+		testCases.push({'message':':S1234N0123456789ABCDEF0;', 'error':'Data field too long'});
+		testCases.push({'message':':S123N0123456789ABCDEF0;', 'error':'Identifier field wrong length'});
+		testCases.push({'message':':S12345N0123456789ABCDEF0;', 'error':'Identifier field wrong length'});
+		testCases.push({'message':':X1234567N0123456789ABCDEF0;', 'error':'Identifier field wrong length'});
+		testCases.push({'message':':X123456789N0123456789ABCDEF0;', 'error':'Identifier field wrong length'});
 		return testCases;
 	}
 
