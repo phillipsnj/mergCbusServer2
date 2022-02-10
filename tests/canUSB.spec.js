@@ -129,59 +129,49 @@ describe('canUSB tests', function(){
 
 
 //
-//              Grid connect ASCII syntax
-// : <S | X> <IDENTIFIER> <N> <DATA-0> <DATA-1> … <DATA-7> ;
+// Grid Connect ASCII syntax
+//          : <S | X> <IDENTIFIER> <N> <DATA-0> <DATA-1> … <DATA-7> ;
+// Always starts with ':' and ends with ';'
 // ‘S’ for standard 11-bit, or ‘X’ for extended 29-bit identifier type - anything else is invalid
 // The ‘IDENTIFIER’ field consists of up to 4 hex digits for 'S' type, or up to 8 hex digits for 'X' type
-// Note that if a 29-bit ID is entered and an 11-bit ID was specified, the command is invalid and ignored.
+// NOTE: The CBUS implementation differs from 'Grid Connect' in using these fixed identifier lengths
+// If a 29-bit ID is entered and an 11-bit ID was specified (and vice versa), the command is invalid and ignored.
 // 0 to 8 data bytes may be present - more than 8 is invalid
 //
 
 	function GetTestCase_lengths () {
 		var testCases = [];
-		testCases.push({'message':':S1234N1;'});
-		testCases.push({'message':':S1234N12;'});
-		testCases.push({'message':':S1234N123;'});
-		testCases.push({'message':':S1234N1234;'});
-		testCases.push({'message':':S1234N12345;'});
-		testCases.push({'message':':S1234N123456;'});
-		testCases.push({'message':':S1234N1234567;'});
-		testCases.push({'message':':S1234N12345678;'});
-		testCases.push({'message':':S1234N123456789;'});
-		testCases.push({'message':':S1234N123456789A;'});
-		testCases.push({'message':':S1234N123456789AB;'});
-		testCases.push({'message':':S1234N123456789ABC;'});
-		testCases.push({'message':':S1234N123456789ABCD;'});
-		testCases.push({'message':':S1234N123456789ABCDE;'});
-		testCases.push({'message':':S1234N123456789ABCDEF;'});
-		testCases.push({'message':':X12345678N1;'});
-		testCases.push({'message':':X12345678N12;'});
-		testCases.push({'message':':X12345678N123;'});
-		testCases.push({'message':':X12345678N1234;'});
-		testCases.push({'message':':X12345678N12345;'});
-		testCases.push({'message':':X12345678N123456;'});
-		testCases.push({'message':':X12345678N1234567;'});
-		testCases.push({'message':':X12345678N12345678;'});
-		testCases.push({'message':':X12345678N123456789;'});
-		testCases.push({'message':':X12345678N123456789A;'});
-		testCases.push({'message':':X12345678N123456789AB;'});
-		testCases.push({'message':':X12345678N123456789ABC;'});
-		testCases.push({'message':':X12345678N123456789ABCD;'});
-		testCases.push({'message':':X12345678N123456789ABCDE;'});
-		testCases.push({'message':':X12345678N123456789ABCDEF;'});
+		testCases.push({'message':':S1234N;'});
+		testCases.push({'message':':S1234N0123456789ABCDEF;'});
+		testCases.push({'message':':X12345678N;'});
+		testCases.push({'message':':X12345678N0123456789ABCDEF;'});
 		return testCases;
 	}
 
 
     // different length messages
     //
-	itParam("length test - message: ${value.message}", GetTestCase_lengths(), function (done, value) {
-		winston.info({message: 'TEST: BEGIN length test'});
+	itParam("Test length - serial in - message: ${value.message}", GetTestCase_lengths(), function (done, value) {
+		winston.info({message: 'TEST: BEGIN length test - serial in'});
         mockSerialPort.binding.emitData(value.message);
-        winston.info({message: 'TEST length - mockSerialPort emitData: '+ value.message});
+        winston.info({message: 'Test length - serial in - mockSerialPort emitData: '+ value.message});
 		setTimeout(function(){
-            winston.info({message: 'TEST length - message in: '+ messagesIn[0]});
+            winston.info({message: 'Test length - serial in - message in: '+ messagesIn[0]});
             expect(messagesIn[0]).to.equal(value.message);
+			done();
+		}, 10);
+	})
+
+
+    // different length messages
+    //
+	itParam("TEST length - serial out - message: ${value.message}", GetTestCase_lengths(), function (done, value) {
+		winston.info({message: 'TEST: BEGIN length test - serial out'});
+        broadcast(value.message);
+        winston.info({message: 'Test length - serial out - IP send: '+ value.message});
+		setTimeout(function(){
+            winston.info({message: 'TEST length - serial out - lastWrite: '+ mockSerialPort.binding.lastWrite.toString()});
+            expect(mockSerialPort.binding.lastWrite.toString()).to.equal(value.message);
 			done();
 		}, 10);
 	})
@@ -199,15 +189,29 @@ describe('canUSB tests', function(){
 		return testCases;
 	}
 
-	itParam("error test - message: ${value.message}", GetTestCase_errors(), function (done, value) {
-		winston.info({message: 'TEST: BEGIN error test'});
+	itParam("error test - serial in - message: ${value.message}", GetTestCase_errors(), function (done, value) {
+		winston.info({message: 'TEST: BEGIN error test - serial in'});
         mockSerialPort.binding.emitData(value.message);
-        winston.info({message: 'TEST error - mockSerialPort emitData: '+ value.message});
+        winston.info({message: 'TEST error - serial in - mockSerialPort emitData: '+ value.message});
 		setTimeout(function(){
             var result = getLastErrorLog();
             expect (result).to.include(value.error);                    // expect error log
-            winston.info({message: 'TEST error - result: '+ result});
+            winston.info({message: 'TEST error - serial in - result: '+ result});
             expect(messagesIn[0]).to.equal(value.result);               // expect to received valid message
+			done();
+		}, 10);
+	})
+
+
+	itParam("error test - serial out - message: ${value.message}", GetTestCase_errors(), function (done, value) {
+		winston.info({message: 'TEST: BEGIN error test - serial out'});
+        broadcast(value.message);
+        winston.info({message: 'TEST error - serial out - IP send: '+ value.message});
+		setTimeout(function(){
+            var result = getLastErrorLog();
+            expect (result).to.include(value.error);                    // expect error log
+            winston.info({message: 'TEST error - serial out - result: '+ result});
+            expect(mockSerialPort.binding.lastWrite.toString()).to.equal(value.result); // expect to received valid message
 			done();
 		}, 10);
 	})
@@ -233,15 +237,28 @@ describe('canUSB tests', function(){
 		return testCases;
 	}
 
-	itParam("invalid test - message: ${value.message}", GetTestCase_invalid(), function (done, value) {
-		winston.info({message: 'TEST: BEGIN invalid test'});
+	itParam("invalid test - serial in - message: ${value.message}", GetTestCase_invalid(), function (done, value) {
+		winston.info({message: 'TEST: BEGIN invalid test - serial in'});
         mockSerialPort.binding.emitData(value.message);
-        winston.info({message: 'TEST invalid - mockSerialPort emitData: '+ value.message});
+        winston.info({message: 'TEST invalid - serial in - mockSerialPort emitData: '+ value.message});
 		setTimeout(function(){
             var result = getLastErrorLog();
             expect (result).to.include(value.error);
-            winston.info({message: 'TEST invalid - result: '+ result});
+            winston.info({message: 'TEST invalid - serial in - result: '+ result});
             expect(messagesIn.length).to.equal(0);                // don't expect any message
+			done();
+		}, 10);
+	})
+
+	itParam("invalid test - serial out - message: ${value.message}", GetTestCase_invalid(), function (done, value) {
+		winston.info({message: 'TEST: BEGIN invalid test - serial out'});
+        broadcast(value.message);
+        winston.info({message: 'TEST invalid - serial out - IP send: '+ value.message});
+		setTimeout(function(){
+            var result = getLastErrorLog();
+            expect (result).to.include(value.error);
+            winston.info({message: 'TEST invalid - serial out - result: '+ result});
+            expect(mockSerialPort.binding.lastWrite.toString()).to.not.equal(value.message); // not expecting message
 			done();
 		}, 10);
 	})
