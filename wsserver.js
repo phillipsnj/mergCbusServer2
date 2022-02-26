@@ -72,11 +72,11 @@ function wsserver(LAYOUT_NAME, httpserver, NET_ADDRESS,NET_PORT) {
             node.cbusSend(node.NNULN(data.nodeId))
         })
         socket.on('REQUEST_ALL_NODE_EVENTS', function(data){
-			winston.debug({message: `REQUEST_ALL_NODE_EVENTS ${JSON.stringify(data)}`});
+			winston.info({message: `REQUEST_ALL_NODE_EVENTS ${JSON.stringify(data)}`});
             node.cbusSend(node.NERD(data.nodeId))
         })
         socket.on('REQUEST_ALL_EVENT_VARIABLES', function(data){
-			winston.debug({message: `REQUEST_ALL_EVENT_VARIABLE ${JSON.stringify(data)}`});
+			winston.info({message: `REQUEST_ALL_EVENT_VARIABLES ${JSON.stringify(data)}`});
             if (data.delay === undefined) {
                 data.delay = 100
             }
@@ -147,7 +147,7 @@ function wsserver(LAYOUT_NAME, httpserver, NET_ADDRESS,NET_PORT) {
         })
         
         socket.on('UPDATE_LAYOUT_DETAILS', function(data){
-			winston.debug({message: `UPDATE_LAYOUT_DETAILS ${JSON.stringify(data)}`});
+			winston.info({message: `UPDATE_LAYOUT_DETAILS ${JSON.stringify(data)}`});
             layoutDetails = data
             jsonfile.writeFileSync('config/'+ LAYOUT_NAME + '/layoutDetails.json', layoutDetails, {spaces: 2, EOL: '\r\n'})
             io.emit('layoutDetails', layoutDetails)

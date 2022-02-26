@@ -92,7 +92,7 @@ exports.cbusServer = function (USB_PORT,NET_PORT, NET_ADDRESS) {
                     return
                 if (data.length > 8) {
                     client.write(data)
-                    winston.info({message: `CbusServer Broadcast : ${data.toString()}`})
+                    //winston.info({message: `CbusServer Broadcast : ${data.toString()}`})
                 } else {
                     //console.log('Server Broadcast : ' + data.toString())
                     winston.info({message: `CbusServer Invalid Message : ${data.toString()}`})

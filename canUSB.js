@@ -48,7 +48,7 @@ exports.canUSB = function (USB_PORT, NET_PORT, NET_ADDRESS) {
             var message = getValidMessage(outMsg[i]);    // rebuild message as string
             if (message) {
                 serialPort.write(message)
-                winston.info({message: `${USB_PORT} -> CbusServer Message Received : ${message}`})
+                //winston.info({message: `${USB_PORT} -> CbusServer Message Received : ${message}`})
             }
         }
     })
@@ -60,7 +60,7 @@ exports.canUSB = function (USB_PORT, NET_PORT, NET_ADDRESS) {
     parser.on('data', function (data) {
         var message = getValidMessage(data);    // rebuild message as string
         if (message) {
-            winston.info({message: `${USB_PORT} -> Message Parsed : ${message}`})
+            //winston.info({message: `${USB_PORT} -> Message Parsed : ${message}`})
             client.write(message)
         }
     })

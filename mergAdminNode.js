@@ -187,7 +187,7 @@ class cbusAdmin extends EventEmitter {
                 this.emit('dccError', output)
             },
             '6F': (cbusMsg) => {// CMDERR - Cbus Error
-                let ref = cbusMsg.nodeId.toString() + '-' + cbusMsg.error.toString()
+                let ref = cbusMsg.nodeNumber.toString() + '-' + cbusMsg.errorNumber.toString()
                 if (ref in this.cbusErrors) {
                     this.cbusErrors[ref].count += 1
                 } else {
@@ -226,17 +226,17 @@ class cbusAdmin extends EventEmitter {
                 this.eventSend(cbusMsg, 'off', 'long')
             },
             '97': (cbusMsg) => { // NVANS - Receive Node Variable Value
-                if (this.config.nodes[cbusMsg.nodeId].variables[cbusMsg.variable] != null) {
-                    if (this.config.nodes[cbusMsg.nodeId].variables[cbusMsg.variable] != cbusMsg.variable) {
-						winston.debug({message: `Variable ${cbusMsg.variable} value has changed`});
-                        this.config.nodes[cbusMsg.nodeId].variables[cbusMsg.variable] = cbusMsg.variable
+                if (this.config.nodes[cbusMsg.nodeNumber].nodeVariables[cbusMsg.nodeVariableIndex] != null) {
+                    if (this.config.nodes[cbusMsg.nodeNumber].nodeVariables[cbusMsg.nodeVariableIndex] != cbusMsg.nodeVariableValue) {
+						winston.info({message: `Variable ${cbusMsg.nodeVariableIndex} value has changed`});
+                        this.config.nodes[cbusMsg.nodeNumber].nodeVariables[cbusMsg.nodeVariableIndex] = cbusMsg.nodeVariableValue
                         this.saveConfig()
                     } else {
-						winston.debug({message: `Variable ${cbusMsg.variable} value has not changed`});
+						winston.info({message: `Variable ${cbusMsg.nodeVariableIndex} value has not changed`});
                     }
                 } else {
-					winston.debug({message: `Variable ${cbusMsg.variable} value does not exist in config`});
-                    this.config.nodes[cbusMsg.nodeId].variables[cbusMsg.variable] = cbusMsg.variable
+					winston.info({message: `Variable ${cbusMsg.nodeVariableIndex} value does not exist in config`});
+                    this.config.nodes[cbusMsg.nodeNumber].nodeVariables[cbusMsg.nodeVariableIndex] = cbusMsg.nodeVariableValue
                     this.saveConfig()
                 }
             },
@@ -248,41 +248,41 @@ class cbusAdmin extends EventEmitter {
             },
             '9B': (cbusMsg) => {//PARAN Parameter readback by Index
                 var saveConfigNeeded = false
-                if (cbusMsg.parameter == 1) {
-                    if (this.config.nodes[cbusMsg.nodeId].moduleManufacturerName != merg.moduleManufacturerName[cbusMsg.value]) {
-                        this.config.nodes[cbusMsg.nodeId].moduleManufacturerName = merg.moduleManufacturerName[cbusMsg.value]
+                if (cbusMsg.parameterIndex == 1) {
+                    if (this.config.nodes[cbusMsg.nodeNumber].moduleManufacturerName != merg.moduleManufacturerName[cbusMsg.parameterValue]) {
+                        this.config.nodes[cbusMsg.nodeNumber].moduleManufacturerName = merg.moduleManufacturerName[cbusMsg.parameterValue]
                         saveConfigNeeded = true
                     }
                 }
-                if (cbusMsg.parameter == 9) {
-                    if (this.config.nodes[cbusMsg.nodeId].cpuName != merg.cpuName[cbusMsg.value]) {
-                        this.config.nodes[cbusMsg.nodeId].cpuName = merg.cpuName[cbusMsg.value]
+                if (cbusMsg.parameterIndex == 9) {
+                    if (this.config.nodes[cbusMsg.nodeNumber].cpuName != merg.cpuName[cbusMsg.parameterValue]) {
+                        this.config.nodes[cbusMsg.nodeNumber].cpuName = merg.cpuName[cbusMsg.parameterValue]
                         saveConfigNeeded = true
                     }
                 }
-                if (cbusMsg.parameter == 10) {
-                    if (this.config.nodes[cbusMsg.nodeId].interfaceName != merg.interfaceName[cbusMsg.value]) {
-                        this.config.nodes[cbusMsg.nodeId].interfaceName = merg.interfaceName[cbusMsg.value]
+                if (cbusMsg.parameterIndex == 10) {
+                    if (this.config.nodes[cbusMsg.nodeNumber].interfaceName != merg.interfaceName[cbusMsg.parameterValue]) {
+                        this.config.nodes[cbusMsg.nodeNumber].interfaceName = merg.interfaceName[cbusMsg.parameterValue]
                         saveConfigNeeded = true
                     }
                 }
-                if (cbusMsg.parameter == 19) {
-                    if (this.config.nodes[cbusMsg.nodeId].cpuManufacturerName != merg.cpuManufacturerName[cbusMsg.value]) {
-                        this.config.nodes[cbusMsg.nodeId].cpuManufacturerName = merg.cpuManufacturerName[cbusMsg.value]
+                if (cbusMsg.parameterIndex == 19) {
+                    if (this.config.nodes[cbusMsg.nodeNumber].cpuManufacturerName != merg.cpuManufacturerName[cbusMsg.parameterValue]) {
+                        this.config.nodes[cbusMsg.nodeNumber].cpuManufacturerName = merg.cpuManufacturerName[cbusMsg.parameterValue]
                         saveConfigNeeded = true
                     }
                 }
-                if (this.config.nodes[cbusMsg.nodeId].parameters[cbusMsg.parameter] != null) {
-                    if (this.config.nodes[cbusMsg.nodeId].parameters[cbusMsg.parameter] != cbusMsg.Value) {
-						winston.debug({message: `Parameter ${cbusMsg.parameter} value has changed`});
-                        this.config.nodes[cbusMsg.nodeId].parameters[cbusMsg.parameter] = cbusMsg.value
+                if (this.config.nodes[cbusMsg.nodeNumber].parameters[cbusMsg.parameterIndex] !== null) {
+                    if (this.config.nodes[cbusMsg.nodeNumber].parameters[cbusMsg.parameterIndex] != cbusMsg.parameterValue) {
+						winston.debug({message: `Parameter ${cbusMsg.parameterIndex} value has changed`});
+                        this.config.nodes[cbusMsg.nodeNumber].parameters[cbusMsg.parameterIndex] = cbusMsg.parameterValue
                         saveConfigNeeded = true
                     } else {
-						winston.info({message: `Parameter ${cbusMsg.parameter} value has not changed`});
+						winston.info({message: `Parameter ${cbusMsg.parameterIndex} value has not changed`});
                     }
                 } else {
-					winston.info({message: `Parameter ${cbusMsg.parameter} value does not exist in config`});
-                    this.config.nodes[cbusMsg.nodeId].parameters[cbusMsg.parameter] = cbusMsg.value
+					winston.info({message: `Parameter ${cbusMsg.parameterIndex} value does not exist in config`});
+                    this.config.nodes[cbusMsg.nodeNumber].parameters[cbusMsg.parameterIndex] = cbusMsg.parameterValue
                     saveConfigNeeded = true
                 }
                 // ok, save the config if needed
@@ -295,41 +295,43 @@ class cbusAdmin extends EventEmitter {
                 this.eventSend(cbusMsg, 'off', 'long')
             },
             'B5': (cbusMsg) => {// NEVAL -Read of EV value Response REVAL
-                if (this.config.nodes[cbusMsg.nodeId].actions[cbusMsg.eventId] != null) {
-                    if (this.config.nodes[cbusMsg.nodeId].actions[cbusMsg.eventId].variables[cbusMsg.eventVariableIndex] != null) {
-                        if (this.config.nodes[cbusMsg.nodeId].actions[cbusMsg.eventId].variables[cbusMsg.variable] != cbusMsg.vValue) {
+                if (this.config.nodes[cbusMsg.nodeNumber].consumedEvents[cbusMsg.eventIndex] != null) {
+                    if (this.config.nodes[cbusMsg.nodeNumber].consumedEvents[cbusMsg.eventIndex].variables[cbusMsg.eventVariableIndex] != null) {
+                        if (this.config.nodes[cbusMsg.nodeNumber].consumedEvents[cbusMsg.eventIndex].variables[cbusMsg.eventVariableIndex] != cbusMsg.eventVariableValue) {
                             winston.debug({message: `Event Variable ${cbusMsg.variable} Value has Changed `});
-                            this.config.nodes[cbusMsg.nodeId].actions[cbusMsg.eventId].variables[cbusMsg.variable] = cbusMsg.value
+                            this.config.nodes[cbusMsg.nodeNumber].consumedEvents[cbusMsg.eventIndex].variables[cbusMsg.eventVariableIndex] = cbusMsg.eventVariableValue
                             this.saveConfig()
                         } else {
-                            winston.debug({message: `NEVAL: Event Variable ${cbusMsg.variable} Value has not Changed `});
+                            winston.debug({message: `NEVAL: Event Variable ${cbusMsg.eventVariableIndex} Value has not Changed `});
                         }
                     } else {
                         winston.debug({message: `NEVAL: Event Variable ${cbusMsg.variable} Does not exist on config - adding`});
-                        this.config.nodes[cbusMsg.nodeId].actions[cbusMsg.eventId].variables[cbusMsg.variable] = cbusMsg.value
+                        this.config.nodes[cbusMsg.nodeNumber].consumedEvents[cbusMsg.eventIndex].variables[cbusMsg.eventVariableIndex] = cbusMsg.eventVariableValue
                         this.saveConfig()
                     }
                 }
                 else {
-                        winston.debug({message: `NEVAL: Event Index ${cbusMsg.eventId} Does not exist on config - skipping`});
+                        winston.debug({message: `NEVAL: Event Index ${cbusMsg.eventIndex} Does not exist on config - skipping`});
                 }
             },
             'B6': (cbusMsg) => { //PNN Recieved from Node
                 const ref = cbusMsg.nodeNumber
-                //const moduleIdentifier = cbusMsg.encoded.subst(15,4)
+                const moduleIdentifier = cbusMsg.encoded.toString().substr(13,4)
                 if (ref in this.config.nodes) {
                     winston.debug({message: `PNN (B6) Node found ` + JSON.stringify(this.config.nodes[ref])})
-                    if (this.merg['modules'][cbusMsg.moduleId]) {
-                        this.config.nodes[ref].module = this.merg['modules'][cbusMsg.moduleId]['name']
-                        this.config.nodes[ref].component = this.merg['modules'][cbusMsg.moduleId]['component']
+                    if (this.merg['modules'][moduleIdentifier]) {
+                        this.config.nodes[ref].module = this.merg['modules'][moduleIdentifier]['name']
+                        this.config.nodes[ref].component = this.merg['modules'][moduleIdentifier]['component']
                     } else {
                         this.config.nodes[ref].component = 'mergDefault'
+                        this.config.nodes[ref].module = 'Unknown'
                     }
                 } else {
                     let output = {
                         "nodeNumber": cbusMsg.nodeNumber,
                         "manufacturerId": cbusMsg.manufacturerId,
                         "moduleId": cbusMsg.moduleId,
+                        "moduleIdentifier": moduleIdentifier,
                         "flags": cbusMsg.flags,
                         "consumer": false,
                         "producer": false,
@@ -342,12 +344,13 @@ class cbusAdmin extends EventEmitter {
                         "status": true,
                         "eventCount": 0
                     }
-                    if (this.merg['modules'][cbusMsg.moduleId]) {
-                        output['module'] = this.merg['modules'][cbusMsg.moduleId]['name']
-                        output['component'] = this.merg['modules'][cbusMsg.moduleId]['component']
+                    if (this.merg['modules'][moduleIdentifier]) {
+                        output['module'] = this.merg['modules'][moduleIdentifier]['name']
+                        output['component'] = this.merg['modules'][moduleIdentifier]['component']
                     } else {
                         winston.info({message: `AdminNode Module Type ${cbusMsg.moduleId} not setup in  `})
                         output['component'] = 'mergDefault'
+                        output['module'] = 'Unknown'
                     }
                     this.config.nodes[ref] = output
                 }
@@ -411,21 +414,21 @@ class cbusAdmin extends EventEmitter {
             'F2': (cbusMsg) => {//ENSRP Response to NERD/NENRD
 				// ENRSP Format: [<MjPri><MinPri=3><CANID>]<F2><NN hi><NN lo><EN3><EN2><EN1><EN0><EN#>
                 //winston.debug({message: `ENSRP (F2) Response to NERD : Node : ${msg.nodeId()} Action : ${msg.actionId()} Action Number : ${msg.actionEventId()}`});
-                const ref = cbusMsg.eventId
-                if (!(ref in this.config.nodes[cbusMsg.nodeId].actions)) {
-                    this.config.nodes[cbusMsg.nodeId].actions[cbusMsg.eventId] = {
-                        "event": cbusMsg.event,
-                        "actionId": cbusMsg.eventId,
-                        "eventIndex": cbusMsg.eventId,
-                        "variables": [this.config.nodes[cbusMsg.nodeId].parameters[5]],
+                const ref = cbusMsg.eventIndex
+                if (!(ref in this.config.nodes[cbusMsg.nodeNumber].consumedEvents)) {
+                    this.config.nodes[cbusMsg.nodeNumber].consumedEvents[cbusMsg.eventIndex] = {
+                        "eventIdentifier": cbusMsg.eventIdentifier,
+                        "eventIndex": cbusMsg.eventIndex,
+                        "variables": []
                     }
-                    if (this.config.nodes[cbusMsg.nodeId].module == "CANMIO") {
+                    if (this.config.nodes[cbusMsg.nodeNumber].module == "CANMIO") {
+                        //winston.info({message:`ENSRP CANMIO: ${cbusMsg.nodeNumber} :: ${cbusMsg.eventIndex}`})
                     //if (["CANMIO","LIGHTS"].includes(this.config.nodes[cbusMsg.nodeNumber].module)){
-                        setTimeout(()=>{this.cbusSend(this.REVAL(cbusMsg.nodeId, cbusMsg.eventId, 0))},50*ref)
-                        setTimeout(()=>{this.cbusSend(this.REVAL(cbusMsg.nodeId, cbusMsg.eventId, 1))},100*ref)
+                        setTimeout(()=>{this.cbusSend(this.REVAL(cbusMsg.nodeNumber, cbusMsg.eventIndex, 0))},50*ref)
+                        setTimeout(()=>{this.cbusSend(this.REVAL(cbusMsg.nodeNumber, cbusMsg.eventIndex, 1))},100*ref)
                     }
-                    if (this.config.nodes[cbusMsg.nodeId].module == "LIGHTS") {
-                        setTimeout(()=>{this.cbusSend(this.REVAL(cbusMsg.nodeId, cbusMsg.eventId, 1))},100*ref)
+                    if (this.config.nodes[cbusMsg.nodeNumber].module == "LIGHTS") {
+                        setTimeout(()=>{this.cbusSend(this.REVAL(cbusMsg.nodeNumber, cbusMsg.eventIndex, 1))},100*ref)
                     }
                     this.saveConfig()
                 }
@@ -514,8 +517,8 @@ class cbusAdmin extends EventEmitter {
         } else {
             let output = {}
             output['id'] = eId
-            output['nodeId'] = cbusMsg.nodeNumber
-            output['eventId'] = cbusMsg.eventNumber
+            output['nodeNumber'] = cbusMsg.nodeNumber
+            output['eventNumber'] = cbusMsg.eventNumber
             output['status'] = status
             output['type'] = type
             output['count'] = 1
@@ -559,7 +562,12 @@ class cbusAdmin extends EventEmitter {
     }
 
     RQNPN(nodeId, param) {//Read Node Parameter
-        return cbusLib.encodeRQNPN(nodeId, param);
+        let output = {}
+        output['mnemonic'] = 'RQNPN'
+        output['nodeNumber'] = nodeId
+        output['parameterIndex'] = param
+        return output
+        //return cbusLib.encodeRQNPN(nodeId, param);
     }
 
     NNLRN(nodeId) {
@@ -581,7 +589,10 @@ class cbusAdmin extends EventEmitter {
     }
 
     NERD(nodeId) {//Request All Events
-        return cbusLib.encodeNERD(nodeId);
+        let output = {}
+        output['mnemonic'] = 'NERD'
+        output['nodeNumber'] = nodeId
+        return output
     }
 
     NENRD(nodeId, eventId) { //Request specific event
@@ -591,10 +602,10 @@ class cbusAdmin extends EventEmitter {
     REVAL(nodeId, eventId, valueId) {//Read an Events EV by index
         winston.info({message: 'AdminNode: REVAL '})
         let output = {}
-        output['opcode'] = '9B'
-        output['nodeId'] = nodeId
-        output['eventId'] = eventId
-        output['variable'] = valueId
+        output['mnemonic'] = 'REVAL'
+        output['nodeNumber'] = nodeId
+        output['eventIndex'] = eventId
+        output['eventVariableIndex'] = valueId
         return output;
         //return cbusLib.encodeREVAL(nodeId, eventId, valueId);
     }
@@ -609,7 +620,12 @@ class cbusAdmin extends EventEmitter {
     }
 
     NVRD(nodeId, variableId) {// Read Node Variable
-        return cbusLib.encodeNVRD(nodeId, variableId);
+        let output = {}
+        output['mnemonic'] = 'NVRD'
+        output['nodeNumber'] = nodeId
+        output['nodeVariableIndex'] = variableId
+        return output
+        //return cbusLib.encodeNVRD(nodeId, variableId);
     }
 
     RQEVN(nodeId) {// Read Node Variable

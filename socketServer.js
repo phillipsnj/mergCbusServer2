@@ -36,6 +36,7 @@ exports.socketServer = function(NET_ADDRESS,LAYOUT_NAME,JSON_PORT,SOCKET_PORT) {
 		winston.info({message: 'a user connected'});
         node.cbusSend(node.QNN())
         io.emit('layoutDetails', layoutDetails)
+        //io.emit('events', events)
         socket.on('QUERY_ALL_NODES', function(){
 			winston.info({message: 'QUERY_ALL_NODES'});
             node.cbusSend(node.QNN())

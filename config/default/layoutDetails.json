@@ -1,9 +1,10 @@
 {
   "layoutDetails": {
-    "title": "Test Board",
-    "subTitle": "Setup",
+    "title": "Test System",
+    "subTitle": "Admin",
     "nextNodeId": 206,
-    "assignId": false
+    "assignId": false,
+    "subtitle": "admin"
   },
   "nodeDetails": {
     "1000": {
