@@ -203,7 +203,7 @@ class cbusAdmin extends EventEmitter {
                 this.emit('cbusError', this.cbusErrors)
             },
             '74': (cbusMsg) => { // NUMEV
-                winston.info({message: 'AdminNode: 74: ' + JSON.stringify(this.config.nodes[cbusMsg.nodeNumber])})
+                //winston.info({message: 'AdminNode: 74: ' + JSON.stringify(this.config.nodes[cbusMsg.nodeNumber])})
                 if (this.config.nodes[cbusMsg.nodeNumber].eventCount != null) {
                     if (this.config.nodes[cbusMsg.nodeNumber].eventCount != cbusMsg.eventCount) {
                         this.config.nodes[cbusMsg.nodeNumber].eventCount = cbusMsg.eventCount
@@ -479,6 +479,11 @@ class cbusAdmin extends EventEmitter {
         this.saveConfig()
     }
 
+    removeEvent(eventId) {
+        delete this.config.nodes[eventId]
+        this.saveConfig()
+    }
+
     clearCbusErrors() {
         this.cbusErrors = {}
         this.emit('cbusError', this.cbusErrors)
@@ -502,6 +507,12 @@ class cbusAdmin extends EventEmitter {
         this.emit('events', Object.values(this.config.events))
     }
 
+    clearEvents() {
+        winston.info({message: `clearEvents() `});
+        this.config.events = {}
+        this.saveConfig()
+        this.emit('events', this.config.events)
+    }
 
     eventSend(cbusMsg, status, type) {
         let eId = cbusMsg.encoded.substr(9,8)
@@ -527,7 +538,7 @@ class cbusAdmin extends EventEmitter {
         }
 		winston.info({message: 'AdminNode: EventSend : ' + JSON.stringify(this.config.events[eId])});
         this.saveConfig()
-        this.emit('events', Object.values(this.config.events));
+        this.emit('events', this.config.events);
     }
 
 

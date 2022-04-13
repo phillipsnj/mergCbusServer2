@@ -21,8 +21,12 @@ function wsserver(LAYOUT_NAME, httpserver, NET_ADDRESS,NET_PORT) {
         node.cbusSend(node.QNN())
         io.emit('layoutDetails', layoutDetails)
         socket.on('QUERY_ALL_NODES', function(){
-			winston.debug({message: 'QUERY_ALL_NODES'});
+			winston.info({message: 'QUERY_ALL_NODES'});
             node.cbusSend(node.QNN())
+        })
+        socket.on('CLEAR_EVENTS', function(){
+            winston.info({message: 'CLEAR_EVENTS'})
+            node.clearEvents()
         })
         socket.on('REQUEST_ALL_NODE_PARAMETERS', function(data){ //Request Node Parameter
 			winston.debug({message: `REQUEST_ALL_NODE_PARAMETERS ${JSON.stringify(data)}`});
@@ -128,6 +132,10 @@ function wsserver(LAYOUT_NAME, httpserver, NET_ADDRESS,NET_PORT) {
             winston.debug({message: `REMOVE_NODE ${JSON.stringify(data)}`});
             node.removeNode(data.nodeId)
         })
+        /*socket.on('REMOVE_EVENT', function(data){
+            winston.debug({message: `REMOVE_EVENT ${JSON.stringify(data)}`});
+            node.removeEvent(data.eventId)
+        })*/
         socket.on('REMOVE_EVENT', function(data){
 			winston.debug({message: `REMOVE_EVENT ${JSON.stringify(data)}`});
             node.cbusSend(node.NNLRN(data.nodeId))
@@ -145,7 +153,6 @@ function wsserver(LAYOUT_NAME, httpserver, NET_ADDRESS,NET_PORT) {
 			winston.debug({message: `REFRESH_EVENTS`});
             node.refreshEvents();
         })
-        
         socket.on('UPDATE_LAYOUT_DETAILS', function(data){
 			winston.info({message: `UPDATE_LAYOUT_DETAILS ${JSON.stringify(data)}`});
             layoutDetails = data

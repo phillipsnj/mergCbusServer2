@@ -1,6 +1,6 @@
 {
   "layoutDetails": {
-    "title": "Test System",
+    "title": "Web FCU",
     "subTitle": "Admin",
     "nextNodeId": 206,
     "assignId": false,
@@ -22,6 +22,31 @@
     "09C40010": {
       "name": "NodeId : 2500 Event : 16",
       "colour": "black",
+      "group": ""
+    },
+    "03220001": {
+      "name": "Button 1",
+      "colour": "indigo",
+      "group": ""
+    },
+    "03220008": {
+      "name": " Button 8",
+      "colour": "black",
+      "group": ""
+    },
+    "003E0007": {
+      "name": "003E0007",
+      "colour": "teal",
+      "group": ""
+    },
+    "012C0010": {
+      "name": "012C0010",
+      "colour": "black",
+      "group": ""
+    },
+    "03220002": {
+      "name": "03220002",
+      "colour": "blue",
       "group": ""
     }
   }
