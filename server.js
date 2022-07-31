@@ -10,7 +10,7 @@ const canUSB = require('./canUSB')
 
 //const config = jsonfile.readFileSync('./config/config.json')
 
-const USB_PORT = "COM4"
+const USB_PORT = "/dev/tty.usbmodem213301"
 const NET_PORT = 5550
 const NET_ADDRESS = "localhost"
 const JSON_PORT = 5551

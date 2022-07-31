@@ -20,26 +20,6 @@
       "component": "merg-canservo8c",
       "learn": false
     },
-    "300": {
-      "nodeNumber": 300,
-      "manufacturerId": 165,
-      "moduleId": 52,
-      "moduleIdentifier": "A534",
-      "flags": 13,
-      "consumer": true,
-      "producer": false,
-      "flim": true,
-      "bootloader": true,
-      "coe": false,
-      "parameters": [],
-      "nodeVariables": [],
-      "consumedEvents": {},
-      "status": true,
-      "eventCount": 0,
-      "module": "CANMIO-OUT",
-      "component": "merg-canacc8",
-      "learn": false
-    },
     "802": {
       "nodeNumber": 802,
       "manufacturerId": 165,
@@ -68,7 +48,7 @@
       "eventNumber": 8,
       "status": "off",
       "type": "long",
-      "count": 7
+      "count": 2
     },
     "03220001": {
       "id": "03220001",
@@ -76,15 +56,7 @@
       "eventNumber": 1,
       "status": "off",
       "type": "long",
-      "count": 6
-    },
-    "03220006": {
-      "id": "03220006",
-      "nodeNumber": 802,
-      "eventNumber": 6,
-      "status": "off",
-      "type": "long",
-      "count": 2
+      "count": 8
     }
   }
 }

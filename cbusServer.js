@@ -1,8 +1,8 @@
 const net = require('net')
 //const jsonfile = require('jsonfile')
-const serialport = require('serialport')
+//const serialport = require('serialport')
 const winston = require('./config/winston.js')
-const parsers = serialport.parsers
+//const parsers = serialport.parsers
 
 //const config = jsonfile.readFileSync('./config/config.json')
 

@@ -1,8 +1,10 @@
 const net = require('net');
-const serialport = require("serialport");
-const MockBinding = require('@serialport/binding-mock')
+const { SerialPort } = require("serialport");
+const { ReadlineParser } = require('@serialport/parser-readline')
+//const MockBinding = require('@serialport/binding-mock')
 const winston = require('winston');
-const parsers = serialport.parsers
+//const parsers = serialport.parsers
+
 
 /**
 * @desc Function that connects to a remote IP port and passes data between that port and a serial port<br>
@@ -15,37 +17,42 @@ const parsers = serialport.parsers
 */
 exports.canUSB = function (USB_PORT, NET_PORT, NET_ADDRESS) {
 
-    const parser = new parsers.Readline({
+    const serialPort = new SerialPort({
+        path: USB_PORT,
+        baudRate: 115200,
+        dataBits: 8,
+        parity: 'none',
+        stopBits: 1
+    })
+
+    //const parser = new parsers.Readline({
+    const parser = new ReadlineParser({
         delimiter: ';'
     })
     
-    if(USB_PORT == "MOCK_PORT"){
+    /*if(USB_PORT == "MOCK_PORT"){
         MockBinding.createPort('MOCK_PORT', { echo: false, record: true })
         serialport.Binding = MockBinding;
-        var serialPort = new serialport('MOCK_PORT');
+        let serialPort = new serialport('MOCK_PORT');
     }
     else 
-    {
-        var serialPort = new serialport(USB_PORT, {
-            baudRate: 115200,
-            dataBits: 8,
-            parity: 'none',
-            stopBits: 1
-        })
-    }
+    {*/
+        //winston.info({message: `canUSB4 : Client Connected to ${USB_PORT}`})
+
+    // }
 
     serialPort.pipe(parser)
 
     const client = new net.Socket()
 
     client.connect(NET_PORT, NET_ADDRESS, function () {
-        winston.info({message: `CbusServer : Client Connected to ${USB_PORT}`})
+        winston.info({message: `canUSB4 : Client Connected to ${USB_PORT}`})
     })
 
     client.on('data', function (data) {
-        var outMsg = data.toString().split(";")
-        for (var i = 0; i < outMsg.length - 1; i++) {
-            var message = getValidMessage(outMsg[i]);    // rebuild message as string
+        let outMsg = data.toString().split(";")
+        for (let i = 0; i < outMsg.length - 1; i++) {
+            let message = getValidMessage(outMsg[i]);    // rebuild message as string
             if (message) {
                 serialPort.write(message)
                 //winston.info({message: `${USB_PORT} -> CbusServer Message Received : ${message}`})
@@ -54,13 +61,14 @@ exports.canUSB = function (USB_PORT, NET_PORT, NET_ADDRESS) {
     })
 
     serialPort.on("open", function () {
-        winston.info({message: `Serial Port : ${USB_PORT} Open`})
+        winston.info({message: `canUSB4 Serial Port : ${USB_PORT} Open`})
     })
     
     parser.on('data', function (data) {
-        var message = getValidMessage(data);    // rebuild message as string
+        //winston.info({message: `${USB_PORT} -> Message Parsed : ${message}`})
+        let message = getValidMessage(data);    // rebuild message as string
         if (message) {
-            //winston.info({message: `${USB_PORT} -> Message Parsed : ${message}`})
+            winston.info({message: `${USB_PORT} -> Message Parsed : ${message}`})
             client.write(message)
         }
     })
@@ -110,7 +118,7 @@ function getValidMessage(data) {
     
     // get the last array element
     // need to replace the starting character lost in the 'split' operation
-    var message = ':' + array[array.length - 1].toString()
+    let message = ':' + array[array.length - 1].toString()
 
 
     // now check that it's either an 'S' or 'X' type of message - the type is in a fixed position
@@ -123,7 +131,7 @@ function getValidMessage(data) {
     // there are only two transmission types defined, 'N' & 'R'
     // use regex to split on either N or R - the position isn't fixed, as it depends on ID length
     // and we can use the result of the split for multiple checks
-    var splitMessage = message.split(/N|R/);
+    let splitMessage = message.split(/N|R/);
 
     if (splitMessage.length == 1) {
         // if 1 then not N or R - unknown transmission type - so reject message

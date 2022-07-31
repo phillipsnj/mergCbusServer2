@@ -9,12 +9,13 @@
     "test": "./node_modules/.bin/mocha ./tests/*.spec.js --timeout 30000 --exit"
   },
   "dependencies": {
+    "@serialport/parser-readline": "^10.3.0",
     "cbuslibrary": "^2.1.1",
     "chai": "^4.3.6",
     "jsonfile": "^4.0.0",
     "mocha": "^9.2.0",
     "mocha-param": "^2.0.1",
-    "serialport": "^9.0.3",
+    "serialport": "^10.4.0",
     "socket.io": "^4.4.0",
     "winston": "^3.3.3"
   },
