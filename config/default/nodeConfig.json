@@ -19,44 +19,24 @@
       "module": "CANMIO-SVO",
       "component": "merg-canservo8c",
       "learn": false
-    },
-    "802": {
-      "nodeNumber": 802,
-      "manufacturerId": 165,
-      "moduleId": 5,
-      "moduleIdentifier": "A505",
-      "flags": 15,
-      "consumer": true,
-      "producer": true,
-      "flim": true,
-      "bootloader": true,
-      "coe": false,
-      "parameters": [],
-      "nodeVariables": [],
-      "consumedEvents": {},
-      "status": true,
-      "eventCount": 1,
-      "module": "CANACE8C",
-      "component": "merg-canace8c",
-      "learn": false
     }
   },
   "events": {
+    "00CC001D": {
+      "id": "00CC001D",
+      "nodeNumber": 204,
+      "eventNumber": 29,
+      "status": "off",
+      "type": "long",
+      "count": 24
+    },
     "03220008": {
       "id": "03220008",
       "nodeNumber": 802,
       "eventNumber": 8,
-      "status": "off",
+      "status": "on",
       "type": "long",
-      "count": 2
-    },
-    "03220001": {
-      "id": "03220001",
-      "nodeNumber": 802,
-      "eventNumber": 1,
-      "status": "off",
-      "type": "long",
-      "count": 8
+      "count": 3
     }
   }
 }

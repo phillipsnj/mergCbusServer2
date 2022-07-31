@@ -1,7 +1,7 @@
-const serialport = require('serialport');
+const { SerialPort } = require("serialport")
 
 // list serial ports:
-serialport.list().then(ports => {
+SerialPort.list().then(ports => {
   ports.forEach(function(port) {
     if (port.vendorId == '04d8' && port.productId == 'f80c') {
       console.log('PORT :' + port.path);

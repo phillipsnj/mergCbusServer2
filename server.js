@@ -7,6 +7,7 @@ const cbusServer = require('./cbusServer')
 const jsonServer = require('./jsonServer')
 const socketServer = require('./socketServer')
 const canUSB = require('./canUSB')
+const {SerialPort} = require("serialport");
 
 //const config = jsonfile.readFileSync('./config/config.json')
 
@@ -20,5 +21,12 @@ const LAYOUT_NAME="Default"
 cbusServer.cbusServer(USB_PORT, NET_PORT, NET_ADDRESS)
 jsonServer.jsonServer(NET_PORT, JSON_PORT, NET_ADDRESS)
 socketServer.socketServer(NET_ADDRESS, LAYOUT_NAME,JSON_PORT, SERVER_PORT)
-canUSB.canUSB(USB_PORT,NET_PORT, NET_ADDRESS)
+
+SerialPort.list().then(ports => {
+    ports.forEach(function(port) {
+        if (port.vendorId == '04d8' && port.productId == 'f80c') {
+            canUSB.canUSB(port.path, NET_PORT, NET_ADDRESS)
+        }
+    })
+})
 
