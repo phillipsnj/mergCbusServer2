@@ -734,9 +734,6 @@ class cbusAdmin extends EventEmitter {
             output['count'] = 1
             this.config.events[eId] = output
         }
-        //this.config.events[eId]['status'] = 'on'
-        //this.config.events[eId]['count'] += 1
-        //winston.debug({message: `ACON Output ${this.config.events}`});
         this.emit('events', Object.values(this.config.events))
 
         return cbusLib.encodeACON(nodeId, eventId);
