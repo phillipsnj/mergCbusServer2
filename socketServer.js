@@ -78,10 +78,10 @@ exports.socketServer = function(NET_ADDRESS,LAYOUT_NAME,JSON_PORT,SOCKET_PORT) {
         socket.on('UPDATE_NODE_VARIABLE', function(data){
             node.cbusSend(node.NVSET(data.nodeId, data.variableId, data.variableValue))
 			winston.info({message: `UPDATE_NODE_VARIABLE ${JSON.stringify(data)}`});
-            setTimeout(function() {node.cbusSend(node.NVRD(data.nodeId, data.variableId))},100)
+            setTimeout(function() {node.cbusSend(node.NVRD(data.nodeId, data.variableId))},50)
         })
         socket.on('UPDATE_NODE_VARIABLE_IN_LEARN_MODE', function(data){
-			winston.info({message: `NVSET-learn ${JSON.stringify(data)}`});
+			winston.info({message: `UPDATE_NODE_VARIABLE_IN_LEARN_MODE ${JSON.stringify(data)}`});
             node.cbusSend(node.NNLRN(data.nodeId))
             node.cbusSend(node.NVSET(data.nodeId, data.variableId, data.variableValue))
             node.cbusSend(node.NNULN(data.nodeId))
@@ -93,11 +93,11 @@ exports.socketServer = function(NET_ADDRESS,LAYOUT_NAME,JSON_PORT,SOCKET_PORT) {
             node.cbusSend(node.NERD(data.nodeId))
         })
         socket.on('REQUEST_ALL_EVENT_VARIABLES', function(data){
-			winston.info({message: `REQUEST_ALL_EVENT_VARIABLE ${JSON.stringify(data)}`});
+			winston.info({message: `REQUEST_ALL_EVENT_VARIABLES ${JSON.stringify(data)}`});
             if (data.delay === undefined) {
                 data.delay = 100
             }
-            for (let i = 0; i <= data.variables; i++) {
+            for (let i = 1; i <= data.variables; i++) {
                 let time = i*data.delay
                 setTimeout(function() {node.cbusSend(node.REVAL(data.nodeId, data.eventIndex, i))},time)
             }
@@ -107,9 +107,10 @@ exports.socketServer = function(NET_ADDRESS,LAYOUT_NAME,JSON_PORT,SOCKET_PORT) {
             node.cbusSend(node.REVAL(data.nodeId, data.eventIndex, data.eventVariableId))
         })
         socket.on('UPDATE_EVENT_VARIABLE', function(data){
-			winston.info({message: `EVLRN ${JSON.stringify(data)}`});
+			winston.info({message: `UPDATE_EVENT_VARIABLE ${JSON.stringify(data)}`});
             node.cbusSend(node.NNLRN(data.nodeId))
-            node.cbusSend(node.EVLRN(data.eventName, data.eventVariableId, data.eventVariableValue))
+            //node.cbusSend(node.EVLRN(data.nodeId, data.eventName, data.eventIndex, data.eventVariableId, data.eventVariableValue))
+            node.cbusSend(node.update_event(data.nodeId, data.eventName, data.eventIndex, data.eventVariableId, data.eventVariableValue))
             node.cbusSend(node.NNULN(data.nodeId))
             node.cbusSend(node.REVAL(data.nodeId, data.eventIndex, data.eventVariableId))
             node.cbusSend(node.NNULN(data.nodeId))
@@ -133,9 +134,11 @@ exports.socketServer = function(NET_ADDRESS,LAYOUT_NAME,JSON_PORT,SOCKET_PORT) {
             node.cbusSend(node.ASON(data.nodeId, data.deviceNumber))
         })
         socket.on('TEACH_EVENT', function(data){
-			winston.info({message: `EVLRN ${JSON.stringify(data)}`});
+			winston.info({message: `TEACH_EVENT ${JSON.stringify(data)}`});
             node.cbusSend(node.NNLRN(data.nodeId))
-            node.cbusSend(node.EVLRN(data.eventName, data.eventId, data.eventVal))
+            //node.cbusSend(node.EVLRN(data.eventName, data.eventId, data.eventVal))
+            //node.cbusSend(node.EVLRN(data.nodeId, data.eventName, data.eventIndex, 1, 0))
+            node.cbusSend(node.teach_event(data.nodeId, data.eventName, 1, 0))
             node.cbusSend(node.NNULN(data.nodeId))
             node.cbusSend(node.NNULN(data.nodeId))
             node.cbusSend(node.NERD(data.nodeId))
@@ -161,6 +164,16 @@ exports.socketServer = function(NET_ADDRESS,LAYOUT_NAME,JSON_PORT,SOCKET_PORT) {
         socket.on('REFRESH_EVENTS', function(){
 			winston.info({message: `REFRESH_EVENTS`});
             node.refreshEvents();
+        })
+
+        socket.on('CLEAR_EVENTS', function(){
+            winston.info({message: `CLEAR_EVENTS`});
+            node.clearEvents();
+        })
+
+        socket.on('CLEAR_CBUS_ERRORS', function(){
+            winston.info({message: `CLEAR_CBUS_ERRORS`});
+            node.clearCbusErrors();
         })
         
         socket.on('UPDATE_LAYOUT_DETAILS', function(data){

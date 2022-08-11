@@ -8,9 +8,9 @@
       "name": "CANACC5",
       "component": "merg-canacc5"
     },
-    "3": {
+    "A503": {
       "name": "CANACC8",
-      "component": "merg-canacc8"
+      "component": "canacc8"
     },
     "4": {
       "name": "CANACE3",
@@ -18,11 +18,11 @@
     },
     "A505": {
       "name": "CANACE8C",
-      "component": "merg-canace8c"
+      "component": "canace8c"
     },
-    "7": {
+    "A507": {
       "name": "CANLED64",
-      "component": "mergDefault"
+      "component": "canled64"
     },
     "8": {
       "name": "CANACC4_2",
@@ -32,17 +32,17 @@
       "name": "CANCAB",
       "component": "mergDefault"
     },
-    "A510": {
+    "A50A": {
       "name": "CANCMD",
-      "component": "merg-cancmd"
+      "component": "cancmd"
     },
     "A513": {
       "name": "CANSERVO8C",
-      "component": "merg-canservo8c"
+      "component": "canservo8c"
     },
-    "29": {
+    "A51D": {
       "name": "CANPAN",
-      "component": "merg-canpan"
+      "component": "canpan"
     },
     "25": {
       "name": "CANETHER",
@@ -50,31 +50,31 @@
     },
     "A520": {
       "name": "CANMIO",
-      "component": "merg-canmio"
+      "component": "canmio"
     },
     "A532": {
       "name": "CANMIO-SVO",
-      "component": "merg-canservo8c"
+      "component": "canservo8c"
     },
     "A534": {
       "name": "CANMIO-OUT",
-      "component": "merg-canacc8"
+      "component": "mergDefault"
     },
     "53": {
       "name": "CANMIO-BIP",
       "component": "mergDefault"
     },
-    "59": {
+    "A53B": {
       "name": "CANDISP",
-      "component": "mergDefault"
+      "component": "canled64"
     },
     "62": {
       "name": "CANINP",
-      "component": "merg-canace8c"
+      "component": "canace8c"
     },
     "63": {
       "name": "CANOUT",
-      "component": "merg-canacc8"
+      "component": "canacc8"
     },
     "65": {
       "name": "ETHNIGE",

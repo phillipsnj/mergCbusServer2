@@ -1,12 +1,32 @@
 {
   "layoutDetails": {
-    "title": "Web FCU",
+    "title": "Quasar FCU",
     "subTitle": "Admin",
-    "nextNodeId": 206,
-    "assignId": false,
+    "nextNodeId": "1000",
+    "assignId": true,
     "subtitle": "admin"
   },
   "nodeDetails": {
+    "204": {
+      "name": "CANPAN - 204",
+      "colour": "black",
+      "group": "Universal"
+    },
+    "256": {
+      "name": "256 - CANMIO-SVO",
+      "colour": "black",
+      "group": "Board A"
+    },
+    "300": {
+      "name": "300 - CANMIO-OUT",
+      "colour": "black",
+      "group": "Board C"
+    },
+    "802": {
+      "name": "802 - CANACE8C",
+      "colour": "black",
+      "group": "Board B"
+    },
     "1000": {
       "name": "Node 1000",
       "colour": "cyan",
@@ -40,14 +60,24 @@
       "group": ""
     },
     "012C0010": {
-      "name": "012C0010",
-      "colour": "black",
-      "group": ""
+      "name": "Button 1",
+      "colour": "light-blue",
+      "group": "Test2"
     },
     "03220002": {
       "name": "03220002",
       "colour": "blue",
       "group": ""
+    },
+    "00CC0001": {
+      "name": "Canpan Button 1",
+      "colour": "teal",
+      "group": ""
+    },
+    "012C0009": {
+      "name": "012C0009",
+      "colour": "black",
+      "group": "Test"
     }
   }
 }
