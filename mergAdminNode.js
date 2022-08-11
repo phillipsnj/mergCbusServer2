@@ -721,11 +721,11 @@ class cbusAdmin extends EventEmitter {
     ACON(nodeId, eventId) {
         const eId = decToHex(nodeId, 4) + decToHex(eventId, 4)
         //winston.debug({message: `ACON admin ${eId}`});
+        let output = {}
         if (eId in this.config.events) {
             this.config.events[eId]['status'] = 'on'
             this.config.events[eId]['count'] += 1
         } else {
-            let output = {}
             output['id'] = eId
             output['nodeId'] = nodeId
             output['eventId'] = eventId
@@ -735,18 +735,22 @@ class cbusAdmin extends EventEmitter {
             this.config.events[eId] = output
         }
         this.emit('events', Object.values(this.config.events))
-
-        return cbusLib.encodeACON(nodeId, eventId);
+        output = {}
+        output['mnemonic'] = 'ACON'
+        output['nodeNumber'] = nodeId
+        output['eventNumber'] = eventId
+        return output
+        //return cbusLib.encodeACON(nodeId, eventId);
     }
 
     ACOF(nodeId, eventId) {
         const eId = decToHex(nodeId, 4) + decToHex(eventId, 4)
         //winston.debug({message: `ACOF admin ${eId}`});
+        let output = {}
         if (eId in this.config.events) {
             this.config.events[eId]['status'] = 'off'
             this.config.events[eId]['count'] += 1
         } else {
-            let output = {}
             output['id'] = eId
             output['nodeId'] = nodeId
             output['eventId'] = eventId
@@ -758,18 +762,22 @@ class cbusAdmin extends EventEmitter {
         //this.config.events[eId]['status'] = 'off'
         //this.config.events[eId]['count'] += 1
         this.emit('events', Object.values(this.config.events))
-
-        return cbusLib.encodeACOF(nodeId, eventId);
+        output = {}
+        output['mnemonic'] = 'ACOF'
+        output['nodeNumber'] = nodeId
+        output['eventNumber'] = eventId
+        return output
+        //return cbusLib.encodeACOF(nodeId, eventId);
     }
 
     ASON(nodeId, deviceNumber) {
         const eId = decToHex(nodeId, 4) + decToHex(deviceNumber, 4)
         //winston.debug({message: `ASON admin ${eId}`});
+        let output = {}
         if (eId in this.config.events) {
             this.config.events[eId]['status'] = 'on'
             this.config.events[eId]['count'] += 1
         } else {
-            let output = {}
             output['id'] = eId
             output['nodeId'] = nodeId
             output['eventId'] = deviceNumber
@@ -779,20 +787,25 @@ class cbusAdmin extends EventEmitter {
             this.config.events[eId] = output
         }
         this.emit('events', Object.values(this.config.events))
+        output = {}
+        output['mnemonic'] = 'ASON'
+        output['nodeNumber'] = nodeId
+        output['deviceNumber'] = deviceNumber
+        return output
 
         //Format: [<MjPri><MinPri=3><CANID>]<98><NN hi><NN lo><DN hi><DN lo>
-        return cbusLib.encodeASON(nodeId, deviceNumber);
+        //return cbusLib.encodeASON(nodeId, deviceNumber);
 
     }
 
     ASOF(nodeId, deviceNumber) {
         const eId = decToHex(nodeId, 4) + decToHex(deviceNumber, 4)
         //winston.debug({message: `ASOFadmin ${eId}`});
+        let output = {}
         if (eId in this.config.events) {
             this.config.events[eId]['status'] = 'off'
             this.config.events[eId]['count'] += 1
         } else {
-            let output = {}
             output['id'] = eId
             output['nodeId'] = nodeId
             output['eventId'] = deviceNumber
@@ -802,9 +815,13 @@ class cbusAdmin extends EventEmitter {
             this.config.events[eId] = output
         }
         this.emit('events', Object.values(this.config.events))
-
+        output = {}
+        output['mnemonic'] = 'ASON'
+        output['nodeNumber'] = nodeId
+        output['deviceNumber'] = deviceNumber
+        return output
         //Format: [<MjPri><MinPri=3><CANID>]<99><NN hi><NN lo><DN hi><DN lo>
-        return cbusLib.encodeASOF(nodeId, deviceNumber);
+        //return cbusLib.encodeASOF(nodeId, deviceNumber);
 
     }
 

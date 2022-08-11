@@ -119,19 +119,19 @@ exports.socketServer = function(NET_ADDRESS,LAYOUT_NAME,JSON_PORT,SOCKET_PORT) {
         })
         socket.on('ACCESSORY_LONG_ON', function(data){
 			winston.info({message: `ACCESSORY_LONG_ON ${JSON.stringify(data)}`});
-            node.cbusSend(node.ACON(data.nodeId, data.eventId))
+            node.cbusSend(node.ACON(data.nodeNumber, data.eventNumber))
         })
         socket.on('ACCESSORY_LONG_OFF', function(data){
 			winston.info({message: `ACCESSORY_LONG_OFF ${JSON.stringify(data)}`});
-            node.cbusSend(node.ACOF(data.nodeId, data.eventId))
+            node.cbusSend(node.ACOF(data.nodeNumber, data.eventNumber))
         })
         socket.on('ACCESSORY_SHORT_OFF', function(data){
 			winston.info({message: `ACCESSORY_SHORT_OFF ${JSON.stringify(data)}`});
-            node.cbusSend(node.ASOF(data.nodeId, data.deviceNumber))
+            node.cbusSend(node.ASOF(data.nodeNumber, data.deviceNumber))
         })
         socket.on('ACCESSORY_SHORT_ON', function(data){
 			winston.info({message: `ACCESSORY_SHORT_ON ${JSON.stringify(data)}`});
-            node.cbusSend(node.ASON(data.nodeId, data.deviceNumber))
+            node.cbusSend(node.ASON(data.nodeNumber, data.deviceNumber))
         })
         socket.on('TEACH_EVENT', function(data){
 			winston.info({message: `TEACH_EVENT ${JSON.stringify(data)}`});

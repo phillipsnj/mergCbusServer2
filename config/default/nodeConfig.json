@@ -13,7 +13,14 @@
       "coe": false,
       "parameters": [],
       "nodeVariables": [],
-      "consumedEvents": {},
+      "consumedEvents": {
+        "1": {
+          "eventIdentifier": "012C0010",
+          "eventIndex": 1,
+          "node": 204,
+          "variables": []
+        }
+      },
       "status": true,
       "eventCount": 1,
       "module": "CANPAN",
@@ -73,9 +80,22 @@
       "coe": false,
       "parameters": [],
       "nodeVariables": [],
-      "consumedEvents": {},
+      "consumedEvents": {
+        "1": {
+          "eventIdentifier": "012C0010",
+          "eventIndex": 1,
+          "node": 300,
+          "variables": []
+        },
+        "2": {
+          "eventIdentifier": "0000000D",
+          "eventIndex": 2,
+          "node": 300,
+          "variables": []
+        }
+      },
       "status": true,
-      "eventCount": 0,
+      "eventCount": 2,
       "module": "CANMIO-OUT",
       "component": "mergDefault",
       "learn": false
@@ -161,5 +181,30 @@
       "learn": false
     }
   },
-  "events": {}
+  "events": {
+    "0000000D": {
+      "id": "0000000D",
+      "nodeNumber": 204,
+      "eventNumber": 13,
+      "status": "off",
+      "type": "short",
+      "count": 25
+    },
+    "012C0010": {
+      "id": "012C0010",
+      "nodeNumber": 300,
+      "eventNumber": 16,
+      "status": "off",
+      "type": "long",
+      "count": 8
+    },
+    "012C0009": {
+      "id": "012C0009",
+      "nodeNumber": 300,
+      "eventNumber": 9,
+      "status": "off",
+      "type": "long",
+      "count": 8
+    }
+  }
 }
