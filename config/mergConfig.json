@@ -1,18 +1,18 @@
 {
   "modules": {
-    "1": {
+    "A501": {
       "name": "CANACC4",
       "component": "mergDefault"
     },
-    "2": {
+    "A5022": {
       "name": "CANACC5",
-      "component": "merg-canacc5"
+      "component": "mergDefault"
     },
     "A503": {
       "name": "CANACC8",
       "component": "canacc8"
     },
-    "4": {
+    "A504": {
       "name": "CANACE3",
       "component": "mergDefault"
     },
@@ -62,6 +62,10 @@
     },
     "53": {
       "name": "CANMIO-BIP",
+      "component": "mergDefault"
+    },
+    "A53A": {
+      "name": "ETHNIGE",
       "component": "mergDefault"
     },
     "A53B": {

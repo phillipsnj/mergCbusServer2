@@ -9,7 +9,7 @@
   "nodeDetails": {
     "204": {
       "name": "CANPAN - 204",
-      "colour": "black",
+      "colour": "light-blue",
       "group": "Universal"
     },
     "256": {
@@ -61,7 +61,7 @@
     },
     "012C0010": {
       "name": "Button 1",
-      "colour": "light-blue",
+      "colour": "deep-purple",
       "group": "Test2"
     },
     "03220002": {

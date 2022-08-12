@@ -11,21 +11,65 @@
       "flim": true,
       "bootloader": true,
       "coe": false,
-      "parameters": [],
-      "nodeVariables": [],
+      "parameters": [
+        20,
+        165,
+        89,
+        29,
+        128,
+        13,
+        1,
+        1,
+        13,
+        13,
+        1,
+        0,
+        8,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "nodeVariables": [
+        null,
+        0
+      ],
       "consumedEvents": {
         "1": {
           "eventIdentifier": "012C0010",
           "eventIndex": 1,
           "node": 204,
-          "variables": []
+          "variables": [
+            null,
+            0,
+            29,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            255
+          ]
         }
       },
       "status": true,
       "eventCount": 1,
       "module": "CANPAN",
       "component": "canpan",
-      "learn": false
+      "learn": false,
+      "moduleManufacturerName": "MERG",
+      "cpuName": "P18F25K80",
+      "interfaceName": "CAN",
+      "cpuManufacturerName": "MICROCHIP"
     },
     "256": {
       "nodeNumber": 256,
@@ -67,6 +111,50 @@
       "component": "canacc8",
       "learn": false
     },
+    "260": {
+      "nodeNumber": 260,
+      "manufacturerId": 165,
+      "moduleId": 58,
+      "moduleIdentifier": "A53A",
+      "flags": 2,
+      "consumer": false,
+      "producer": true,
+      "flim": false,
+      "bootloader": false,
+      "coe": false,
+      "parameters": [
+        20,
+        165,
+        65,
+        58,
+        255,
+        0,
+        1,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        165,
+        1
+      ],
+      "nodeVariables": [],
+      "consumedEvents": {},
+      "status": true,
+      "eventCount": 0,
+      "module": "ETHNIGE",
+      "component": "mergDefault",
+      "learn": false,
+      "moduleManufacturerName": "MERG",
+      "interfaceName": "Ethernet"
+    },
     "300": {
       "nodeNumber": 300,
       "manufacturerId": 165,
@@ -78,14 +166,55 @@
       "flim": true,
       "bootloader": true,
       "coe": false,
-      "parameters": [],
-      "nodeVariables": [],
+      "parameters": [
+        20,
+        165,
+        98,
+        52,
+        128,
+        3,
+        12,
+        5,
+        13,
+        13,
+        1,
+        0,
+        8,
+        0,
+        0,
+        38,
+        97,
+        0,
+        0,
+        1,
+        0
+      ],
+      "nodeVariables": [
+        null,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        0,
+        255,
+        255
+      ],
       "consumedEvents": {
         "1": {
           "eventIdentifier": "012C0010",
           "eventIndex": 1,
           "node": 300,
-          "variables": []
+          "variables": [
+            null,
+            0,
+            0,
+            0
+          ]
         },
         "2": {
           "eventIdentifier": "0000000D",
@@ -98,7 +227,11 @@
       "eventCount": 2,
       "module": "CANMIO-OUT",
       "component": "mergDefault",
-      "learn": false
+      "learn": false,
+      "moduleManufacturerName": "MERG",
+      "cpuName": "P18F25K80",
+      "interfaceName": "CAN",
+      "cpuManufacturerName": "MICROCHIP"
     },
     "403": {
       "nodeNumber": 403,
@@ -151,52 +284,396 @@
       "flim": true,
       "bootloader": true,
       "coe": true,
-      "parameters": [],
-      "nodeVariables": [],
-      "consumedEvents": {},
+      "parameters": [
+        20,
+        165,
+        98,
+        32,
+        255,
+        20,
+        127,
+        3,
+        31,
+        15,
+        1,
+        0,
+        8,
+        0,
+        0,
+        38,
+        97,
+        0,
+        0,
+        1,
+        3
+      ],
+      "nodeVariables": [
+        null,
+        70,
+        3,
+        234,
+        51,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        3,
+        6,
+        128,
+        127,
+        64,
+        3,
+        60,
+        2,
+        6,
+        128,
+        128,
+        235,
+        235,
+        255,
+        0,
+        0,
+        42,
+        4,
+        255,
+        255,
+        255,
+        3,
+        6,
+        128,
+        127,
+        64,
+        3,
+        60,
+        2,
+        6,
+        128,
+        128,
+        235,
+        235,
+        255,
+        0,
+        6,
+        4,
+        4,
+        255,
+        255,
+        255,
+        0,
+        6,
+        4,
+        4,
+        255,
+        255,
+        255,
+        0,
+        6,
+        4,
+        4,
+        255,
+        255,
+        255,
+        0,
+        6,
+        4,
+        4,
+        255,
+        255,
+        255,
+        0,
+        6,
+        4,
+        4,
+        255,
+        255,
+        255,
+        0,
+        6,
+        4,
+        4,
+        255,
+        255,
+        255,
+        0,
+        6,
+        4,
+        4,
+        255,
+        255,
+        255,
+        0,
+        6,
+        4,
+        4,
+        255,
+        255,
+        255,
+        0,
+        6,
+        4,
+        4,
+        255,
+        255,
+        255,
+        0,
+        6,
+        4,
+        4,
+        255,
+        255,
+        255,
+        0,
+        6,
+        4,
+        4,
+        255,
+        255,
+        255
+      ],
+      "consumedEvents": {
+        "1": {
+          "eventIdentifier": "03850065",
+          "eventIndex": 1,
+          "node": 901,
+          "variables": [
+            null,
+            8
+          ]
+        },
+        "2": {
+          "eventIdentifier": "03850066",
+          "eventIndex": 2,
+          "node": 901,
+          "variables": [
+            null,
+            12
+          ]
+        },
+        "3": {
+          "eventIdentifier": "03850003",
+          "eventIndex": 3,
+          "node": 901,
+          "variables": [
+            null,
+            16
+          ]
+        },
+        "4": {
+          "eventIdentifier": "03850068",
+          "eventIndex": 4,
+          "node": 901,
+          "variables": [
+            null,
+            20
+          ]
+        },
+        "5": {
+          "eventIdentifier": "03850069",
+          "eventIndex": 5,
+          "node": 901,
+          "variables": [
+            null,
+            24
+          ]
+        },
+        "6": {
+          "eventIdentifier": "03850006",
+          "eventIndex": 6,
+          "node": 901,
+          "variables": [
+            null,
+            28
+          ]
+        },
+        "7": {
+          "eventIdentifier": "03850007",
+          "eventIndex": 7,
+          "node": 901,
+          "variables": [
+            null,
+            32
+          ]
+        },
+        "8": {
+          "eventIdentifier": "03850008",
+          "eventIndex": 8,
+          "node": 901,
+          "variables": [
+            null,
+            36
+          ]
+        },
+        "9": {
+          "eventIdentifier": "03850009",
+          "eventIndex": 9,
+          "node": 901,
+          "variables": [
+            null,
+            40
+          ]
+        },
+        "10": {
+          "eventIdentifier": "0385000A",
+          "eventIndex": 10,
+          "node": 901,
+          "variables": [
+            null,
+            44
+          ]
+        },
+        "11": {
+          "eventIdentifier": "0385000B",
+          "eventIndex": 11,
+          "node": 901,
+          "variables": [
+            null,
+            48
+          ]
+        },
+        "12": {
+          "eventIdentifier": "0385000C",
+          "eventIndex": 12,
+          "node": 901,
+          "variables": [
+            null,
+            52
+          ]
+        },
+        "13": {
+          "eventIdentifier": "0385000D",
+          "eventIndex": 13,
+          "node": 901,
+          "variables": [
+            null,
+            56
+          ]
+        },
+        "14": {
+          "eventIdentifier": "0385000E",
+          "eventIndex": 14,
+          "node": 901,
+          "variables": [
+            null,
+            60
+          ]
+        },
+        "15": {
+          "eventIdentifier": "0385000F",
+          "eventIndex": 15,
+          "node": 901,
+          "variables": [
+            null,
+            64
+          ]
+        },
+        "16": {
+          "eventIdentifier": "03850010",
+          "eventIndex": 16,
+          "node": 901,
+          "variables": [
+            null,
+            68
+          ]
+        },
+        "17": {
+          "eventIdentifier": "03850001",
+          "eventIndex": 17,
+          "node": 901,
+          "variables": [
+            null,
+            0
+          ]
+        },
+        "18": {
+          "eventIdentifier": "0385012E",
+          "eventIndex": 18,
+          "node": 901,
+          "variables": [
+            null,
+            13
+          ]
+        },
+        "19": {
+          "eventIdentifier": "038500CA",
+          "eventIndex": 19,
+          "node": 901,
+          "variables": [
+            null,
+            14
+          ]
+        },
+        "20": {
+          "eventIdentifier": "03850002",
+          "eventIndex": 20,
+          "node": 901,
+          "variables": [
+            null,
+            0
+          ]
+        },
+        "21": {
+          "eventIdentifier": "03850004",
+          "eventIndex": 21,
+          "node": 901,
+          "variables": [
+            null,
+            0
+          ]
+        },
+        "22": {
+          "eventIdentifier": "03850131",
+          "eventIndex": 22,
+          "node": 901,
+          "variables": [
+            null,
+            25
+          ]
+        },
+        "23": {
+          "eventIdentifier": "038500CD",
+          "eventIndex": 23,
+          "node": 901,
+          "variables": [
+            null,
+            26
+          ]
+        },
+        "24": {
+          "eventIdentifier": "03850005",
+          "eventIndex": 24,
+          "node": 901,
+          "variables": [
+            null,
+            0
+          ]
+        }
+      },
       "status": true,
       "eventCount": 24,
       "module": "CANMIO",
       "component": "canmio",
-      "learn": false
-    },
-    "65534": {
-      "nodeNumber": 65534,
-      "manufacturerId": 165,
-      "moduleId": 10,
-      "moduleIdentifier": "A50A",
-      "flags": 14,
-      "consumer": false,
-      "producer": true,
-      "flim": true,
-      "bootloader": true,
-      "coe": false,
-      "parameters": [],
-      "nodeVariables": [],
-      "consumedEvents": {},
-      "status": true,
-      "eventCount": 0,
-      "module": "CANCMD",
-      "component": "cancmd",
-      "learn": false
+      "learn": false,
+      "moduleManufacturerName": "MERG",
+      "cpuName": "P18F26K80",
+      "interfaceName": "CAN",
+      "cpuManufacturerName": "MICROCHIP"
     }
   },
   "events": {
-    "0000000D": {
-      "id": "0000000D",
-      "nodeNumber": 204,
-      "eventNumber": 13,
-      "status": "off",
-      "type": "short",
-      "count": 25
-    },
     "012C0010": {
       "id": "012C0010",
       "nodeNumber": 300,
       "eventNumber": 16,
       "status": "off",
       "type": "long",
-      "count": 8
+      "count": 12
     },
     "012C0009": {
       "id": "012C0009",
@@ -204,7 +681,15 @@
       "eventNumber": 9,
       "status": "off",
       "type": "long",
-      "count": 8
+      "count": 10
+    },
+    "01040001": {
+      "id": "01040001",
+      "nodeNumber": 260,
+      "eventNumber": 1,
+      "status": "on",
+      "type": "long",
+      "count": 27
     }
   }
 }
