@@ -25,9 +25,7 @@ socketServer.socketServer(NET_ADDRESS, LAYOUT_NAME,JSON_PORT, SERVER_PORT)
 SerialPort.list().then(ports => {
 
     ports.forEach(function(port) {
-        const vendorId = toString(port.vendorId)
-        const productId = toString(port.productId)
-        if (vendorId.toUpperCase() == '04D8' && productId.toUpperCase() == 'F80C') {
+        if (port.vendorId != undefined && port.vendorId.toString().toUpperCase() == '04D8' && port.productId.toString().toUpperCase() == 'F80C') {
             canUSB.canUSB(port.path, NET_PORT, NET_ADDRESS)
         }
     })
