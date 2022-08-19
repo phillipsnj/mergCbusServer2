@@ -816,7 +816,7 @@ class cbusAdmin extends EventEmitter {
         }
         this.emit('events', Object.values(this.config.events))
         output = {}
-        output['mnemonic'] = 'ASON'
+        output['mnemonic'] = 'ASOF'
         output['nodeNumber'] = nodeId
         output['deviceNumber'] = deviceNumber
         return output
