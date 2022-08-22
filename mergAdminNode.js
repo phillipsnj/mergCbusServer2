@@ -653,7 +653,11 @@ class cbusAdmin extends EventEmitter {
     }
 
     teach_event(nodeId, event, variableId, value) {
-        return this.EVLRN(nodeId, event, variableId, value)
+        if (this.config.nodes[nodeId].module == 'CANMIO') {
+            return this.EVLRN(nodeId, event, 2, 2)
+        } else {
+            return this.EVLRN(nodeId, event, variableId, value)
+        }
     }
 
     EVLRN(nodeId, event, variableId, value) {//Update Event Variable
