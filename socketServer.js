@@ -230,6 +230,11 @@ exports.socketServer = function(NET_ADDRESS,LAYOUT_NAME,JSON_PORT,SOCKET_PORT) {
         io.emit('nodes', nodes);
     })
 
+    node.on('node', function (node) {
+        //winston.info({message: `Node Sent :${JSON.stringify(node)}`});
+        io.emit('node', node);
+    })
+
     node.on('cbusError', function (cbusErrors) {
 		winston.info({message: `CBUS - ERROR :${JSON.stringify(cbusErrors)}`});
         io.emit('cbusError', cbusErrors);

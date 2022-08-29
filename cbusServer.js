@@ -12,7 +12,7 @@ const winston = require('./config/winston.js')
 
 
 exports.cbusServer = function (USB_PORT,NET_PORT, NET_ADDRESS) {
-    var clients = []
+    let clients = []
 
 /*    const parser = new parsers.Readline({
         delimiter: ';'
@@ -59,7 +59,7 @@ exports.cbusServer = function (USB_PORT,NET_PORT, NET_ADDRESS) {
         winston.info({message: `Serial port ERROR:  : ${err.message}`})
     });*/
 
-    var server = net.createServer(function (socket) {
+    const server = net.createServer(function (socket) {
         socket.setKeepAlive(true, 60000)
         clients.push(socket)
         winston.info({message: `CbusServer Client Connected to Server`})

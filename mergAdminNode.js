@@ -30,7 +30,7 @@ class cbusAdmin extends EventEmitter {
         this.pr1 = 2
         this.pr2 = 3
         this.canId = 60
-        this.config.nodes = {}
+        //this.config.nodes = {}
         this.config.events = {}
         this.cbusErrors = {}
         this.cbusNoSupport = {}
@@ -209,13 +209,13 @@ class cbusAdmin extends EventEmitter {
                 if (this.config.nodes[cbusMsg.nodeNumber].eventCount != null) {
                     if (this.config.nodes[cbusMsg.nodeNumber].eventCount != cbusMsg.eventCount) {
                         this.config.nodes[cbusMsg.nodeNumber].eventCount = cbusMsg.eventCount
-                        this.saveConfig()
+                        this.saveNode(cbusMsg.nodeNumber)
                     } else {
                         winston.debug({message: `AdminNode: NUMEV: EvCount value has not changed`});
                     }
                 } else {
                     this.config.nodes[cbusMsg.nodeNumber].eventCount = cbusMsg.eventCount
-                    this.saveConfig()
+                    this.saveNode(cbusMsg.nodeNumber)
                 }
                 //winston.info({message: 'AdminNode: NUMEV: ' + JSON.stringify(this.config.nodes[cbusMsg.nodeNumber])});
             },
@@ -230,16 +230,16 @@ class cbusAdmin extends EventEmitter {
             '97': (cbusMsg) => { // NVANS - Receive Node Variable Value
                 if (this.config.nodes[cbusMsg.nodeNumber].nodeVariables[cbusMsg.nodeVariableIndex] != null) {
                     if (this.config.nodes[cbusMsg.nodeNumber].nodeVariables[cbusMsg.nodeVariableIndex] != cbusMsg.nodeVariableValue) {
-                        winston.info({message: `Variable ${cbusMsg.nodeVariableIndex} value has changed`});
+                        //winston.info({message: `Variable ${cbusMsg.nodeVariableIndex} value has changed`});
                         this.config.nodes[cbusMsg.nodeNumber].nodeVariables[cbusMsg.nodeVariableIndex] = cbusMsg.nodeVariableValue
-                        this.saveConfig()
+                        this.saveNode(cbusMsg.nodeNumber)
                     } else {
-                        winston.info({message: `Variable ${cbusMsg.nodeVariableIndex} value has not changed`});
+                        //winston.info({message: `Variable ${cbusMsg.nodeVariableIndex} value has not changed`});
                     }
                 } else {
-                    winston.info({message: `Variable ${cbusMsg.nodeVariableIndex} value does not exist in config`});
+                    //winston.info({message: `Variable ${cbusMsg.nodeVariableIndex} value does not exist in config`});
                     this.config.nodes[cbusMsg.nodeNumber].nodeVariables[cbusMsg.nodeVariableIndex] = cbusMsg.nodeVariableValue
-                    this.saveConfig()
+                    this.saveNode(cbusMsg.nodeNumber)
                 }
             },
             '98': (cbusMsg) => {//Accessory On Short Event
@@ -289,7 +289,7 @@ class cbusAdmin extends EventEmitter {
                 }
                 // ok, save the config if needed
                 if (saveConfigNeeded == true) {
-                    this.saveConfig()
+                    this.saveNode(cbusMsg.nodeNumber)
                 }
             },
             'B0': (cbusMsg) => {//Accessory On Long Event 1
@@ -304,14 +304,14 @@ class cbusAdmin extends EventEmitter {
                         if (this.config.nodes[cbusMsg.nodeNumber].consumedEvents[cbusMsg.eventIndex].variables[cbusMsg.eventVariableIndex] != cbusMsg.eventVariableValue) {
                             winston.debug({message: `Event Variable ${cbusMsg.variable} Value has Changed `});
                             this.config.nodes[cbusMsg.nodeNumber].consumedEvents[cbusMsg.eventIndex].variables[cbusMsg.eventVariableIndex] = cbusMsg.eventVariableValue
-                            this.saveConfig()
+                            this.saveNode(cbusMsg.nodeNumber)
                         } else {
                             winston.debug({message: `NEVAL: Event Variable ${cbusMsg.eventVariableIndex} Value has not Changed `});
                         }
                     } else {
                         winston.debug({message: `NEVAL: Event Variable ${cbusMsg.variable} Does not exist on config - adding`});
                         this.config.nodes[cbusMsg.nodeNumber].consumedEvents[cbusMsg.eventIndex].variables[cbusMsg.eventVariableIndex] = cbusMsg.eventVariableValue
-                        this.saveConfig()
+                        this.saveNode(cbusMsg.nodeNumber)
                     }
                 } else {
                     winston.debug({message: `NEVAL: Event Index ${cbusMsg.eventIndex} Does not exist on config - skipping`});
@@ -367,7 +367,7 @@ class cbusAdmin extends EventEmitter {
                 this.config.nodes[ref].learn = (cbusMsg.flags & 32) ? true : false
                 this.config.nodes[ref].status = true
                 this.cbusSend((this.RQEVN(cbusMsg.nodeNumber)))
-                this.saveConfig()
+                this.saveNode(cbusMsg.nodeNumber)
             },
             'B8': (cbusMsg) => {//Accessory On Short Event 1
                 this.eventSend(cbusMsg, 'on', 'short')
@@ -570,6 +570,12 @@ class cbusAdmin extends EventEmitter {
         }*/
         this.emit('nodes', this.config.nodes);
         //this.emit('nodes', Object.values(this.config.nodes))
+    }
+
+    saveNode(nodeId) {
+        winston.info({message: 'AdminNode: Save Node : '+nodeId});
+        jsonfile.writeFileSync(this.configFile, this.config, {spaces: 2, EOL: '\r\n'})
+        this.emit('node', this.config.nodes[nodeId]);
     }
 
     QNN() {//Query Node Number
