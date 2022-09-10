@@ -583,6 +583,7 @@ class cbusAdmin extends EventEmitter {
         for (let node in this.config.nodes) {
             this.config.nodes[node].status = false
         }
+        this.saveConfig()
         let output = {}
         output['mnemonic'] = 'QNN'
         return output;
