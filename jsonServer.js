@@ -31,7 +31,7 @@ exports.jsonServer = function (CBUS_SERVER_PORT, JSON_SERVER_PORT,  CBUS_SERVER_
             clients.forEach(function (client) {
                 let output = JSON.stringify(cbusLibMsg);
                 //console.log('Output to Client : ' + output);
-                winston.info({message:'Json Server Output to Client : ' + output})
+                //winston.info({message:'Json Server Output to Client : ' + output})
                 client.write(output);
             });
         }

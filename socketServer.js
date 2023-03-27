@@ -56,7 +56,7 @@ exports.socketServer = function(NET_ADDRESS,LAYOUT_NAME,JSON_PORT,SOCKET_PORT) {
             node.cbusSend(node.RQNPN(data.nodeId, data.parameter))
         })
         socket.on('REQUEST_ALL_NODE_VARIABLES', function(data){
-			winston.info({message: `REQUEST_ALL_NODE_VARIABLES ${JSON.stringify(data)}`});
+			winston.info({message: `REQUEST_ALL_NODE_VARIABLES ${JSON.stringify(data)}`})
             if (data.start === undefined) {
                 data.start = 1
             }
@@ -70,6 +70,14 @@ exports.socketServer = function(NET_ADDRESS,LAYOUT_NAME,JSON_PORT,SOCKET_PORT) {
                 setTimeout(function() {node.cbusSend(node.NVRD(data.nodeId, i))},time)
                 increment +=1
             }
+        })
+        socket.on('REQUEST_SERVICE_DISCOVERY', function(data){
+            winston.info({message: `REQUEST_SERVICE_DISCOVERY ${JSON.stringify(data)}`});
+            node.cbusSend(node.RQSD(data.nodeId, 0))
+        })
+        socket.on('REQUEST_DIAGNOSTICS', function(data){
+            winston.info({message: `REQUEST_DIAGNOSTICS ${JSON.stringify(data)}`});
+            node.cbusSend(node.RDGN(data.nodeId, 0, 0))
         })
         socket.on('REQUEST_NODE_VARIABLE', function(data){
 			winston.info({message: `REQUEST_NODE_VARIABLE ${JSON.stringify(data)}`});

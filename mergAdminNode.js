@@ -35,6 +35,7 @@ class cbusAdmin extends EventEmitter {
         this.cbusErrors = {}
         this.cbusNoSupport = {}
         this.dccSessions = {}
+        this.heartbeats = {}
         this.saveConfig()
         const outHeader = ((((this.pr1 * 4) + this.pr2) * 128) + this.canId) << 5
         this.header = ':S' + outHeader.toString(16).toUpperCase() + 'N'
@@ -292,6 +293,11 @@ class cbusAdmin extends EventEmitter {
                     this.saveNode(cbusMsg.nodeNumber)
                 }
             },
+            'AB': (cbusMsg) => {//Accessory On Long Event 1
+                console.log(`Heartbeat ${cbusMsg.nodeNumber} ${Date.now()}`)
+                this.heartbeats[cbusMsg.nodeNumber] = Date.now()
+                //this.eventSend(cbusMsg, 'on', 'long')
+            },
             'B0': (cbusMsg) => {//Accessory On Long Event 1
                 this.eventSend(cbusMsg, 'on', 'long')
             },
@@ -319,7 +325,7 @@ class cbusAdmin extends EventEmitter {
             },
             'B6': (cbusMsg) => { //PNN Recieved from Node
                 const ref = cbusMsg.nodeNumber
-                const moduleIdentifier = cbusMsg.encoded.toString().substr(13, 4)
+                const moduleIdentifier = cbusMsg.encoded.toString().substr(13, 4).toUpperCase()
                 if (ref in this.config.nodes) {
                     winston.debug({message: `PNN (B6) Node found ` + JSON.stringify(this.config.nodes[ref])})
                     if (this.merg['modules'][moduleIdentifier]) {
@@ -345,11 +351,16 @@ class cbusAdmin extends EventEmitter {
                         "nodeVariables": [],
                         "consumedEvents": {},
                         "status": true,
-                        "eventCount": 0
+                        "eventCount": 0,
+                        "services": {}
                     }
                     if (this.merg['modules'][moduleIdentifier]) {
                         output['module'] = this.merg['modules'][moduleIdentifier]['name']
                         output['component'] = this.merg['modules'][moduleIdentifier]['component']
+                        if (this.merg['modules'][moduleIdentifier]['component'] == 'mergDefault2') {
+                            const variableConfig = jsonfile.readFileSync('./config/'+this.merg['modules'][moduleIdentifier]['variableConfig'])
+                            output['variableConfig'] = variableConfig
+                        }
                     } else {
                         winston.info({message: `AdminNode Module Type ${cbusMsg.moduleId} not setup in  `})
                         output['component'] = 'mergDefault'
@@ -403,6 +414,11 @@ class cbusAdmin extends EventEmitter {
                 this.dccSessions[session].F3 = cbusMsg.Fn3
                 this.emit('dccSessions', this.dccSessions)
                 winston.debug({message: `PLOC (E1) ` + JSON.stringify(this.dccSessions[session])})
+            },
+            'E7': (cbusMsg) => {//Service Discovery
+                // mode
+                winston.debug({message: `Service Delivery ${JSON.stringify(cbusMsg)}`})
+                this.config.nodes[cbusMsg.nodeNumber]["services"][cbusMsg.ServiceNumber] = [cbusMsg.Data1, cbusMsg.Data2, cbusMsg.Data3, cbusMsg.Data4]
             },
             'EF': (cbusMsg) => {//Request Node Parameter in setup
                 // mode
@@ -654,6 +670,25 @@ class cbusAdmin extends EventEmitter {
         //return cbusLib.encodeREVAL(nodeId, eventId, valueId);
     }
 
+    RQSD(nodeId, service) { //Request Service Delivery
+        let output = {}
+        output['mnemonic'] = 'RQSD'
+        output['nodeNumber'] = nodeId
+        output['ServiceNumber'] = service
+        return output
+        //return cbusLib.encodeRQSD(nodeNumber, ServiceNumber);
+    }
+
+    RDGN(nodeId, service, diagCode) { //Request Diagnostics
+        let output = {}
+        output['mnemonic'] = 'RDGN'
+        output['nodeNumber'] = nodeId
+        output['ServiceNumber'] = service
+        output['DiagnosticCode'] = diagCode
+        return output
+        //return cbusLib.encodeRDGN(nodeNumber ServiceNumber, DiagnosticCode);
+    }
+
     update_event(nodeId, event, eventIndex, variableId, value){
         this.config.nodes[nodeId].consumedEvents[eventIndex].variables[variableId] = value
         return this.EVLRN(nodeId, event, variableId, value)
@@ -673,7 +708,7 @@ class cbusAdmin extends EventEmitter {
         //winston.info({message: `Test ${JSON.stringify(this.config.nodes[nodeId])}` })
         //this.config.nodes[nodeId].consumedEvents[eventIndex].variables[variableId] = value
         //this.config.nodes[parseInt(event.substr(0, 4), 16)].consumedEvents[eventIndex].variables[variableId] = value
-        //this.saveConfig()
+        this.saveNode(nodeId)
         let output = {}
         output['mnemonic'] = 'EVLRN'
         output['nodeNumber'] = parseInt(event.substr(0, 4), 16)

@@ -58,15 +58,17 @@
     },
     "A534": {
       "name": "CANMIO-OUT",
-      "component": "mergDefault"
+      "component": "mergDefault2",
+      "variableConfig": "test.json"
     },
     "53": {
       "name": "CANMIO-BIP",
       "component": "mergDefault"
     },
     "A53A": {
-      "name": "ETHNIGE",
-      "component": "mergDefault"
+      "name": "PYTHON",
+      "component": "mergDefault2",
+      "variableConfig": "test.json"
     },
     "A53B": {
       "name": "CANDISP",
@@ -87,6 +89,14 @@
     "99": {
       "name": "LIGHTS",
       "component": "daveh-lights"
+    },
+    "2A01":{
+      "name": "CANMULTI",
+      "component": "mergDefault"
+    },
+    "2A02":{
+      "name": "MERGLCB",
+      "component": "mergLcbDefault"
     }
   },
   "cbusErrors": {
@@ -153,6 +163,7 @@
   },
 
   "moduleManufacturerName": {
+            "42": "SHAG",
 			"70": "ROCRAIL",
 			"80": "SPECTRUM",
 			"165": "MERG",
