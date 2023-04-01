@@ -1,5 +1,6 @@
 const net = require('net')
 const cbusLib = require('cbuslibrary')
+const winston = require('winston')
 
 //const JSON_SERVER_PORT = 5551;
 //const CBUS_SERVER_ADDRESS = "localhost";
@@ -12,7 +13,8 @@ exports.jsonServer = function (CBUS_SERVER_PORT, JSON_SERVER_PORT,  CBUS_SERVER_
     let cbusClient = new net.Socket();
 
     cbusClient.connect(CBUS_SERVER_PORT, CBUS_SERVER_ADDRESS, function () {
-        console.log('Cbus Client Connected to ' + CBUS_SERVER_ADDRESS + ' on ' + CBUS_SERVER_PORT);
+        //console.log('JSON Server Connected to ' + CBUS_SERVER_ADDRESS + ' on ' + CBUS_SERVER_PORT);
+        winston.info({message:'JSON Server Connected to ' + CBUS_SERVER_ADDRESS + ' on ' + CBUS_SERVER_PORT})
     });
 
     cbusClient.on('data', function (data) {
@@ -28,16 +30,19 @@ exports.jsonServer = function (CBUS_SERVER_PORT, JSON_SERVER_PORT,  CBUS_SERVER_
             console.log(`New ::${outMsg[i]} ==> ${JSON.stringify(cbusLibMsg)} ==> ${JSON.stringify(cbusLibJsonMsg)} => ${cbusLibJsonMsg.encoded}`)*/
             clients.forEach(function (client) {
                 let output = JSON.stringify(cbusLibMsg);
-                console.log('Output to Client : ' + output);
+                //console.log('Output to Client : ' + output);
+                //winston.info({message:'Json Server Output to Client : ' + output})
                 client.write(output);
             });
         }
     });
 
-    var server = net.createServer(function (socket) {
+    const server = net.createServer(function (socket) {
         socket.setKeepAlive(true, 60000);
         clients.push(socket);
-        console.log('Client Connected to JSON Server');
+        //console.log('Client Connected to JSON Server');
+        winston.info({message:'' +
+                'Client Connected to JSON Server'})
 
         socket.on('data', function (data) {
             console.log(`jsonServer : Data Received : ${data} `)

@@ -7,10 +7,11 @@ const cbusServer = require('./cbusServer')
 const jsonServer = require('./jsonServer')
 const socketServer = require('./socketServer')
 const canUSB = require('./canUSB')
+const {SerialPort} = require("serialport");
 
 //const config = jsonfile.readFileSync('./config/config.json')
 
-const USB_PORT = "COM4"
+const USB_PORT = "/dev/tty.usbmodem213301"
 const NET_PORT = 5550
 const NET_ADDRESS = "localhost"
 const JSON_PORT = 5551
@@ -20,5 +21,13 @@ const LAYOUT_NAME="Default"
 cbusServer.cbusServer(USB_PORT, NET_PORT, NET_ADDRESS)
 jsonServer.jsonServer(NET_PORT, JSON_PORT, NET_ADDRESS)
 socketServer.socketServer(NET_ADDRESS, LAYOUT_NAME,JSON_PORT, SERVER_PORT)
-canUSB.canUSB(USB_PORT,NET_PORT, NET_ADDRESS)
+
+SerialPort.list().then(ports => {
+
+    ports.forEach(function(port) {
+        if (port.vendorId != undefined && port.vendorId.toString().toUpperCase() == '04D8' && port.productId.toString().toUpperCase() == 'F80C') {
+            canUSB.canUSB(port.path, NET_PORT, NET_ADDRESS)
+        }
+    })
+})
 

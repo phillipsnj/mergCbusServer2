@@ -1,8 +1,8 @@
 const net = require('net')
 //const jsonfile = require('jsonfile')
-const serialport = require('serialport')
+//const serialport = require('serialport')
 const winston = require('./config/winston.js')
-const parsers = serialport.parsers
+//const parsers = serialport.parsers
 
 //const config = jsonfile.readFileSync('./config/config.json')
 
@@ -12,7 +12,7 @@ const parsers = serialport.parsers
 
 
 exports.cbusServer = function (USB_PORT,NET_PORT, NET_ADDRESS) {
-    var clients = []
+    let clients = []
 
 /*    const parser = new parsers.Readline({
         delimiter: ';'
@@ -59,7 +59,7 @@ exports.cbusServer = function (USB_PORT,NET_PORT, NET_ADDRESS) {
         winston.info({message: `Serial port ERROR:  : ${err.message}`})
     });*/
 
-    var server = net.createServer(function (socket) {
+    const server = net.createServer(function (socket) {
         socket.setKeepAlive(true, 60000)
         clients.push(socket)
         winston.info({message: `CbusServer Client Connected to Server`})
@@ -92,7 +92,7 @@ exports.cbusServer = function (USB_PORT,NET_PORT, NET_ADDRESS) {
                     return
                 if (data.length > 8) {
                     client.write(data)
-                    winston.info({message: `CbusServer Broadcast : ${data.toString()}`})
+                    //winston.info({message: `CbusServer Broadcast : ${data.toString()}`})
                 } else {
                     //console.log('Server Broadcast : ' + data.toString())
                     winston.info({message: `CbusServer Invalid Message : ${data.toString()}`})
