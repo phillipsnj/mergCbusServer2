@@ -1,0 +1,221 @@
+{
+  "nv": [
+    {
+		"type": "group",
+		"displayName": "channel 1 test",
+		"groupItems": [
+			{
+			  "type": "NodeVariable",
+			  "nodeVariableIndex": 10,
+			  "title": "Test nv10",
+			  "description": "",
+			  "max": 255,
+			  "min": 0,
+			  "hint": "",
+			  "learn": false
+			},
+		    {
+			  "type": "NodeVariableBitSingle",
+			  "nodeVariableIndex": 11,
+			  "title": "Test nv11 Bit 0",
+			  "description": "",
+			  "bit": 0,
+			  "hint": "",
+			  "learn": false
+			},
+			{
+			  "type": "NodeVariableSlider",
+			  "nodeVariableIndex": 12,
+			  "title": "Test nv12 Slider",
+			  "description": "",
+			  "badge": "Delay",
+			  "badgeMulti": 1,
+			  "badgeUnit": "Milli Seconds",
+			  "max": 255,
+			  "min": 0,
+			  "hint": "",
+			  "learn": false
+			}
+		]
+    },
+    {
+		"type": "group",
+		"displayName": "channel 2 test",
+		"groupItems": [
+			{
+			  "type": "NodeVariable",
+			  "nodeVariableIndex": 13,
+			  "title": "Test nv13",
+			  "description": "",
+			  "max": 255,
+			  "min": 0,
+			  "hint": "",
+			  "learn": false
+			},
+		    {
+			  "type": "NodeVariableBitSingle",
+			  "nodeVariableIndex": 14,
+			  "title": "Test nv14 Bit 0",
+			  "description": "",
+			  "bit": 0,
+			  "hint": "",
+			  "learn": false
+			},
+			{
+			  "type": "NodeVariableSlider",
+			  "nodeVariableIndex": 15,
+			  "title": "Test nv15 Slider",
+			  "description": "",
+			  "badge": "Delay",
+			  "badgeMulti": 1,
+			  "badgeUnit": "Milli Seconds",
+			  "max": 255,
+			  "min": 0,
+			  "hint": "",
+			  "learn": false
+			}
+		]
+    },
+    {
+		"type": "group",
+		"displayName": "channel 3 test",
+		"groupItems": [
+			{
+			  "type": "NodeVariable",
+			  "nodeVariableIndex": 16,
+			  "title": "Test nv16",
+			  "description": "",
+			  "max": 255,
+			  "min": 0,
+			  "hint": "",
+			  "learn": false
+			},
+		    {
+			  "type": "NodeVariableBitSingle",
+			  "nodeVariableIndex": 17,
+			  "title": "Test nv17 Bit 0",
+			  "description": "",
+			  "bit": 0,
+			  "hint": "",
+			  "learn": false
+			},
+			{
+			  "type": "NodeVariableBitArray",
+			  "nodeVariableIndex": 18,
+			  "title": "Test nv18 Bit Array",
+			  "description": "",
+			  "hint": "",
+			  "learn": false
+			},
+			{
+			  "type": "NodeVariableDual",
+			  "nodeVariableIndexHigh": 19,
+			  "nodeVariableIndexLow": 20,
+			  "title": "Test nv19/20 Dual Byte",
+			  "description": "",
+			  "max": 65025,
+			  "min": 0,
+			  "hint": "",
+			  "learn": false
+			},
+			{
+			  "type": "NodeVariableSlider",
+			  "nodeVariableIndex": 21,
+			  "title": "Test nv21 Slider",
+			  "description": "",
+			  "badge": "Delay",
+			  "badgeMulti": 1,
+			  "badgeUnit": "Milli Seconds",
+			  "max": 255,
+			  "min": 0,
+			  "hint": "",
+			  "learn": false
+			},
+			{
+			  "type": "NodeVariableSelect",
+			  "nodeVariableIndex": 22,
+			  "title": "Test nv22 Select",
+			  "description": "",
+			  "hint": "",
+			  "learn": false,
+			  "options": [
+				{"label": "Options 1", "value": 0},
+				{"label": "Options 2", "value": 1},
+				{"label": "Options 3", "value": 2},
+				{"label": "Options 4", "value": 8}
+			  ]
+			}
+		]
+    },
+	{
+	  "type": "NodeVariable",
+	  "nodeVariableIndex": 1,
+	  "title": "Test nv1",
+	  "description": "",
+	  "max": 255,
+	  "min": 0,
+	  "hint": "",
+	  "learn": false
+	},
+	{
+	  "type": "NodeVariableBitSingle",
+	  "nodeVariableIndex": 2,
+	  "title": "Test nv2 Bit 0",
+	  "description": "",
+	  "bit": 0,
+	  "hint": "",
+	  "learn": false
+	},
+    {
+      "type": "NodeVariableBitArray",
+      "nodeVariableIndex": 3,
+      "title": "Test nv3 Bit Array",
+      "description": "",
+      "hint": "",
+      "learn": false
+    },
+    {
+      "type": "NodeVariableDual",
+      "nodeVariableIndexHigh": 4,
+      "nodeVariableIndexLow": 5,
+      "title": "Test nv4/5 Dual Byte",
+      "description": "",
+      "max": 65025,
+      "min": 0,
+      "hint": "",
+      "learn": false
+    },
+    {
+      "type": "NodeVariableSlider",
+      "nodeVariableIndex": 6,
+      "title": "Test nv6 Slider",
+      "description": "",
+      "badge": "Delay",
+      "badgeMulti": 1,
+      "badgeUnit": "Milli Seconds",
+      "max": 255,
+      "min": 0,
+      "hint": "",
+      "learn": false
+    },
+    {
+      "type": "NodeVariableSelect",
+      "nodeVariableIndex": 7,
+      "title": "Test nv7 Select",
+      "description": "",
+      "hint": "",
+      "learn": false,
+      "options": [
+        {"label": "Options 1", "value": 0},
+        {"label": "Options 2", "value": 1},
+        {"label": "Options 3", "value": 2},
+        {"label": "Options 4", "value": 8}
+      ]
+    }
+  ],
+  "ev": [{
+    "type": "number",
+    "eventVariableIndex": "1",
+    "name": "CANMIO-OUT ev1"
+  }]
+}
