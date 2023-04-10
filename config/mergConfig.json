@@ -4,9 +4,10 @@
       "name": "CANACC4",
       "component": "mergDefault"
     },
-    "A5022": {
+    "A502": {
       "name": "CANACC5",
-      "component": "mergDefault"
+      "component": "mergDefault2",
+      "variableConfig": "modules/ACC5-5302.json"
     },
     "A503": {
       "name": "CANACC8",
@@ -68,7 +69,7 @@
     "A53A": {
       "name": "PYTHON",
       "component": "mergDefault2",
-      "variableConfig": "test.json"
+      "variableConfig": "test-grouping.json"
     },
     "A53B": {
       "name": "CANDISP",

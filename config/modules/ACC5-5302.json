@@ -1,177 +1,169 @@
 {
-  "nv": [
+  "nodeVariables": [
     {
 		"type": "group",
-		"displayName": "Output 1",
+		"displayTitle": "Output 1",
 		"groupItems": [
 			{
 			  "type": "NodeVariableSlider7Bit",
 			  "nodeVariableIndex": 1,
-			  "title": "Pulse Duration",
-			  "badge": "Delay",
-			  "badgeMulti": 20,
-			  "badgeUnit": "Milli Seconds",
+			  "displayTitle": "Pulse Duration",
+			  "displayScale": 20,
+			  "displayUnits": "Milli Seconds",
 			  "max": 127,
 			  "min": 0
 			},
 			{
 			  "type": "NodeVariableBitSingle",
 			  "nodeVariableIndex": 1,
-			  "title": "Repeat enabled",
+			  "displayTitle": "Repeat enabled",
 			  "bit": 7
 			}
 		]
     },
     {
 		"type": "group",
-		"displayName": "Output 2",
+		"displayTitle": "Output 2",
 		"groupItems": [
 			{
 			  "type": "NodeVariableSlider7Bit",
 			  "nodeVariableIndex": 2,
-			  "title": "Pulse Duration",
-			  "badge": "Delay",
-			  "badgeMulti": 20,
-			  "badgeUnit": "Milli Seconds",
+			  "displayTitle": "Pulse Duration",
+			  "displayScale": 20,
+			  "displayUnits": "Milli Seconds",
 			  "max": 127,
 			  "min": 0
 			},
 			{
 			  "type": "NodeVariableBitSingle",
 			  "nodeVariableIndex": 2,
-			  "title": "Repeat enabled",
+			  "displayTitle": "Repeat enabled",
 			  "bit": 7
 			}
 		]
     },
     {
 		"type": "group",
-		"displayName": "Output 3",
+		"displayTitle": "Output 3",
 		"groupItems": [
 			{
 			  "type": "NodeVariableSlider7Bit",
 			  "nodeVariableIndex": 3,
-			  "title": "Pulse Duration",
-			  "badge": "Delay",
-			  "badgeMulti": 20,
-			  "badgeUnit": "Milli Seconds",
+			  "displayTitle": "Pulse Duration",
+			  "displayScale": 20,
+			  "displayUnits": "Milli Seconds",
 			  "max": 127,
 			  "min": 0
 			},
 			{
 			  "type": "NodeVariableBitSingle",
 			  "nodeVariableIndex": 3,
-			  "title": "Repeat enabled",
+			  "displayTitle": "Repeat enabled",
 			  "bit": 7
 			}
 		]
     },
     {
 		"type": "group",
-		"displayName": "Output 4",
+		"displayTitle": "Output 4",
 		"groupItems": [
 			{
 			  "type": "NodeVariableSlider7Bit",
 			  "nodeVariableIndex": 4,
-			  "title": "Pulse Duration",
-			  "badge": "Delay",
-			  "badgeMulti": 20,
-			  "badgeUnit": "Milli Seconds",
+			  "displayTitle": "Pulse Duration",
+			  "displayScale": 20,
+			  "displayUnits": "Milli Seconds",
 			  "max": 127,
 			  "min": 0
 			},
 			{
 			  "type": "NodeVariableBitSingle",
 			  "nodeVariableIndex": 4,
-			  "title": "Repeat enabled",
+			  "displayTitle": "Repeat enabled",
 			  "bit": 7
 			}
 		]
     },
     {
 		"type": "group",
-		"displayName": "Output 5",
+		"displayTitle": "Output 5",
 		"groupItems": [
 			{
 			  "type": "NodeVariableSlider7Bit",
 			  "nodeVariableIndex": 5,
-			  "title": "Pulse Duration",
-			  "badge": "Delay",
-			  "badgeMulti": 20,
-			  "badgeUnit": "Milli Seconds",
+			  "displayTitle": "Pulse Duration",
+			  "displayScale": 20,
+			  "displayUnits": "Milli Seconds",
 			  "max": 127,
 			  "min": 0
 			},
 			{
 			  "type": "NodeVariableBitSingle",
 			  "nodeVariableIndex": 5,
-			  "title": "Repeat enabled",
+			  "displayTitle": "Repeat enabled",
 			  "bit": 7
 			}
 		]
     },
     {
 		"type": "group",
-		"displayName": "Output 6",
+		"displayTitle": "Output 6",
 		"groupItems": [
 			{
 			  "type": "NodeVariableSlider7Bit",
 			  "nodeVariableIndex": 6,
-			  "title": "Pulse Duration",
-			  "badge": "Delay",
-			  "badgeMulti": 20,
-			  "badgeUnit": "Milli Seconds",
+			  "displayTitle": "Pulse Duration",
+			  "displayScale": 20,
+			  "displayUnits": "Milli Seconds",
 			  "max": 127,
 			  "min": 0
 			},
 			{
 			  "type": "NodeVariableBitSingle",
 			  "nodeVariableIndex": 6,
-			  "title": "Repeat enabled",
+			  "displayTitle": "Repeat enabled",
 			  "bit": 7
 			}
 		]
     },
     {
 		"type": "group",
-		"displayName": "Output 7",
+		"displayTitle": "Output 7",
 		"groupItems": [
 			{
 			  "type": "NodeVariableSlider7Bit",
 			  "nodeVariableIndex": 7,
-			  "title": "Pulse Duration",
-			  "badge": "Delay",
-			  "badgeMulti": 20,
-			  "badgeUnit": "Milli Seconds",
+			  "displayTitle": "Pulse Duration",
+			  "displayScale": 20,
+			  "displayUnits": "Milli Seconds",
 			  "max": 127,
 			  "min": 0
 			},
 			{
 			  "type": "NodeVariableBitSingle",
 			  "nodeVariableIndex": 7,
-			  "title": "Repeat enabled",
+			  "displayTitle": "Repeat enabled",
 			  "bit": 7
 			}
 		]
     },
     {
 		"type": "group",
-		"displayName": "Output 8",
+		"displayTitle": "Output 8",
 		"groupItems": [
 			{
 			  "type": "NodeVariableSlider7Bit",
 			  "nodeVariableIndex": 8,
-			  "title": "Pulse Duration",
-			  "badge": "Delay",
-			  "badgeMulti": 20,
-			  "badgeUnit": "Milli Seconds",
+			  "displayTitle": "Pulse Duration",
+			  "displayScale": 20,
+			  "displayUnits": "Milli Seconds",
 			  "max": 127,
 			  "min": 0
 			},
 			{
 			  "type": "NodeVariableBitSingle",
 			  "nodeVariableIndex": 8,
-			  "title": "Repeat enabled",
+			  "displayTitle": "Repeat enabled",
 			  "bit": 7
 			}
 		]

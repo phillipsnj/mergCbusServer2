@@ -1,9 +1,9 @@
 {
-  "nv": [
+  "nodeVariables": [
     {
       "type": "NodeVariable",
       "nodeVariableIndex": 1,
-      "title": "Test nv1",
+      "displayTitle": "Test nv1",
       "description": "",
       "max": 255,
       "min": 0,
@@ -13,7 +13,7 @@
     {
       "type": "NodeVariableBitSingle",
       "nodeVariableIndex": 2,
-      "title": "Test nv2 Bit 0",
+      "displayTitle": "Test nv2 Bit 0",
       "description": "",
       "bit": 0,
       "hint": "",
@@ -22,7 +22,7 @@
     {
       "type": "NodeVariableBitSingle",
       "nodeVariableIndex": 2,
-      "title": "Test nv2 Bit 7",
+      "displayTitle": "Test nv2 Bit 7",
       "description": "",
       "bit": 7,
       "hint": "",
@@ -31,7 +31,7 @@
     {
       "type": "NodeVariableBitArray",
       "nodeVariableIndex": 3,
-      "title": "Test nv3 Bit Array",
+      "displayTitle": "Test nv3 Bit Array",
       "description": "",
       "hint": "",
       "learn": false
@@ -40,7 +40,7 @@
       "type": "NodeVariableDual",
       "nodeVariableIndexHigh": 4,
       "nodeVariableIndexLow": 5,
-      "title": "Test nv3 Dual Byte",
+      "displayTitle": "Test nv3 Dual Byte",
       "description": "",
       "max": 65025,
       "min": 0,
@@ -50,11 +50,11 @@
     {
       "type": "NodeVariableSlider",
       "nodeVariableIndex": 6,
-      "title": "Test nv6 Slider",
+      "displayTitle": "Test nv6 Slider",
       "description": "",
       "badge": "Delay",
-      "badgeMulti": 1,
-      "badgeUnit": "Milli Seconds",
+      "displayScale": 1,
+      "displayUnits": "Milli Seconds",
       "max": 255,
       "min": 0,
       "hint": "",
@@ -63,7 +63,7 @@
     {
       "type": "NodeVariableSelect",
       "nodeVariableIndex": 7,
-      "title": "Test nv6 Select",
+      "displayTitle": "Test nv6 Select",
       "description": "",
       "hint": "",
       "learn": false,
