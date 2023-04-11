@@ -9,9 +9,7 @@
 			  "nodeVariableIndex": 1,
 			  "displayTitle": "Pulse Duration",
 			  "displayScale": 20,
-			  "displayUnits": "Milli Seconds",
-			  "max": 127,
-			  "min": 0
+			  "displayUnits": "Milli Seconds"
 			},
 			{
 			  "type": "NodeVariableBitSingle",
@@ -30,9 +28,7 @@
 			  "nodeVariableIndex": 2,
 			  "displayTitle": "Pulse Duration",
 			  "displayScale": 20,
-			  "displayUnits": "Milli Seconds",
-			  "max": 127,
-			  "min": 0
+			  "displayUnits": "Milli Seconds"
 			},
 			{
 			  "type": "NodeVariableBitSingle",
@@ -51,9 +47,7 @@
 			  "nodeVariableIndex": 3,
 			  "displayTitle": "Pulse Duration",
 			  "displayScale": 20,
-			  "displayUnits": "Milli Seconds",
-			  "max": 127,
-			  "min": 0
+			  "displayUnits": "Milli Seconds"
 			},
 			{
 			  "type": "NodeVariableBitSingle",
@@ -72,9 +66,7 @@
 			  "nodeVariableIndex": 4,
 			  "displayTitle": "Pulse Duration",
 			  "displayScale": 20,
-			  "displayUnits": "Milli Seconds",
-			  "max": 127,
-			  "min": 0
+			  "displayUnits": "Milli Seconds"
 			},
 			{
 			  "type": "NodeVariableBitSingle",
@@ -93,9 +85,7 @@
 			  "nodeVariableIndex": 5,
 			  "displayTitle": "Pulse Duration",
 			  "displayScale": 20,
-			  "displayUnits": "Milli Seconds",
-			  "max": 127,
-			  "min": 0
+			  "displayUnits": "Milli Seconds"
 			},
 			{
 			  "type": "NodeVariableBitSingle",
@@ -114,9 +104,7 @@
 			  "nodeVariableIndex": 6,
 			  "displayTitle": "Pulse Duration",
 			  "displayScale": 20,
-			  "displayUnits": "Milli Seconds",
-			  "max": 127,
-			  "min": 0
+			  "displayUnits": "Milli Seconds"
 			},
 			{
 			  "type": "NodeVariableBitSingle",
@@ -135,9 +123,7 @@
 			  "nodeVariableIndex": 7,
 			  "displayTitle": "Pulse Duration",
 			  "displayScale": 20,
-			  "displayUnits": "Milli Seconds",
-			  "max": 127,
-			  "min": 0
+			  "displayUnits": "Milli Seconds"
 			},
 			{
 			  "type": "NodeVariableBitSingle",
@@ -156,9 +142,7 @@
 			  "nodeVariableIndex": 8,
 			  "displayTitle": "Pulse Duration",
 			  "displayScale": 20,
-			  "displayUnits": "Milli Seconds",
-			  "max": 127,
-			  "min": 0
+			  "displayUnits": "Milli Seconds"
 			},
 			{
 			  "type": "NodeVariableBitSingle",
