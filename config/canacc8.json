@@ -1,15 +1,15 @@
 {
-  "nv": [
+  "nodeVariables": [
     {
       "type": "NodeVariable",
       "nodeVariableIndex": 1,
-      "title": "CANMIO-OUT nv1",
+      "displayTitle": "CANMIO-OUT nv1",
       "description": ""
     },
     {
       "type": "NodeVariableBitArray",
       "nodeVariableIndex": 2,
-      "title": "CANMIO-OUT nv2",
+      "displayTitle": "CANMIO-OUT nv2",
       "description": ""
     }
   ],
