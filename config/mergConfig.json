@@ -49,11 +49,12 @@
     "A50B": {
       "name": "CANSERVO8",
       "component": "mergDefault2",
-      "variableConfig": "modules/SERVO-A513-0275.json"
+      "variableConfig": "modules/SERVO-A50B-0275.json"
     },
     "A513": {
       "name": "CANSERVO8C",
-      "component": "canservo8c"
+      "component": "mergDefault2",
+      "variableConfig": "modules/SERVO8C-A513-0468.json"
     },
     "A519": {
       "name": "CANETHER",
