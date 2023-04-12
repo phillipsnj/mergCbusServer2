@@ -1,0 +1,73 @@
+{
+  "NAME":"ACE3C",
+  "nodeVariables": [
+    {
+      "type": "NodeVariableBitArray",
+      "nodeVariableIndex": 1,
+      "displayTitle": "Switch Block 1"
+    },
+    {
+      "type": "NodeVariableBitArray",
+      "nodeVariableIndex": 2,
+      "displayTitle": "Switch Block 2"
+    },
+    {
+      "type": "NodeVariableBitArray",
+      "nodeVariableIndex": 3,
+      "displayTitle": "Switch Block 3"
+    },
+    {
+      "type": "NodeVariableBitArray",
+      "nodeVariableIndex": 4,
+      "displayTitle": "Switch Block 4"
+    },
+    {
+      "type": "NodeVariableBitArray",
+      "nodeVariableIndex": 5,
+      "displayTitle": "Switch Block 5"
+    },
+    {
+      "type": "NodeVariableBitArray",
+      "nodeVariableIndex": 6,
+      "displayTitle": "Switch Block 6"
+    },
+    {
+      "type": "NodeVariableBitArray",
+      "nodeVariableIndex": 7,
+      "displayTitle": "Switch Block 7"
+    },
+    {
+      "type": "NodeVariableBitArray",
+      "nodeVariableIndex": 8,
+      "displayTitle": "Switch Block 8"
+    },
+    {
+		"type": "group",
+		"displayTitle": "General Settings",
+		"groupItems": [
+			{
+			  "type": "NodeVariableSlider6Bit",
+			  "nodeVariableIndex": 9,
+			  "displayTitle": "Delay before SoD",
+			  "displayScale": 1,
+			  "displayUnits": "Seconds",
+			  "max": 63,
+			  "min": 2
+			},
+			{
+			  "type": "NodeVariableBitSingle",
+			  "nodeVariableIndex": 9,
+			  "displayTitle": "ON event enabled",
+			  "bit": 6
+			},
+			{
+			  "type": "NodeVariableBitSingle",
+			  "nodeVariableIndex": 9,
+			  "displayTitle": "OFF event enabled",
+			  "bit": 7
+			}
+		]
+    }
+
+  ]
+}
