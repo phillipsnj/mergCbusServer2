@@ -36,7 +36,8 @@
     },
     "A508": {
       "name": "CANACC4_2",
-      "component": "mergDefault"
+      "component": "mergDefault2",
+      "variableConfig": "modules/ACC4_2-A501-0271.json"
     },
     "A509": {
       "name": "CANCAB",
