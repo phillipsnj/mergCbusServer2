@@ -63,7 +63,8 @@
     },
     "A51D": {
       "name": "CANPAN",
-      "component": "canpan"
+      "component": "mergDefault2",
+      "variableConfig": "modules/PAN-A51D-0179.json"
     },
     "A51E": {
       "name": "CANACE3C",
