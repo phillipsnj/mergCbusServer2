@@ -31,7 +31,8 @@
     },
     "A507": {
       "name": "CANLED64",
-      "component": "canled64"
+      "component": "mergDefault2",
+      "variableConfig": "modules/LED64-A507-0267.json"
     },
     "A508": {
       "name": "CANACC4_2",
@@ -44,6 +45,11 @@
     "A50A": {
       "name": "CANCMD",
       "component": "cancmd"
+    },
+    "A50B": {
+      "name": "CANSERVO8",
+      "component": "mergDefault2",
+      "variableConfig": "modules/SERVO-A513-0275.json"
     },
     "A513": {
       "name": "CANSERVO8C",
