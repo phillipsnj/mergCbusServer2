@@ -2,30 +2,38 @@
   "modules": {
     "A501": {
       "name": "CANACC4",
-      "component": "mergDefault"
+      "component": "mergDefault2",
+      "variableConfig": "modules/ACC4-A501-0271.json"
     },
     "A502": {
       "name": "CANACC5",
       "component": "mergDefault2",
-      "variableConfig": "modules/ACC5-5302.json"
+      "variableConfig": "modules/ACC5-A502-0275.json"
     },
     "A503": {
       "name": "CANACC8",
-      "component": "canacc8"
+      "component": "mergDefault2",
+      "variableConfig": "modules/ACC8-A503-0276.json"
     },
     "A504": {
       "name": "CANACE3",
-      "component": "mergDefault"
+      "component": "mergDefault2",
+      "variableConfig": "modules/ACE3-A504-0267.json"
     },
     "A505": {
       "name": "CANACE8C",
-      "component": "canace8c"
+      "component": "mergDefault2",
+      "variableConfig": "modules/ACE8C-A505-0271.json"
+    },
+    "A506": {
+      "name": "CANLED",
+      "component": "mergDefault"
     },
     "A507": {
       "name": "CANLED64",
       "component": "canled64"
     },
-    "8": {
+    "A508": {
       "name": "CANACC4_2",
       "component": "mergDefault"
     },
@@ -41,13 +49,18 @@
       "name": "CANSERVO8C",
       "component": "canservo8c"
     },
+    "A519": {
+      "name": "CANETHER",
+      "component": "mergDefault"
+    },
     "A51D": {
       "name": "CANPAN",
       "component": "canpan"
     },
-    "25": {
-      "name": "CANETHER",
-      "component": "mergDefault"
+    "A51E": {
+      "name": "CANACE3C",
+      "component": "mergDefault2",
+      "variableConfig": "modules/ACE3C-A51E-0361.json"
     },
     "A520": {
       "name": "CANMIO",
@@ -62,7 +75,7 @@
       "component": "mergDefault2",
       "variableConfig": "test.json"
     },
-    "53": {
+    "A535": {
       "name": "CANMIO-BIP",
       "component": "mergDefault"
     },
@@ -75,11 +88,12 @@
       "name": "CANDISP",
       "component": "canled64"
     },
-    "62": {
+    "A53E": {
       "name": "CANINP",
-      "component": "canace8c"
+      "component": "mergDefault2",
+      "variableConfig": "modules/CANINP-A53E-0273.json"
     },
-    "63": {
+    "A53F": {
       "name": "CANOUT",
       "component": "canacc8"
     },
