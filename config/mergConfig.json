@@ -1,5 +1,9 @@
 {
   "modules": {
+    "A500": {
+      "name": "Unregistered",
+      "component": "mergDefault"
+    },
     "A501": {
       "name": "CANACC4",
       "component": "mergDefault2",
@@ -52,6 +56,11 @@
       "component": "mergDefault2",
       "variableConfig": "modules/CANSERVO-A50B-0275.json"
     },
+    "A511": {
+      "name": "CANTOTI",
+      "component": "mergDefault2",
+      "variableConfig": "modules/CANTOTI-A511-0271.json"
+    },
     "A513": {
       "name": "CANSERVO8C",
       "component": "mergDefault2",
@@ -93,9 +102,9 @@
       "component": "mergDefault"
     },
     "A53A": {
-      "name": "PYTHON",
+      "name": "CANPiNODE",
       "component": "mergDefault2",
-      "variableConfig": "test-grouping.json"
+      "variableConfig": "test.json"
     },
     "A53B": {
       "name": "CANDISP",
