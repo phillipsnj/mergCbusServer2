@@ -101,11 +101,12 @@
     "A534": {
       "name": "CANMIO-OUT",
       "component": "mergDefault2",
-      "variableConfig": "test.json"
+      "variableConfig": "modules/CANMIO-OUT-A534-0562.json"
     },
     "A535": {
       "name": "CANMIO-BIP",
-      "component": "mergDefault"
+      "component": "mergDefault2",
+      "variableConfig": "modules/CANBIP-OUT-A535-0562.json"
     },
     "A53A": {
       "name": "CANPiNODE",
