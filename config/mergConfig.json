@@ -90,7 +90,8 @@
     },
     "A532": {
       "name": "CANMIO-SVO",
-      "component": "canservo8c"
+      "component": "mergDefault2",
+      "variableConfig": "modules/CANMIO-SVO-A532-0473.json"
     },
     "A534": {
       "name": "CANMIO-OUT",
