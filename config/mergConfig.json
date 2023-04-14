@@ -84,6 +84,11 @@
       "name": "CANMIO",
       "component": "canmio"
     },
+    "A521": {
+      "name": "CANACE8MIO",
+      "component": "mergDefault2",
+      "variableConfig": "modules/CANACE8MIO-A521-0271.json"
+    },
     "A522": {
       "name": "CANSOL",
       "component": "mergDefault"
