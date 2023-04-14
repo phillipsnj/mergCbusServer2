@@ -18,7 +18,14 @@ const JSON_PORT = 5551
 const SERVER_PORT=5552
 const LAYOUT_NAME="Default"
 
-cbusServer.cbusServer(USB_PORT, NET_PORT, NET_ADDRESS)
+
+// use command line to suppress starting cbusServer, so network port can be used
+// command line arguments will be 'node' <javascript file started> '--' <arguments starting at index 3>
+if ( process.argv[3] != 'network') {
+  cbusServer.cbusServer(USB_PORT, NET_PORT, NET_ADDRESS)
+  console.log('\nStarting cbusServer...\n');
+} else { console.log('\nUsing network...\n'); }
+
 jsonServer.jsonServer(NET_PORT, JSON_PORT, NET_ADDRESS)
 socketServer.socketServer(NET_ADDRESS, LAYOUT_NAME,JSON_PORT, SERVER_PORT)
 
