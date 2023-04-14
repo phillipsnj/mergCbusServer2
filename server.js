@@ -18,7 +18,7 @@ const JSON_PORT = 5551
 const SERVER_PORT=5552
 const LAYOUT_NAME="Default"
 
-//cbusServer.cbusServer(USB_PORT, NET_PORT, NET_ADDRESS)
+cbusServer.cbusServer(USB_PORT, NET_PORT, NET_ADDRESS)
 jsonServer.jsonServer(NET_PORT, JSON_PORT, NET_ADDRESS)
 socketServer.socketServer(NET_ADDRESS, LAYOUT_NAME,JSON_PORT, SERVER_PORT)
 
