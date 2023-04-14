@@ -1,5 +1,5 @@
 {
-  "NAME":"ACE3",
+  "moduleName":"CANACE3",
   "nodeVariables": [
     {
       "type": "NodeVariableSelect",

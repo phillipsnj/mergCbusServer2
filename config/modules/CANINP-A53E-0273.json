@@ -1,5 +1,5 @@
 {
-  "NAME":"CANINP",
+  "moduleName":"CANINP",
   "nodeVariables": [
     {
 		"type": "group",

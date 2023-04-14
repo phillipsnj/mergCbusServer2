@@ -1,5 +1,5 @@
 {
-  "NAME":"PAN",
+  "moduleName":"CANPAN",
   "nodeVariables": [
       {
       "type": "NodeVariableSelect",

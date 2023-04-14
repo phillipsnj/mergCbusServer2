@@ -1,5 +1,5 @@
 {
-  "NAME":"ACE3C",
+  "moduleName":"CANACE3C",
   "nodeVariables": [
     {
       "type": "NodeVariableBitArray",
