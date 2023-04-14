@@ -48,7 +48,7 @@
       "component": "cancmd"
     },
     "A50B": {
-      "name": "CANSERVO8",
+      "name": "CANSERVO",
       "component": "mergDefault2",
       "variableConfig": "modules/CANSERVO-A50B-0275.json"
     },
