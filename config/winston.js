@@ -36,9 +36,27 @@ var messageOnly = winston.format.combine(
 
 
 var options = {
-  file: {
+  fileDebug: {
     level: 'debug',
     filename: `./logs/debug.log`,
+	options: { flags: 'w' },
+    handleExceptions: true,
+    maxsize: 5242880, // 5MB
+    maxFiles: 1,
+	format: timeStampFirst
+  },
+  fileInfo: {
+    level: 'info',
+    filename: `./logs/info.log`,
+	options: { flags: 'w' },
+    handleExceptions: true,
+    maxsize: 5242880, // 5MB
+    maxFiles: 1,
+	format: timeStampFirst
+  },
+  fileWarn: {
+    level: 'warn',
+    filename: `./logs/warn.log`,
 	options: { flags: 'w' },
     handleExceptions: true,
     maxsize: 5242880, // 5MB
@@ -60,7 +78,9 @@ var options = {
 // default_old logger is essentially a blank logger, and has no transports setup, so need to add them
 //
 
-winston.add(new winston.transports.File(options.file));
+winston.add(new winston.transports.File(options.fileDebug));
+winston.add(new winston.transports.File(options.fileInfo));
+winston.add(new winston.transports.File(options.fileWarn));
 winston.add(new winston.transports.Console(options.console));
 
 
