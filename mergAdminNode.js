@@ -357,10 +357,12 @@ class cbusAdmin extends EventEmitter {
                     if (this.merg['modules'][moduleIdentifier]) {
                         output['module'] = this.merg['modules'][moduleIdentifier]['name']
                         output['component'] = this.merg['modules'][moduleIdentifier]['component']
+                        /*
                         if (this.merg['modules'][moduleIdentifier]['component'] == 'mergDefault2') {
                             const variableConfig = jsonfile.readFileSync('./config/'+this.merg['modules'][moduleIdentifier]['variableConfig'])
                             output['variableConfig'] = variableConfig
                         }
+                        */
                     } else {
                         winston.info({message: `AdminNode Module Type ${cbusMsg.moduleId} not setup in  `})
                         output['component'] = 'mergDefault'
@@ -590,9 +592,48 @@ class cbusAdmin extends EventEmitter {
 
     saveNode(nodeId) {
         winston.info({message: 'AdminNode: Save Node : '+nodeId});
+        this.checkVariableConfig(nodeId);
         jsonfile.writeFileSync(this.configFile, this.config, {spaces: 2, EOL: '\r\n'})
         this.emit('node', this.config.nodes[nodeId]);
     }
+
+    checkVariableConfig(nodeId){
+      if (this.config.nodes[nodeId].variableConfig == undefined) {
+        // only proceed if variableConfig doesn't exist, if it does exist, then just return, nothing to see here...
+        var module = this.config.nodes[nodeId].module;                          // should be populated by PNN
+        var moduleIdentifier = this.config.nodes[nodeId].moduleIdentifier;      // should be populated by PNN
+        if (module == "Unknown") {
+          // we can't handle a module we don't know about...
+          winston.warn({message: 'AdminNode: Variable Config : module unknown'});
+        } else {
+          winston.info({message: 'AdminNode: Variable Config undefined for ' + module});
+          // only get variable config if mergDefault2
+          if (this.merg['modules'][moduleIdentifier]) {
+            if (this.merg['modules'][moduleIdentifier]['component'] == 'mergDefault2') {
+              // build filename
+              var filename = module + "-" + moduleIdentifier               
+
+              // need major & minor version numbers to complete building of filename
+              if ((this.config.nodes[nodeId].parameters[7] != undefined) && (this.config.nodes[nodeId].parameters[2] != undefined))
+              {
+                filename += "-" + decToHex(this.config.nodes[nodeId].parameters[7], 2)
+                filename += decToHex(this.config.nodes[nodeId].parameters[2], 2)
+                filename += ".json"
+
+                // ok - can get file now
+                const variableConfig = jsonfile.readFileSync('./config/modules/' + filename)
+//                  const variableConfig = jsonfile.readFileSync('./config/'+this.merg['modules'][moduleIdentifier]['variableConfig'])
+                
+                this.config.nodes[nodeId].variableConfig = variableConfig
+                winston.info({message: 'AdminNode: Variable Config: loaded file ' + filename});
+              }
+
+            }
+          }
+        }
+      }
+    }
+
 
     QNN() {//Query Node Number
         winston.info({message: 'AdminNode: QNN '})

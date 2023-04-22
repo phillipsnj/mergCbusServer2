@@ -31,18 +31,17 @@ exports.socketServer = function(NET_ADDRESS,LAYOUT_NAME,JSON_PORT,SOCKET_PORT) {
     //const programNode = require('./merg/programNode.js')(NET_ADDRESS, NET_PORT)
     let node = new admin.cbusAdmin(LAYOUT_NAME, NET_ADDRESS,JSON_PORT);
 
-
     io.on('connection', function(socket){
-		winston.info({message: 'a user connected'});
+		winston.info({message: 'SS: a user connected'});
         node.cbusSend(node.QNN())
         io.emit('layoutDetails', layoutDetails)
         //io.emit('events', events)
         socket.on('QUERY_ALL_NODES', function(){
-			winston.info({message: 'QUERY_ALL_NODES'});
-            node.cbusSend(node.QNN())
+          winston.info({message: 'SS: QUERY_ALL_NODES'});
+          node.cbusSend(node.QNN())
         })
         socket.on('REQUEST_ALL_NODE_PARAMETERS', function(data){ //Request Node Parameter
-			winston.info({message: `REQUEST_ALL_NODE_PARAMETERS ${JSON.stringify(data)}`});
+            winston.info({message: `REQUEST_ALL_NODE_PARAMETERS ${JSON.stringify(data)}`});
             if (data.delay === undefined) {
                 data.delay = 100
             }
@@ -226,20 +225,23 @@ exports.socketServer = function(NET_ADDRESS,LAYOUT_NAME,JSON_PORT,SOCKET_PORT) {
         })
 		
     });
-    server.listen(SOCKET_PORT, () => console.log(`Server running on port ${SOCKET_PORT}`))
+    server.listen(SOCKET_PORT, () => console.log(`SS: Server running on port ${SOCKET_PORT}`))
 
     node.on('events', function (events) {
-		//winston.debug({message: `Events :${JSON.stringify(events)}`});
+        winston.info({message: `SS: Events`});
+        winston.debug({message: `SS: Events :${JSON.stringify(events)}`});
         io.emit('events', events);
     })
 
     node.on('nodes', function (nodes) {
-		//winston.info({message: `Nodes Sent :${JSON.stringify(nodes)}`});
+      winston.info({message: `SS: Nodes Sent`});
+        winston.debug({message: `SS: Nodes Sent :${JSON.stringify(nodes)}`});
         io.emit('nodes', nodes);
     })
 
     node.on('node', function (node) {
-        //winston.info({message: `Node Sent :${JSON.stringify(node)}`});
+        winston.info({message: `SS: Node Sent`});
+        winston.debug({message: `SS: Node Sent :${JSON.stringify(node)}`});
         io.emit('node', node);
     })
 
