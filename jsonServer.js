@@ -14,7 +14,7 @@ exports.jsonServer = function (CBUS_SERVER_PORT, JSON_SERVER_PORT,  CBUS_SERVER_
 
     cbusClient.connect(CBUS_SERVER_PORT, CBUS_SERVER_ADDRESS, function () {
         //console.log('JSON Server Connected to ' + CBUS_SERVER_ADDRESS + ' on ' + CBUS_SERVER_PORT);
-        winston.info({message:'JSON Server Connected to ' + CBUS_SERVER_ADDRESS + ' on ' + CBUS_SERVER_PORT})
+        winston.info({message:'JSON Server: Connected to ' + CBUS_SERVER_ADDRESS + ' on ' + CBUS_SERVER_PORT})
     });
 
     cbusClient.on('data', function (data) {
@@ -41,11 +41,10 @@ exports.jsonServer = function (CBUS_SERVER_PORT, JSON_SERVER_PORT,  CBUS_SERVER_
         socket.setKeepAlive(true, 60000);
         clients.push(socket);
         //console.log('Client Connected to JSON Server');
-        winston.info({message:'' +
-                'Client Connected to JSON Server'})
+        winston.info({message:`jsonServer: Client Connected`})
 
         socket.on('data', function (data) {
-            console.log(`jsonServer : Data Received : ${data} `)
+            winston.info({message:`jsonServer: Data Received : ${data}`})
             //broadcast(data, socket)
             let indata = data.toString().replace(/}{/g, "}|{")
             //winston.info({message: `AdminNode CBUS Receive <<<  ${indata}`})
@@ -58,17 +57,17 @@ exports.jsonServer = function (CBUS_SERVER_PORT, JSON_SERVER_PORT,  CBUS_SERVER_
 
         socket.on('end', function () {
             clients.splice(clients.indexOf(socket), 1);
-            console.log('Client Disconnected from Server');
+            winston.info({message:`jsonServer: Client Disconnected`});
         });
 
         socket.on("error", function (err) {
             clients.splice(clients.indexOf(socket), 1);
-            console.log("Caught flash policy server socket error: ");
-            console.log(err.stack);
+            winston.error({message:`jsonServer: Caught flash policy server socket error: `});
+            winston.error({message:`jsonServer: ` + err.stack});
         });
 
         function broadcast(data, sender) {
-            console.log(`jsonServer : broadcast : ${data} `)
+            winston.info({message:`jsonServer: broadcast : ${data} `})
             let input = JSON.parse(data)
             let cbusMsg = cbusLib.encode(input)
             let outMsg = cbusLib.decode(cbusMsg.encoded)

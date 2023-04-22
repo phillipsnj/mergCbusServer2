@@ -23,8 +23,8 @@ class cbusAdmin extends EventEmitter {
         const merg = jsonfile.readFileSync('./config/mergConfig.json')
 //        super();
         this.merg = merg
-        winston.info({message: `AdminNode : Config = ${this.configFile}`});
-        //winston.debug({message: `merg- 32 :${JSON.stringify(this.merg['modules'][32]['name'])}`});
+        winston.info({message: `mergAdminNode: Config = ${this.configFile}`});
+        //winston.debug({message: `mergAdminNode: ${JSON.stringify(this.merg['modules'][32]['name'])}`});
 //        this.config = setup
 //        this.configFile = LAYOUT_PATH + 'nodeConfig.json'
         this.pr1 = 2
@@ -41,19 +41,19 @@ class cbusAdmin extends EventEmitter {
         this.header = ':S' + outHeader.toString(16).toUpperCase() + 'N'
         this.client = new net.Socket()
         this.client.connect(NET_PORT, NET_ADDRESS, function () {
-            winston.info({message: `AdminNode Connected - ${NET_ADDRESS} on ${NET_PORT}`});
+            winston.info({message: `mergAdminNode: Connected - ${NET_ADDRESS} on ${NET_PORT}`});
         })
         this.client.on('data', function (data) { //Receives packets from network and process individual Messages
             //const outMsg = data.toString().split(";")
             let indata = data.toString().replace(/}{/g, "}|{")
-            //winston.info({message: `AdminNode CBUS Receive <<<  ${indata}`})
+            //winston.info({message: `mergAdminNode: CBUS Receive <<<  ${indata}`})
             const outMsg = indata.toString().split("|")
             //const outMsg = JSON.parse(data)
-            //winston.info({message: `AdminNode Split <<<  ${outMsg.length}`})
+            //winston.info({message: `mergAdminNode: Split <<<  ${outMsg.length}`})
             for (let i = 0; i < outMsg.length; i++) {
 
                 //let cbusMsg = cbusLib.decode(outMsg[i].concat(";"))     // replace terminator removed by 'split' method
-                winston.info({message: `AdminNode JSON Action >>>  ${outMsg[i]}`})
+                winston.info({message: `mergAdminNode: JSON Action >>>  ${outMsg[i]}`})
                 //this.emit('cbusTraffic', {direction: 'In', raw: cbusMsg.encoded, translated: cbusMsg.text});
                 this.action_message(JSON.parse(outMsg[i]))
 
@@ -61,28 +61,28 @@ class cbusAdmin extends EventEmitter {
             //this.action_message(outMsg)
         }.bind(this))
         this.client.on('error', (err) => {
-            winston.debug({message: 'TCP ERROR ${err.code}'});
+            winston.debug({message: 'mergAdminNode: TCP ERROR ${err.code}'});
         })
         this.client.on('close', function () {
-            winston.debug({message: 'Connection Closed'});
+            winston.debug({message: 'mergAdminNode: Connection Closed'});
             setTimeout(() => {
                 this.client.connect(NET_PORT, NET_ADDRESS, function () {
-                    winston.debug({message: 'Client ReConnected'});
+                    winston.debug({message: 'mergAdminNode: Client ReConnected'});
                 })
             }, 1000)
         }.bind(this))
         this.actions = { //actions when Opcodes are received
             '00': (cbusMsg) => { // ACK
-                winston.info({message: "ACK (00) : No Action"});
+                winston.info({message: "mergAdminNode: ACK (00) : No Action"});
             },
             '21': (cbusMsg) => { // KLOC
-                winston.info({message: `Session Cleared : ${cbusMsg.session}`});
+                winston.info({message: `mergAdminNode: Session Cleared : ${cbusMsg.session}`});
                 let ref = cbusMsg.opCode
                 let session = cbusMsg.session
                 if (session in this.dccSessions) {
                     this.dccSessions[session].status = 'In Active'
                 } else {
-                    winston.debug({message: `Session ${session} does not exist - adding`});
+                    winston.debug({message: `mergAdminNode: Session ${session} does not exist - adding`});
                     this.dccSessions[session] = {}
                     this.dccSessions[session].count = 1
                     this.dccSessions[session].status = 'In Active'
@@ -91,7 +91,7 @@ class cbusAdmin extends EventEmitter {
                 this.emit('dccSessions', this.dccSessions)
             },
             '23': (cbusMsg) => { // DKEEP
-                //winston.debug({message: `Session Keep Alive : ${cbusMsg.session}`});
+                //winston.debug({message: `mergAdminNode: Session Keep Alive : ${cbusMsg.session}`});
                 let ref = cbusMsg.opCode
                 let session = cbusMsg.session
 
@@ -100,7 +100,7 @@ class cbusAdmin extends EventEmitter {
                     this.dccSessions[session].status = 'Active'
                 } else {
 
-                    winston.debug({message: `Session ${session} does not exist - adding`});
+                    winston.debug({message: `mergAdminNode: Session ${session} does not exist - adding`});
 
                     this.dccSessions[session] = {}
                     this.dccSessions[session].count = 1
@@ -114,7 +114,7 @@ class cbusAdmin extends EventEmitter {
                 let session = cbusMsg.session
                 let speed = cbusMsg.speed
                 let direction = cbusMsg.direction
-                winston.info({message: `(47) DCC Speed Change : ${session} : ${direction} : ${speed}`});
+                winston.info({message: `mergAdminNode: (47) DCC Speed Change : ${session} : ${direction} : ${speed}`});
 
                 if (!(session in this.dccSessions)) {
                     this.dccSessions[session] = {}
@@ -130,10 +130,10 @@ class cbusAdmin extends EventEmitter {
                 this.emit('requestNodeNumber')
             },
             '52': (cbusMsg) => {
-                winston.debug({message: "NNACK (59) : " + cbusMsg.text});
+                winston.debug({message: "mergAdminNode: NNACK (59) : " + cbusMsg.text});
             },
             '59': (cbusMsg) => {
-                winston.debug({message: "WRACK (59) : " + cbusMsg.text});
+                winston.debug({message: "mergAdminNode: WRACK (59) : " + cbusMsg.text});
             },
             '60': (cbusMsg) => {
                 let session = cbusMsg.session
@@ -176,12 +176,12 @@ class cbusAdmin extends EventEmitter {
                 if (this.dccSessions[session].F5 & 128) functionArray.push(28)
                 this.dccSessions[session].functions = functionArray
 
-                winston.debug({message: `DCC Set Engine Function : ${cbusMsg.session} ${functionRange} ${dccNMRA} : ${functionArray}`});
+                winston.debug({message: `mergAdminNode: DCC Set Engine Function : ${cbusMsg.session} ${functionRange} ${dccNMRA} : ${functionArray}`});
                 this.emit('dccSessions', this.dccSessions)
                 //this.cbusSend(this.QLOC(session))
             },
             '63': (cbusMsg) => {// ERR - dcc error
-                //winston.debug({message: `DCC ERROR Node ${msg.nodeId()} Error ${msg.errorId()}`});
+                //winston.debug({message: `mergAdminNode: DCC ERROR Node ${msg.nodeId()} Error ${msg.errorId()}`});
                 let output = {}
                 output['type'] = 'DCC'
                 output['Error'] = cbusMsg.errorNumber
@@ -206,39 +206,39 @@ class cbusAdmin extends EventEmitter {
                 this.emit('cbusError', this.cbusErrors)
             },
             '74': (cbusMsg) => { // NUMEV
-                //winston.info({message: 'AdminNode: 74: ' + JSON.stringify(this.config.nodes[cbusMsg.nodeNumber])})
+                //winston.info({message: 'mergAdminNode: 74: ' + JSON.stringify(this.config.nodes[cbusMsg.nodeNumber])})
                 if (this.config.nodes[cbusMsg.nodeNumber].eventCount != null) {
                     if (this.config.nodes[cbusMsg.nodeNumber].eventCount != cbusMsg.eventCount) {
                         this.config.nodes[cbusMsg.nodeNumber].eventCount = cbusMsg.eventCount
                         this.saveNode(cbusMsg.nodeNumber)
                     } else {
-                        winston.debug({message: `AdminNode: NUMEV: EvCount value has not changed`});
+                        winston.debug({message: `mergAdminNode:  NUMEV: EvCount value has not changed`});
                     }
                 } else {
                     this.config.nodes[cbusMsg.nodeNumber].eventCount = cbusMsg.eventCount
                     this.saveNode(cbusMsg.nodeNumber)
                 }
-                //winston.info({message: 'AdminNode: NUMEV: ' + JSON.stringify(this.config.nodes[cbusMsg.nodeNumber])});
+                //winston.info({message: 'mergAdminNode:  NUMEV: ' + JSON.stringify(this.config.nodes[cbusMsg.nodeNumber])});
             },
             '90': (cbusMsg) => {//Accessory On Long Event
-                //winston.info({message: `AdminNode: 90 recieved`})
+                //winston.info({message: `mergAdminNode:  90 recieved`})
                 this.eventSend(cbusMsg, 'on', 'long')
             },
             '91': (cbusMsg) => {//Accessory Off Long Event
-                //winston.info({message: `AdminNode: 91 recieved`})
+                //winston.info({message: `mergAdminNode: 91 recieved`})
                 this.eventSend(cbusMsg, 'off', 'long')
             },
             '97': (cbusMsg) => { // NVANS - Receive Node Variable Value
                 if (this.config.nodes[cbusMsg.nodeNumber].nodeVariables[cbusMsg.nodeVariableIndex] != null) {
                     if (this.config.nodes[cbusMsg.nodeNumber].nodeVariables[cbusMsg.nodeVariableIndex] != cbusMsg.nodeVariableValue) {
-                        //winston.info({message: `Variable ${cbusMsg.nodeVariableIndex} value has changed`});
+                        //winston.info({message: `mergAdminNode: Variable ${cbusMsg.nodeVariableIndex} value has changed`});
                         this.config.nodes[cbusMsg.nodeNumber].nodeVariables[cbusMsg.nodeVariableIndex] = cbusMsg.nodeVariableValue
                         this.saveNode(cbusMsg.nodeNumber)
                     } else {
-                        //winston.info({message: `Variable ${cbusMsg.nodeVariableIndex} value has not changed`});
+                        //winston.info({message: `mergAdminNode: Variable ${cbusMsg.nodeVariableIndex} value has not changed`});
                     }
                 } else {
-                    //winston.info({message: `Variable ${cbusMsg.nodeVariableIndex} value does not exist in config`});
+                    //winston.info({message: `mergAdminNode: Variable ${cbusMsg.nodeVariableIndex} value does not exist in config`});
                     this.config.nodes[cbusMsg.nodeNumber].nodeVariables[cbusMsg.nodeVariableIndex] = cbusMsg.nodeVariableValue
                     this.saveNode(cbusMsg.nodeNumber)
                 }
@@ -277,14 +277,14 @@ class cbusAdmin extends EventEmitter {
                 }
                 if (this.config.nodes[cbusMsg.nodeNumber].parameters[cbusMsg.parameterIndex] !== null) {
                     if (this.config.nodes[cbusMsg.nodeNumber].parameters[cbusMsg.parameterIndex] != cbusMsg.parameterValue) {
-                        winston.debug({message: `Parameter ${cbusMsg.parameterIndex} value has changed`});
+                        winston.debug({message: `mergAdminNode: Parameter ${cbusMsg.parameterIndex} value has changed`});
                         this.config.nodes[cbusMsg.nodeNumber].parameters[cbusMsg.parameterIndex] = cbusMsg.parameterValue
                         saveConfigNeeded = true
                     } else {
-                        winston.info({message: `Parameter ${cbusMsg.parameterIndex} value has not changed`});
+                        winston.info({message: `mergAdminNode: Parameter ${cbusMsg.parameterIndex} value has not changed`});
                     }
                 } else {
-                    winston.info({message: `Parameter ${cbusMsg.parameterIndex} value does not exist in config`});
+                    winston.info({message: `mergAdminNode: Parameter ${cbusMsg.parameterIndex} value does not exist in config`});
                     this.config.nodes[cbusMsg.nodeNumber].parameters[cbusMsg.parameterIndex] = cbusMsg.parameterValue
                     saveConfigNeeded = true
                 }
@@ -294,7 +294,7 @@ class cbusAdmin extends EventEmitter {
                 }
             },
             'AB': (cbusMsg) => {//Accessory On Long Event 1
-                console.log(`Heartbeat ${cbusMsg.nodeNumber} ${Date.now()}`)
+                winston.info({message: `Heartbeat ${cbusMsg.nodeNumber} ${Date.now()}`})
                 this.heartbeats[cbusMsg.nodeNumber] = Date.now()
                 //this.eventSend(cbusMsg, 'on', 'long')
             },
@@ -308,26 +308,26 @@ class cbusAdmin extends EventEmitter {
                 if (this.config.nodes[cbusMsg.nodeNumber].consumedEvents[cbusMsg.eventIndex] != null) {
                     if (this.config.nodes[cbusMsg.nodeNumber].consumedEvents[cbusMsg.eventIndex].variables[cbusMsg.eventVariableIndex] != null) {
                         if (this.config.nodes[cbusMsg.nodeNumber].consumedEvents[cbusMsg.eventIndex].variables[cbusMsg.eventVariableIndex] != cbusMsg.eventVariableValue) {
-                            winston.debug({message: `Event Variable ${cbusMsg.variable} Value has Changed `});
+                            winston.debug({message: `mergAdminNode: Event Variable ${cbusMsg.variable} Value has Changed `});
                             this.config.nodes[cbusMsg.nodeNumber].consumedEvents[cbusMsg.eventIndex].variables[cbusMsg.eventVariableIndex] = cbusMsg.eventVariableValue
                             this.saveNode(cbusMsg.nodeNumber)
                         } else {
-                            winston.debug({message: `NEVAL: Event Variable ${cbusMsg.eventVariableIndex} Value has not Changed `});
+                            winston.debug({message: `mergAdminNode: NEVAL: Event Variable ${cbusMsg.eventVariableIndex} Value has not Changed `});
                         }
                     } else {
-                        winston.debug({message: `NEVAL: Event Variable ${cbusMsg.variable} Does not exist on config - adding`});
+                        winston.debug({message: `mergAdminNode: NEVAL: Event Variable ${cbusMsg.variable} Does not exist on config - adding`});
                         this.config.nodes[cbusMsg.nodeNumber].consumedEvents[cbusMsg.eventIndex].variables[cbusMsg.eventVariableIndex] = cbusMsg.eventVariableValue
                         this.saveNode(cbusMsg.nodeNumber)
                     }
                 } else {
-                    winston.debug({message: `NEVAL: Event Index ${cbusMsg.eventIndex} Does not exist on config - skipping`});
+                    winston.debug({message: `mergAdminNode: NEVAL: Event Index ${cbusMsg.eventIndex} Does not exist on config - skipping`});
                 }
             },
             'B6': (cbusMsg) => { //PNN Recieved from Node
                 const ref = cbusMsg.nodeNumber
                 const moduleIdentifier = cbusMsg.encoded.toString().substr(13, 4).toUpperCase()
                 if (ref in this.config.nodes) {
-                    winston.debug({message: `PNN (B6) Node found ` + JSON.stringify(this.config.nodes[ref])})
+                    winston.debug({message: `mergAdminNode: PNN (B6) Node found ` + JSON.stringify(this.config.nodes[ref])})
                     if (this.merg['modules'][moduleIdentifier]) {
                         this.config.nodes[ref].module = this.merg['modules'][moduleIdentifier]['name']
                         this.config.nodes[ref].component = this.merg['modules'][moduleIdentifier]['component']
@@ -364,7 +364,7 @@ class cbusAdmin extends EventEmitter {
                         }
                         */
                     } else {
-                        winston.info({message: `AdminNode Module Type ${cbusMsg.moduleId} not setup in  `})
+                        winston.info({message: `mergAdminNode: Module Type ${cbusMsg.moduleId} not setup in  `})
                         output['component'] = 'mergDefault'
                         output['module'] = 'Unknown'
                     }
@@ -415,16 +415,16 @@ class cbusAdmin extends EventEmitter {
                 this.dccSessions[session].F2 = cbusMsg.Fn2
                 this.dccSessions[session].F3 = cbusMsg.Fn3
                 this.emit('dccSessions', this.dccSessions)
-                winston.debug({message: `PLOC (E1) ` + JSON.stringify(this.dccSessions[session])})
+                winston.debug({message: `mergAdminNode: PLOC (E1) ` + JSON.stringify(this.dccSessions[session])})
             },
             'E7': (cbusMsg) => {//Service Discovery
                 // mode
-                winston.debug({message: `Service Delivery ${JSON.stringify(cbusMsg)}`})
+                winston.debug({message: `mergAdminNode: Service Delivery ${JSON.stringify(cbusMsg)}`})
                 this.config.nodes[cbusMsg.nodeNumber]["services"][cbusMsg.ServiceNumber] = [cbusMsg.Data1, cbusMsg.Data2, cbusMsg.Data3, cbusMsg.Data4]
             },
             'EF': (cbusMsg) => {//Request Node Parameter in setup
                 // mode
-                //winston.debug({message: `PARAMS (EF) Received`});
+                //winston.debug({message: `mergAdminNode: PARAMS (EF) Received`});
             },
             'F0': (cbusMsg) => {//Accessory On Long Event 3
                 this.eventSend(cbusMsg, 'on', 'long')
@@ -434,7 +434,7 @@ class cbusAdmin extends EventEmitter {
             },
             'F2': (cbusMsg) => {//ENSRP Response to NERD/NENRD
                 // ENRSP Format: [<MjPri><MinPri=3><CANID>]<F2><NN hi><NN lo><EN3><EN2><EN1><EN0><EN#>
-                //winston.debug({message: `ENSRP (F2) Response to NERD : Node : ${msg.nodeId()} Action : ${msg.actionId()} Action Number : ${msg.actionEventId()}`});
+                //winston.debug({message: `mergAdminNode: ENSRP (F2) Response to NERD : Node : ${msg.nodeId()} Action : ${msg.actionId()} Action Number : ${msg.actionEventId()}`});
                 const ref = cbusMsg.eventIndex
                 if (!(ref in this.config.nodes[cbusMsg.nodeNumber].consumedEvents)) {
                     this.config.nodes[cbusMsg.nodeNumber].consumedEvents[cbusMsg.eventIndex] = {
@@ -444,7 +444,7 @@ class cbusAdmin extends EventEmitter {
                         "variables": []
                     }
                     if (this.config.nodes[cbusMsg.nodeNumber].module == "CANMIO") {
-                        //winston.info({message:`ENSRP CANMIO: ${cbusMsg.nodeNumber} :: ${cbusMsg.eventIndex}`})
+                        //winston.info({message:`mergAdminNode: ENSRP CANMIO: ${cbusMsg.nodeNumber} :: ${cbusMsg.eventIndex}`})
                         //if (["CANMIO","LIGHTS"].includes(this.config.nodes[cbusMsg.nodeNumber].module)){
                         /*setTimeout(() => {
                             this.cbusSend(this.REVAL(cbusMsg.nodeNumber, cbusMsg.eventIndex, 0))
@@ -469,7 +469,7 @@ class cbusAdmin extends EventEmitter {
                 this.eventSend(cbusMsg, 'off', 'short')
             },
             'DEFAULT': (cbusMsg) => {
-                winston.debug({message: "Opcode " + cbusMsg.opCode + ' is not supported by the Admin module'});
+                winston.debug({message: "mergAdminNode: Opcode " + cbusMsg.opCode + ' is not supported by the Admin module'});
                 let ref = cbusMsg.opCode
 
                 if (ref in this.cbusNoSupport) {
@@ -489,7 +489,7 @@ class cbusAdmin extends EventEmitter {
     }
 
     action_message(cbusMsg) {
-        winston.info({message: "AdminNode Opcode " + cbusMsg.opCode + ' processed'});
+        winston.info({message: "mergAdminNode: Opcode " + cbusMsg.opCode + ' processed'});
         if (this.actions[cbusMsg.opCode]) {
             this.actions[cbusMsg.opCode](cbusMsg);
         } else {
@@ -519,14 +519,14 @@ class cbusAdmin extends EventEmitter {
 
     cbusSend(msg) {
         if (typeof msg !== 'undefined') {
-            //winston.info({message: `AdminNode cbusSend Base : ${JSON.stringify(msg)}`});
+            //winston.info({message: `mergAdminNode: cbusSend Base : ${JSON.stringify(msg)}`});
             let output = JSON.stringify(msg)
             this.client.write(output);
 
 
             //let outMsg = cbusLib.decode(msg);
             //this.emit('cbusTraffic', {direction: 'Out', raw: outMsg.encoded, translated: outMsg.text});
-            winston.info({message: `AdminNode CBUS send >> ${output} `});
+            winston.info({message: `mergAdminNode: CBUS send >> ${output} `});
         }
 
     }
@@ -536,7 +536,7 @@ class cbusAdmin extends EventEmitter {
     }
 
     clearEvents() {
-        winston.info({message: `clearEvents() `});
+        winston.info({message: `mergAdminNode: clearEvents() `});
         this.config.events = {}
         this.saveConfig()
         this.emit('events', this.config.events)
@@ -568,19 +568,19 @@ class cbusAdmin extends EventEmitter {
             //output['data'] = cbusMsg.eventData.hex
             this.config.events[eId] = output
         }
-        winston.info({message: 'AdminNode: EventSend : ' + JSON.stringify(this.config.events[eId])});
+        winston.info({message: 'mergAdminNode: EventSend : ' + JSON.stringify(this.config.events[eId])});
         //this.saveConfig()
         this.emit('events', this.config.events);
     }
 
 
     saveConfig() {
-        //winston.debug({message: `Save Config `});
+        //winston.debug({message: `mergAdminNode: Save Config `});
         //this.config.events = this.events
         //
         //
         //
-        winston.info({message: 'AdminNode: Save Config : '});
+        winston.info({message: 'mergAdminNode: Save Config : '});
         jsonfile.writeFileSync(this.configFile, this.config, {spaces: 2, EOL: '\r\n'})
         //let nodes = []
         /*for (let node in this.config.nodes){
@@ -591,7 +591,7 @@ class cbusAdmin extends EventEmitter {
     }
 
     saveNode(nodeId) {
-        winston.info({message: 'AdminNode: Save Node : '+nodeId});
+        winston.info({message: 'mergAdminNode: Save Node : '+nodeId});
         this.checkVariableConfig(nodeId);
         jsonfile.writeFileSync(this.configFile, this.config, {spaces: 2, EOL: '\r\n'})
         this.emit('node', this.config.nodes[nodeId]);
@@ -602,41 +602,38 @@ class cbusAdmin extends EventEmitter {
         // only proceed if variableConfig doesn't exist, if it does exist, then just return, nothing to see here...
         var module = this.config.nodes[nodeId].module;                          // should be populated by PNN
         var moduleIdentifier = this.config.nodes[nodeId].moduleIdentifier;      // should be populated by PNN
-        if (module == "Unknown") {
-          // we can't handle a module we don't know about...
-          winston.warn({message: 'AdminNode: Variable Config : module unknown'});
-        } else {
-          winston.info({message: 'AdminNode: Variable Config undefined for ' + module});
-          // only get variable config if mergDefault2
-          if (this.merg['modules'][moduleIdentifier]) {
+        if (this.merg['modules'][moduleIdentifier]) {
+          // if we get here then it's a module type we know about (present in mergConfig.json)
+          if (module == "Unknown") {
+            // we can't handle a module we don't know about, so just warn & skip rest
+            winston.warn({message: 'mergAdminNode: Variable Config : module unknown'});
+          } else {
+            // ok, so we recognise the module, but only get variable config if component is mergDefault2
             if (this.merg['modules'][moduleIdentifier]['component'] == 'mergDefault2') {
               // build filename
               var filename = module + "-" + moduleIdentifier               
-
               // need major & minor version numbers to complete building of filename
               if ((this.config.nodes[nodeId].parameters[7] != undefined) && (this.config.nodes[nodeId].parameters[2] != undefined))
               {
                 filename += "-" + decToHex(this.config.nodes[nodeId].parameters[7], 2)
                 filename += decToHex(this.config.nodes[nodeId].parameters[2], 2)
                 filename += ".json"
-
                 // ok - can get file now
                 const variableConfig = jsonfile.readFileSync('./config/modules/' + filename)
-//                  const variableConfig = jsonfile.readFileSync('./config/'+this.merg['modules'][moduleIdentifier]['variableConfig'])
-                
                 this.config.nodes[nodeId].variableConfig = variableConfig
-                winston.info({message: 'AdminNode: Variable Config: loaded file ' + filename});
+                winston.info({message: 'mergAdminNode: Variable Config: loaded file ' + filename});
               }
-
             }
           }
+        } else {
+            winston.warn({message: 'mergAdminNode: module not found in mergConfig ' + moduleIdentifier});
         }
       }
     }
 
 
     QNN() {//Query Node Number
-        winston.info({message: 'AdminNode: QNN '})
+        winston.info({message: 'mergAdminNode: QNN '})
         for (let node in this.config.nodes) {
             this.config.nodes[node].status = false
         }
@@ -701,7 +698,7 @@ class cbusAdmin extends EventEmitter {
     }
 
     REVAL(nodeId, eventId, valueId) {//Read an Events EV by index
-        //winston.info({message: 'AdminNode: REVAL '})
+        //winston.info({message: 'mergAdminNode: REVAL '})
         let output = {}
         output['mnemonic'] = 'REVAL'
         output['nodeNumber'] = nodeId
@@ -745,8 +742,8 @@ class cbusAdmin extends EventEmitter {
 
     EVLRN(nodeId, event, variableId, value) {//Update Event Variable
         //let nodeNumber = parseInt(event.substr(0, 4), 16)
-        //winston.info({message: `AdminNode: EVLRN ${event} ${eventIndex} ${variableId} ${value} ` })
-        //winston.info({message: `Test ${JSON.stringify(this.config.nodes[nodeId])}` })
+        //winston.info({message: `mergAdminNode: EVLRN ${event} ${eventIndex} ${variableId} ${value} ` })
+        //winston.info({message: `mergAdminNode: Test ${JSON.stringify(this.config.nodes[nodeId])}` })
         //this.config.nodes[nodeId].consumedEvents[eventIndex].variables[variableId] = value
         //this.config.nodes[parseInt(event.substr(0, 4), 16)].consumedEvents[eventIndex].variables[variableId] = value
         this.saveNode(nodeId)
@@ -775,7 +772,7 @@ class cbusAdmin extends EventEmitter {
         output['mnemonic'] = 'NVRD'
         output['nodeNumber'] = nodeId
         output['nodeVariableIndex'] = variableId
-        winston.info({message: `AdminNode: NVRD : ${nodeId} :${JSON.stringify(output)}`})
+        winston.info({message: `mergAdminNode: NVRD : ${nodeId} :${JSON.stringify(output)}`})
         return output
         //return cbusLib.encodeNVRD(nodeId, variableId);
     }
@@ -785,7 +782,7 @@ class cbusAdmin extends EventEmitter {
         let output = {}
         output['mnemonic'] = 'RQEVN'
         output['nodeNumber'] = nodeId
-        //winston.info({message: `AdminNode: RQEVN : ${nodeId} :${JSON.stringify(output)}`})
+        //winston.info({message: `mergAdminNode: RQEVN : ${nodeId} :${JSON.stringify(output)}`})
         return output;
         //return cbusLib.encodeRQEVN(nodeId);
     }
@@ -798,7 +795,7 @@ class cbusAdmin extends EventEmitter {
         output['nodeNumber'] = nodeId
         output['nodeVariableIndex'] = variableId
         output['nodeVariableValue'] = variableVal
-        winston.info({message: `AdminNode: NVSET : ${nodeId} :${JSON.stringify(output)}`})
+        winston.info({message: `mergAdminNode: NVSET : ${nodeId} :${JSON.stringify(output)}`})
         return output
 
         //return cbusLib.encodeNVSET(nodeId, variableId, variableVal);
@@ -807,7 +804,7 @@ class cbusAdmin extends EventEmitter {
 
     ACON(nodeId, eventId) {
         const eId = decToHex(nodeId, 4) + decToHex(eventId, 4)
-        //winston.debug({message: `ACON admin ${eId}`});
+        //winston.debug({message: `mergAdminNode: ACON admin ${eId}`});
         let output = {}
         if (eId in this.config.events) {
             this.config.events[eId]['status'] = 'on'
@@ -832,7 +829,7 @@ class cbusAdmin extends EventEmitter {
 
     ACOF(nodeId, eventId) {
         const eId = decToHex(nodeId, 4) + decToHex(eventId, 4)
-        //winston.debug({message: `ACOF admin ${eId}`});
+        //winston.debug({message: `mergAdminNode: ACOF admin ${eId}`});
         let output = {}
         if (eId in this.config.events) {
             this.config.events[eId]['status'] = 'off'
@@ -859,7 +856,7 @@ class cbusAdmin extends EventEmitter {
 
     ASON(nodeId, deviceNumber) {
         const eId = decToHex(nodeId, 4) + decToHex(deviceNumber, 4)
-        //winston.debug({message: `ASON admin ${eId}`});
+        //winston.debug({message: `mergAdminNode: ASON admin ${eId}`});
         let output = {}
         if (eId in this.config.events) {
             this.config.events[eId]['status'] = 'on'
@@ -887,7 +884,7 @@ class cbusAdmin extends EventEmitter {
 
     ASOF(nodeId, deviceNumber) {
         const eId = decToHex(nodeId, 4) + decToHex(deviceNumber, 4)
-        //winston.debug({message: `ASOFadmin ${eId}`});
+        //winston.debug({message: `mergAdminNode: ASOFadmin ${eId}`});
         let output = {}
         if (eId in this.config.events) {
             this.config.events[eId]['status'] = 'off'
@@ -918,11 +915,11 @@ class cbusAdmin extends EventEmitter {
 
     /*ENRSP() {
         let output = '';
-		winston.debug({message: `ENRSP : ${Object.keys(this.events).length}`});
+		winston.debug({message: `mergAdminNode: ENRSP : ${Object.keys(this.events).length}`});
         const eventList = Object.keys(this.events)
         for (let i = 0, len = eventList.length; i < len; i++) {
             output += this.header + 'F2' + pad(this.nodeId.toString(16), 4) + eventList[i] + pad((i+1).toString(16), 2) + ';'
-			winston.debug({message: `ENSRP output : ${output}`});
+			winston.debug({message: `mergAdminNode: ENSRP output : ${output}`});
         }
         return output
     }*/
@@ -934,7 +931,7 @@ class cbusAdmin extends EventEmitter {
 
     PARAMS() {
         var par = this.params();
-		//winston.debug({message: 'RQNPN :'+par[index]});
+		//winston.debug({message: 'mergAdminNode: RQNPN :'+par[index]});
         let output = this.header + 'EF'
         for (var i = 1; i < 8; i++) {
             output += par[i]
@@ -945,7 +942,7 @@ class cbusAdmin extends EventEmitter {
     }
 
     RQNN() {
-		winston.debug({message: `RQNN TM : ${this.TEACH_MODE ? 'TRUE' : 'FALSE'}`});
+		winston.debug({message: `mergAdminNode: RQNN TM : ${this.TEACH_MODE ? 'TRUE' : 'FALSE'}`});
         return this.header + '50' + pad(this.nodeId.toString(16), 4) + ';';
     }
 
@@ -964,24 +961,24 @@ class cbusAdmin extends EventEmitter {
 
     NEVAL(eventIndex, eventNo) {
         const eventId = Object.keys(this.events)[eventIndex-1]
-		winston.debug({message: `NEVAL ${eventId} : ${eventIndex} : ${eventNo} -- ${Object.keys(this.events)}`});
+		winston.debug({message: `mergAdminNode: NEVAL ${eventId} : ${eventIndex} : ${eventNo} -- ${Object.keys(this.events)}`});
         return this.header + 'B5' + pad(this.nodeId.toString(16), 4) + pad(eventIndex.toString(16), 2) + pad(eventNo.toString(16), 2)+ pad(this.events[eventId][eventNo].toString(16), 2) + ';'
     }
 
     ENRSP() {
         let output = '';
-		winston.debug({message: `ENRSP : ${Object.keys(this.events).length}`});
+		winston.debug({message: `mergAdminNode: ENRSP : ${Object.keys(this.events).length}`});
         const eventList = Object.keys(this.events)
         for (let i = 0, len = eventList.length; i < len; i++) {
             output += this.header + 'F2' + pad(this.nodeId.toString(16), 4) + eventList[i] + pad((i+1).toString(16), 2) + ';'
-			winston.debug({message: `ENSRP output : ${output}`});
+			winston.debug({message: `mergAdminNode: ENSRP output : ${output}`});
         }
         return output
     }
 
     PARAN(index) {
         const par = this.params();
-		//winston.debug({message: 'RQNPN :'+par[index]});
+		//winston.debug({message: 'mergAdminNode: RQNPN :'+par[index]});
         return this.header + '9B' + pad(this.nodeId.toString(16), 4) + pad(index.toString(16), 2) + pad(par[index].toString(16), 2) + ';';
     }
 
