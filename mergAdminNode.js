@@ -619,9 +619,14 @@ class cbusAdmin extends EventEmitter {
                 filename += decToHex(this.config.nodes[nodeId].parameters[2], 2)
                 filename += ".json"
                 // ok - can get file now
-                const variableConfig = jsonfile.readFileSync('./config/modules/' + filename)
-                this.config.nodes[nodeId].variableConfig = variableConfig
-                winston.info({message: 'mergAdminNode: Variable Config: loaded file ' + filename});
+                try {
+                  const variableConfig = jsonfile.readFileSync('./config/modules/' + filename)
+                  this.config.nodes[nodeId].variableConfig = variableConfig
+                  winston.info({message: 'mergAdminNode: Variable Config: loaded file ' + filename});
+                }catch(err) {
+                  winston.error({message: 'mergAdminNode: Variable Config: erro loading file ' + filename + ' ' + err});
+                  this.config.nodes[nodeId]['component'] = 'mergDefault'
+                }
               }
             }
           }
