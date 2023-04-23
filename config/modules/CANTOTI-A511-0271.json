@@ -357,5 +357,17 @@
 						}
 					]
 	}
+  ],
+  "eventVariables":[
+    {
+      "type": "EventVariableSelect",
+      "eventVariableIndex": 1,
+      "displayTitle": "Options",
+      "bitMask": 1,
+      "options": [
+        {"label": "Start of Day event", "value": 0},
+        {"label": "Route event", "value": 1}
+      ]
+    }
   ]
 }
