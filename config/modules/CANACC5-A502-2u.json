@@ -261,7 +261,7 @@
     {
       "type": "EventVariableBitArray",
       "eventVariableIndex": 1,
-      "displayTitle": "Output pairs active",
+      "displayTitle": "Output enable",
       "bitCollection":[
         {"bitPosition": 0, "label": "output 1"},
         {"bitPosition": 1, "label": "output 2"},

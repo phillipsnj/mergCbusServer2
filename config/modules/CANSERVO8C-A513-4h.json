@@ -450,5 +450,67 @@
       ]
     }
   
+  ],
+  "eventVariables":[
+    {
+      "type": "EventVariableBitArray",
+      "eventVariableIndex": 1,
+      "displayTitle": "Servo event enable",
+      "bitCollection":[
+        {"bitPosition": 0, "label": "Servo 1"},
+        {"bitPosition": 1, "label": "Servo 2"},
+        {"bitPosition": 2, "label": "Servo 3"},
+        {"bitPosition": 3, "label": "Servo 4"},
+        {"bitPosition": 4, "label": "Servo 5"},
+        {"bitPosition": 5, "label": "Servo 6"},
+        {"bitPosition": 6, "label": "Servo 7"},
+        {"bitPosition": 7, "label": "Servo 8"}
+      ]
+    },
+    {
+      "type": "EventVariableBitArray",
+      "eventVariableIndex": 2,
+      "displayTitle": "Enable reverse polarity for event",
+      "bitCollection":[
+        {"bitPosition": 0, "label": "Servo 1"},
+        {"bitPosition": 1, "label": "Servo 2"},
+        {"bitPosition": 2, "label": "Servo 3"},
+        {"bitPosition": 3, "label": "Servo 4"},
+        {"bitPosition": 4, "label": "Servo 5"},
+        {"bitPosition": 5, "label": "Servo 6"},
+        {"bitPosition": 6, "label": "Servo 7"},
+        {"bitPosition": 7, "label": "Servo 8"}
+      ]
+    },
+    {
+      "type": "EventVariableBitArray",
+      "eventVariableIndex": 3,
+      "displayTitle": "Event actions",
+      "bitCollection":[
+        {"bitPosition": 7, "label": "enable event"},
+        {"bitPosition": 6, "label": "reverse polarity of end point events"},
+        {"bitPosition": 5, "label": "reverse polarity of mid point event"}
+      ]
+    },
+    {
+      "type": "EventVariableNumber",
+      "eventVariableIndex": 3,
+      "displayTitle": "Servo Number",
+      "startBit": 2,
+      "endBit": 4,
+      "displayOffset":1
+    },
+    {
+      "type": "EventVariableSelect",
+      "eventVariableIndex": 3,
+      "displayTitle": "Event position",
+      "bitMask": 3,
+      "options": [
+        {"label": "event sent at ON end", "value": 0},
+        {"label": "event sent when at OFF end", "value": 1},
+        {"label": "event sent at mid travel", "value": 2},
+        {"label": "Start of Day (SoD) event", "value": 3}
+      ]
+    }
   ]
 }

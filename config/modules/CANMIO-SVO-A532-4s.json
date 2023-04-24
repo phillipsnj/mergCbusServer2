@@ -1,6 +1,7 @@
 {
   "moduleName":"CANMIO-SVO",
   "nodeVariables": [
+    { "learn": true },
     {
       "type": "group",
       "displayTitle": "Servo 1",
