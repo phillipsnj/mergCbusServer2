@@ -615,8 +615,8 @@ class cbusAdmin extends EventEmitter {
               // need major & minor version numbers to complete building of filename
               if ((this.config.nodes[nodeId].parameters[7] != undefined) && (this.config.nodes[nodeId].parameters[2] != undefined))
               {
-                filename += "-" + decToHex(this.config.nodes[nodeId].parameters[7], 2)
-                filename += decToHex(this.config.nodes[nodeId].parameters[2], 2)
+                filename += "-" + this.config.nodes[nodeId].parameters[7]
+                filename += String.fromCharCode(this.config.nodes[nodeId].parameters[2])
                 filename += ".json"
                 this.config.nodes[nodeId]['moduleDescriptorFilename'] = filename
                 // ok - can get file now
