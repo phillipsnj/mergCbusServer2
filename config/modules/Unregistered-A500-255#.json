@@ -186,7 +186,7 @@
     {
       "type": "EventVariableTabs",
       "tabPanels": [
-        { "name": "One",
+        { "displayTitle": "One",
           "items": [
             {
               "type": "EventVariableNumber",
@@ -195,7 +195,7 @@
             }
           ]
         },
-        { "name": "Two",
+        { "displayTitle": "Two",
           "items": [
             {
               "type": "EventVariableNumber",
@@ -209,7 +209,7 @@
             }
           ]
         },
-        { "name": "Three",
+        { "displayTitle": "Three",
           "items": [
             {
               "type": "EventVariableNumber",
@@ -232,8 +232,14 @@
     },
     {
       "type": "EventVariableGroup",
-      "displayTitle": "Event Groupt Test",
-      "groupItems": []
+      "displayTitle": "Event Group Test",
+      "groupItems": [
+        {
+          "type": "EventVariableNumber",
+          "eventVariableIndex": 1,
+          "displayTitle": "Output 1"
+        }
+      ]
     }
 
   ]
