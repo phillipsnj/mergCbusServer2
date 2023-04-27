@@ -5,7 +5,7 @@
 		"displayTitle": "channel 1 test",
 		"groupItems": [
 			{
-			  "type": "NodeVariable",
+			  "type": "NodeVariableNumber",
 			  "nodeVariableIndex": 10,
 			  "displayTitle": "Test nv10",
 			  "description": "",
@@ -43,7 +43,7 @@
 		"displayTitle": "channel 2 test",
 		"groupItems": [
 			{
-			  "type": "NodeVariable",
+			  "type": "NodeVariableNumber",
 			  "nodeVariableIndex": 13,
 			  "displayTitle": "Test nv13",
 			  "description": "",
@@ -81,7 +81,7 @@
 		"displayTitle": "channel 3 test",
 		"groupItems": [
 			{
-			  "type": "NodeVariable",
+			  "type": "NodeVariableNumber",
 			  "nodeVariableIndex": 16,
 			  "displayTitle": "Test nv16",
 			  "description": "",
@@ -148,7 +148,7 @@
 		]
     },
 	{
-	  "type": "NodeVariable",
+	  "type": "NodeVariableNumber",
 	  "nodeVariableIndex": 1,
 	  "displayTitle": "Test nv1",
 	  "description": "",

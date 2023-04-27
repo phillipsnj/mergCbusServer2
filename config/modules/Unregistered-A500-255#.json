@@ -5,7 +5,7 @@
 		"displayTitle": "channel 1 test",
 		"groupItems": [
 			{
-			  "type": "NodeVariable",
+			  "type": "NodeVariableNumber",
 			  "nodeVariableIndex": 10,
 			  "displayTitle": "Test nv10",
 			  "description": "",
@@ -37,7 +37,7 @@
 		"displayTitle": "channel 2 test",
 		"groupItems": [
 			{
-			  "type": "NodeVariable",
+			  "type": "NodeVariableNumber",
 			  "nodeVariableIndex": 13,
 			  "displayTitle": "Test nv13",
 			  "description": "",
@@ -69,7 +69,7 @@
 		"displayTitle": "channel 3 test",
 		"groupItems": [
 			{
-			  "type": "NodeVariable",
+			  "type": "NodeVariableNumber",
 			  "nodeVariableIndex": 16,
 			  "displayTitle": "Test nv16",
 			  "description": "",
@@ -87,7 +87,16 @@
 			  "type": "NodeVariableBitArray",
 			  "nodeVariableIndex": 18,
 			  "displayTitle": "Test nv18 Bit Array",
-			  "description": ""
+        "bitCollection":[
+          {"bitPosition": 0, "label": "output 1"},
+          {"bitPosition": 1, "label": "output 2"},
+          {"bitPosition": 2, "label": "output 3"},
+          {"bitPosition": 3, "label": "output 4"},
+          {"bitPosition": 4, "label": "output 5"},
+          {"bitPosition": 5, "label": "output 6"},
+          {"bitPosition": 6, "label": "output 7"},
+          {"bitPosition": 7, "label": "output 8"}
+        ]
 			},
 			{
 			  "type": "NodeVariableDual",
@@ -124,7 +133,7 @@
 		]
     },
 	{
-	  "type": "NodeVariable",
+	  "type": "NodeVariableNumber",
 	  "nodeVariableIndex": 1,
 	  "displayTitle": "Test nv1",
 	  "description": "",
@@ -142,7 +151,16 @@
       "type": "NodeVariableBitArray",
       "nodeVariableIndex": 3,
       "displayTitle": "Test nv3 Bit Array",
-      "description": ""
+      "bitCollection":[
+        {"bitPosition": 0, "label": "output 1"},
+        {"bitPosition": 1, "label": "output 2"},
+        {"bitPosition": 2, "label": "output 3"},
+        {"bitPosition": 3, "label": "output 4"},
+        {"bitPosition": 4, "label": "output 5"},
+        {"bitPosition": 5, "label": "output 6"},
+        {"bitPosition": 6, "label": "output 7"},
+        {"bitPosition": 7, "label": "output 8"}
+      ]
     },
     {
       "type": "NodeVariableDual",
@@ -175,6 +193,34 @@
         {"label": "Options 3", "value": 2},
         {"label": "Options 4", "value": 8}
       ]
+    },
+    {
+      "type": "NodeVariableTabs",
+      "tabPanels": [
+        { "displayTitle": "One",
+          "items": [
+            {
+              "type": "NodeVariableNumber",
+              "nodeVariableIndex": 1,
+              "displayTitle": "Output 1-1"
+            }
+          ]
+        },
+        { "displayTitle": "Two",
+          "items": [
+            {
+              "type": "NodeVariableNumber",
+              "nodeVariableIndex": 1,
+              "displayTitle": "Output 2-1"
+            },
+            {
+              "type": "NodeVariableNumber",
+              "nodeVariableIndex": 2,
+              "displayTitle": "Output 2-2"
+            }
+          ]
+        }
+      ]        
     }
   ],
   "eventVariables": [
