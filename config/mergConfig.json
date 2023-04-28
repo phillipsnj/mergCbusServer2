@@ -98,6 +98,10 @@
       "component": "mergDefault2",
       "variableConfig": "modules/CANMIO-SVO-A532-0473.json"
     },
+    "A533": {
+      "name": "CANMIO-INP",
+      "component": "mergDefault2"
+    },
     "A534": {
       "name": "CANMIO-OUT",
       "component": "mergDefault2",
