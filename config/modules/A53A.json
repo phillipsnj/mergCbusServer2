@@ -3,7 +3,7 @@
   "name": "Test Module",
   "nodeVariables": [
     {
-      "type": "NodeVariable",
+      "type": "NodeVariableNumber",
       "nodeVariableIndex": 1,
       "displayTitle": "Test nv1",
       "description": "",

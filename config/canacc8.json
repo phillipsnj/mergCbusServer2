@@ -1,7 +1,7 @@
 {
   "nodeVariables": [
     {
-      "type": "NodeVariable",
+      "type": "NodeVariableNumber",
       "nodeVariableIndex": 1,
       "displayTitle": "CANMIO-OUT nv1",
       "description": ""

@@ -2,7 +2,7 @@
   "modules": {
     "A500": {
       "name": "Unregistered",
-      "component": "mergDefault"
+      "component": "mergDefault2"
     },
     "A501": {
       "name": "CANACC4",
