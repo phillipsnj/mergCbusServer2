@@ -151,6 +151,30 @@
               ]
             }
           ]
+        }
+      ]        
+    },
+    {
+      "type": "NodeVariableTabs",
+      "tabPanels": [
+        { "displayTitle": "Bit Array",
+          "items": [
+            {
+              "type": "NodeVariableBitArray",
+              "nodeVariableIndex": 1,
+              "displayTitle": "Bit Array",
+              "bitCollection":[
+                {"bitPosition": 0, "label": "output 1"},
+                {"bitPosition": 1, "label": "output 2"},
+                {"bitPosition": 2, "label": "output 3"},
+                {"bitPosition": 3, "label": "output 4"},
+                {"bitPosition": 4, "label": "output 5"},
+                {"bitPosition": 5, "label": "output 6"},
+                {"bitPosition": 6, "label": "output 7"},
+                {"bitPosition": 7, "label": "output 8"}
+              ]
+            }
+          ]
         },
         { "displayTitle": "Single Bit",
           "items": [
@@ -244,7 +268,7 @@
     {
       "type": "EventVariableBitArray",
       "eventVariableIndex": 1,
-      "displayTitle": "Event Bit Array (EV1)",
+      "displayTitle": "Event Bit Array",
       "bitCollection":[
         {"bitPosition": 0, "label": "output 1"},
         {"bitPosition": 1, "label": "output 2"},
@@ -259,7 +283,7 @@
     {
       "type": "EventVariableBitSingle",
       "eventVariableIndex": 2,
-      "displayTitle": "Event Bit Single (EV2-0)",
+      "displayTitle": "Event Bit Single",
       "bit": 0
     },
     {
@@ -270,7 +294,7 @@
     {
       "type": "EventVariableSelect",
       "eventVariableIndex": 6,
-      "displayTitle": "EventVariable Select (EV4)",
+      "displayTitle": "EventVariable Select",
       "options": [
         {"label": "select 0", "value": 0},
         {"label": "select 1", "value": 1},
@@ -294,7 +318,7 @@
         {
           "type": "EventVariableBitArray",
           "eventVariableIndex": 1,
-          "displayTitle": "Event Bit Array (EV1)",
+          "displayTitle": "Event Bit Array",
           "bitCollection":[
             {"bitPosition": 0, "label": "output 1"},
             {"bitPosition": 1, "label": "output 2"},
@@ -309,7 +333,7 @@
         {
           "type": "EventVariableBitSingle",
           "eventVariableIndex": 2,
-          "displayTitle": "Event Bit Single (EV2-0)",
+          "displayTitle": "Event Bit Single",
           "bit": 0
         },
         {
@@ -320,7 +344,7 @@
         {
           "type": "EventVariableSelect",
           "eventVariableIndex": 6,
-          "displayTitle": "EventVariable Select (EV4)",
+          "displayTitle": "EventVariable Select",
           "options": [
             {"label": "select 0", "value": 0},
             {"label": "select 1", "value": 1},
@@ -347,7 +371,7 @@
             {
               "type": "EventVariableBitArray",
               "eventVariableIndex": 1,
-              "displayTitle": "Event Bit Array (EV1)",
+              "displayTitle": "Event Bit Array",
               "bitCollection":[
                 {"bitPosition": 0, "label": "output 1"},
                 {"bitPosition": 1, "label": "output 2"},
@@ -366,7 +390,7 @@
             {
               "type": "EventVariableBitSingle",
               "eventVariableIndex": 2,
-              "displayTitle": "Event Bit Single (EV2-0)",
+              "displayTitle": "Event Bit Single",
               "bit": 0
             }
           ]
@@ -400,7 +424,7 @@
             {
               "type": "EventVariableSelect",
               "eventVariableIndex": 6,
-              "displayTitle": "EventVariable Select (EV4)",
+              "displayTitle": "EventVariable Select",
               "options": [
                 {"label": "select 0", "value": 0},
                 {"label": "select 1", "value": 1},
@@ -424,6 +448,30 @@
           ]
         }
       ]        
+    },
+    {
+      "type": "EventVariableTabs",
+      "tabPanels": [
+        { "displayTitle": "Bit",
+          "items": [
+            {
+              "type": "EventVariableBitSingle",
+              "eventVariableIndex": 2,
+              "displayTitle": "Event Bit Single",
+              "bit": 0
+            }
+          ]
+        },
+        { "displayTitle": "Number",
+          "items": [
+            {
+              "type": "EventVariableNumber",
+              "eventVariableIndex": 5,
+              "displayTitle": "Output 1"
+            }
+          ]
+        }
+      ]
     }
 
   ]
