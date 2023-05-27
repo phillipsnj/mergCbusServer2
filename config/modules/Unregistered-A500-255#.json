@@ -127,32 +127,36 @@
           "displayUnits": "Milli Seconds",
           "max": 255,
           "min": 0
-        }
-      ]
-    },
-    {
-      "type": "NodeVariableTabs",
-      "tabPanels": [
-        { "displayTitle": "Bit Array",
-          "items": [
-            {
-              "type": "NodeVariableBitArray",
-              "nodeVariableIndex": 1,
-              "displayTitle": "Bit Array",
-              "bitCollection":[
-                {"bitPosition": 0, "label": "output 1"},
-                {"bitPosition": 1, "label": "output 2"},
-                {"bitPosition": 2, "label": "output 3"},
-                {"bitPosition": 3, "label": "output 4"},
-                {"bitPosition": 4, "label": "output 5"},
-                {"bitPosition": 5, "label": "output 6"},
-                {"bitPosition": 6, "label": "output 7"},
-                {"bitPosition": 7, "label": "output 8"}
+        },
+        {
+          "type": "NodeVariableTabs",
+          "tabPanels": [
+            { "displayTitle": "Single Bit",
+              "items": [
+                {
+                  "type": "NodeVariableBitSingle",
+                  "nodeVariableIndex": 2,
+                  "displayTitle": "Bit 0",
+                  "description": "",
+                  "bit": 0
+                }
+              ]
+            },
+            { "displayTitle": "Number",
+              "items": [
+                {
+                  "type": "NodeVariableNumber",
+                  "nodeVariableIndex": 5,
+                  "displayTitle": "Number",
+                  "description": "",
+                  "max": 255,
+                  "min": 0
+                }
               ]
             }
-          ]
+          ]        
         }
-      ]        
+      ]
     },
     {
       "type": "NodeVariableTabs",
@@ -360,6 +364,30 @@
           "displayUnits": "Milli Seconds",
           "max": 255,
           "min": 0
+        },
+        {
+          "type": "EventVariableTabs",
+          "tabPanels": [
+            { "displayTitle": "Bit",
+              "items": [
+                {
+                  "type": "EventVariableBitSingle",
+                  "eventVariableIndex": 2,
+                  "displayTitle": "Event Bit Single",
+                  "bit": 0
+                }
+              ]
+            },
+            { "displayTitle": "Number",
+              "items": [
+                {
+                  "type": "EventVariableNumber",
+                  "eventVariableIndex": 5,
+                  "displayTitle": "Output 1"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -448,30 +476,6 @@
           ]
         }
       ]        
-    },
-    {
-      "type": "EventVariableTabs",
-      "tabPanels": [
-        { "displayTitle": "Bit",
-          "items": [
-            {
-              "type": "EventVariableBitSingle",
-              "eventVariableIndex": 2,
-              "displayTitle": "Event Bit Single",
-              "bit": 0
-            }
-          ]
-        },
-        { "displayTitle": "Number",
-          "items": [
-            {
-              "type": "EventVariableNumber",
-              "eventVariableIndex": 5,
-              "displayTitle": "Output 1"
-            }
-          ]
-        }
-      ]
     }
 
   ]
