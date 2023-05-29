@@ -118,11 +118,14 @@
 		"displayTitle": "General Settings",
 		"groupItems": [
 			{
-			  "type": "NodeVariableSlider6Bit",
+			  "type": "NodeVariableSlider",
 			  "nodeVariableIndex": 9,
 			  "displayTitle": "Delay before SoD",
+        "description": "Range 2 to 63 seconds",
 			  "displayScale": 1,
 			  "displayUnits": "Seconds",
+        "startBit": 0,
+        "endBit": 5,
 			  "max": 63,
 			  "min": 2
 			},
@@ -143,3 +146,4 @@
 
   ]
 }
+

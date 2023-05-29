@@ -13,11 +13,16 @@
       "displayTitle": "Output 1",
       "groupItems": [
         {
-          "type": "NodeVariableSlider7Bit",
+          "type": "NodeVariableSlider",
           "nodeVariableIndex": 1,
           "displayTitle": "Pulse Duration",
+          "description": "Range 0 to 2,540 milliSeconds",
           "displayScale": 20,
-          "displayUnits": "mS"
+          "displayUnits": "mS",
+          "dtartBit": 0,
+          "endBit": 6,
+          "max": 127,
+          "min": 0
         },
         {
           "type": "NodeVariableBitSingle",
@@ -44,11 +49,16 @@
       "displayTitle": "Output 2",
       "groupItems": [
         {
-          "type": "NodeVariableSlider7Bit",
+          "type": "NodeVariableSlider",
           "nodeVariableIndex": 2,
           "displayTitle": "Pulse Duration",
+          "description": "Range 0 to 2,540 milliSeconds",
           "displayScale": 20,
-          "displayUnits": "mS"
+          "displayUnits": "mS",
+          "dtartBit": 0,
+          "endBit": 6,
+          "max": 127,
+          "min": 0
         },
         {
           "type": "NodeVariableBitSingle",
@@ -75,11 +85,16 @@
       "displayTitle": "Output 3",
       "groupItems": [
         {
-          "type": "NodeVariableSlider7Bit",
+          "type": "NodeVariableSlider",
           "nodeVariableIndex": 3,
           "displayTitle": "Pulse Duration",
+          "description": "Range 0 to 2,540 milliSeconds",
           "displayScale": 20,
-          "displayUnits": "mS"
+          "displayUnits": "mS",
+          "dtartBit": 0,
+          "endBit": 6,
+          "max": 127,
+          "min": 0
         },
         {
           "type": "NodeVariableBitSingle",
@@ -106,11 +121,16 @@
       "displayTitle": "Output 4",
       "groupItems": [
         {
-          "type": "NodeVariableSlider7Bit",
+          "type": "NodeVariableSlider",
           "nodeVariableIndex": 4,
           "displayTitle": "Pulse Duration",
+          "description": "Range 0 to 2,540 milliSeconds",
           "displayScale": 20,
-          "displayUnits": "mS"
+          "displayUnits": "mS",
+          "dtartBit": 0,
+          "endBit": 6,
+          "max": 127,
+          "min": 0
         },
         {
           "type": "NodeVariableBitSingle",
@@ -137,11 +157,16 @@
       "displayTitle": "Output 5",
       "groupItems": [
         {
-          "type": "NodeVariableSlider7Bit",
+          "type": "NodeVariableSlider",
           "nodeVariableIndex": 5,
           "displayTitle": "Pulse Duration",
+          "description": "Range 0 to 2,540 milliSeconds",
           "displayScale": 20,
-          "displayUnits": "mS"
+          "displayUnits": "mS",
+          "dtartBit": 0,
+          "endBit": 6,
+          "max": 127,
+          "min": 0
         },
         {
           "type": "NodeVariableBitSingle",
@@ -168,11 +193,16 @@
       "displayTitle": "Output 6",
       "groupItems": [
         {
-          "type": "NodeVariableSlider7Bit",
+          "type": "NodeVariableSlider",
           "nodeVariableIndex": 6,
           "displayTitle": "Pulse Duration",
+          "description": "Range 0 to 2,540 milliSeconds",
           "displayScale": 20,
-          "displayUnits": "mS"
+          "displayUnits": "mS",
+          "dtartBit": 0,
+          "endBit": 6,
+          "max": 127,
+          "min": 0
         },
         {
           "type": "NodeVariableBitSingle",
@@ -199,11 +229,16 @@
       "displayTitle": "Output 7",
       "groupItems": [
         {
-          "type": "NodeVariableSlider7Bit",
+          "type": "NodeVariableSlider",
           "nodeVariableIndex": 7,
           "displayTitle": "Pulse Duration",
+          "description": "Range 0 to 2,540 milliSeconds",
           "displayScale": 20,
-          "displayUnits": "mS"
+          "displayUnits": "mS",
+          "dtartBit": 0,
+          "endBit": 6,
+          "max": 127,
+          "min": 0
         },
         {
           "type": "NodeVariableBitSingle",
@@ -230,11 +265,16 @@
       "displayTitle": "Output 8",
       "groupItems": [
         {
-          "type": "NodeVariableSlider7Bit",
+          "type": "NodeVariableSlider",
           "nodeVariableIndex": 8,
           "displayTitle": "Pulse Duration",
+          "description": "Range 0 to 2,540 milliSeconds",
           "displayScale": 20,
-          "displayUnits": "mS"
+          "displayUnits": "mS",
+          "dtartBit": 0,
+          "endBit": 6,
+          "max": 127,
+          "min": 0
         },
         {
           "type": "NodeVariableBitSingle",
