@@ -121,7 +121,7 @@
 			  "type": "NodeVariableSlider",
 			  "nodeVariableIndex": 9,
 			  "displayTitle": "Delay before SoD",
-        "description": "Description",
+        "description": "Range 2 to 63 seconds",
 			  "displayScale": 1,
 			  "displayUnits": "Seconds",
         "startBit": 0,
