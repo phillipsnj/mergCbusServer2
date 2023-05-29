@@ -62,11 +62,23 @@
       "type": "NodeVariableSlider",
       "nodeVariableIndex": 7,
       "displayTitle": "Slider",
-      "description": "",
-      "badge": "Delay",
+      "description": "blank",
       "displayScale": 1,
       "displayUnits": "Milli Seconds",
       "max": 255,
+      "min": 0
+    },
+    {
+      "type": "NodeVariableSlider",
+      "nodeVariableIndex": 17,
+      "displayTitle": "Slider - hiNibble",
+      "description": "range 10 to 120 milli seconds",
+      "displayScale": 10,
+      "displayUnits": "Milli Seconds",
+      "startBit": 4,
+      "endBit": 7,
+      "displayOffset":10,
+      "max": 11,
       "min": 0
     },
     {
@@ -128,7 +140,7 @@
           "type": "NodeVariableSlider",
           "nodeVariableIndex": 7,
           "displayTitle": "Slider",
-          "description": "",
+          "description": "group slider",
           "badge": "Delay",
           "displayScale": 1,
           "displayUnits": "Milli Seconds",
@@ -199,7 +211,7 @@
                       "type": "NodeVariableSlider",
                       "nodeVariableIndex": 7,
                       "displayTitle": "Slider",
-                      "description": "",
+                      "description": "tab group slider",
                       "badge": "Delay",
                       "displayScale": 1,
                       "displayUnits": "Milli Seconds",
@@ -313,7 +325,7 @@
               "type": "NodeVariableSlider",
               "nodeVariableIndex": 7,
               "displayTitle": "Slider",
-              "description": "",
+              "description": "tab slider",
               "badge": "Delay",
               "displayScale": 1,
               "displayUnits": "Milli Seconds",
@@ -377,9 +389,23 @@
       "type": "EventVariableSlider",
       "eventVariableIndex": 7,
       "displayTitle": "Event Slider",
+      "description": "NV7",
       "displayScale": 10,
       "displayUnits": "Milli Seconds",
       "max": 255,
+      "min": 0
+    },
+    {
+      "type": "EventVariableSlider",
+      "eventVariableIndex": 17,
+      "displayTitle": "Event Slider - hiNibble",
+      "description": "range 10 to 120 milli seconds - NV17",
+      "displayScale": 10,
+      "displayUnits": "Milli Seconds",
+      "startBit": 4,
+      "endBit": 7,
+      "displayOffset":10,
+      "max": 11,
       "min": 0
     },
     {
@@ -407,21 +433,6 @@
           "displayTitle": "Event Bit Single",
           "bit": 0
         },
-        { "displayTitle": "Group",
-          "items": [
-            {
-              "type": "EventVariableGroup",
-              "displayTitle": "Event Group Test",
-              "groupItems": [
-                {
-                  "type": "EventVariableNumber",
-                  "eventVariableIndex": 5,
-                  "displayTitle": "Output 1"
-                }
-              ]
-            }
-          ]
-        },
         {
           "type": "EventVariableNumber",
           "eventVariableIndex": 5,
@@ -445,6 +456,7 @@
           "type": "EventVariableSlider",
           "eventVariableIndex": 7,
           "displayTitle": "Event Slider",
+          "description": "Group slider - NV7",
           "displayScale": 10,
           "displayUnits": "Milli Seconds",
           "max": 255,
@@ -463,47 +475,17 @@
                 }
               ]
             },
-            { "displayTitle": "Group",
+            { "displayTitle": "Slider",
               "items": [
                 {
-                  "type": "EventVariableGroup",
-                  "displayTitle": "Event Group Test 1",
-                  "groupItems": [
-                    {
-                      "type": "EventVariableNumber",
-                      "eventVariableIndex": 5,
-                      "displayTitle": "Output 1"
-                    },
-                    {
-                      "type": "EventVariableSlider",
-                      "eventVariableIndex": 7,
-                      "displayTitle": "Event Slider",
-                      "displayScale": 10,
-                      "displayUnits": "Milli Seconds",
-                      "max": 255,
-                      "min": 0
-                    }
-                  ]
-                },
-                {
-                  "type": "EventVariableGroup",
-                  "displayTitle": "Event Group Test 2",
-                  "groupItems": [
-                    {
-                      "type": "EventVariableNumber",
-                      "eventVariableIndex": 6,
-                      "displayTitle": "Output 1"
-                    },
-                    {
-                      "type": "EventVariableSlider",
-                      "eventVariableIndex": 7,
-                      "displayTitle": "Event Slider",
-                      "displayScale": 10,
-                      "displayUnits": "Milli Seconds",
-                      "max": 255,
-                      "min": 0
-                    }
-                  ]
+                  "type": "EventVariableSlider",
+                  "eventVariableIndex": 7,
+                  "displayTitle": "Event Slider",
+                  "description": "Group Tab slider - NV7",
+                  "displayScale": 10,
+                  "displayUnits": "Milli Seconds",
+                  "max": 255,
+                  "min": 0
                 }
               ]
             }
@@ -553,30 +535,6 @@
                   "type": "EventVariableNumber",
                   "eventVariableIndex": 5,
                   "displayTitle": "Output 1"
-                },
-                {
-                  "type": "EventVariableTabs",
-                  "tabPanels": [
-                    { "displayTitle": "Bit",
-                      "items": [
-                        {
-                          "type": "EventVariableBitSingle",
-                          "eventVariableIndex": 2,
-                          "displayTitle": "Event Bit Single",
-                          "bit": 0
-                        }
-                      ]
-                    },
-                    { "displayTitle": "Number",
-                      "items": [
-                        {
-                          "type": "EventVariableNumber",
-                          "eventVariableIndex": 5,
-                          "displayTitle": "Output 1"
-                        }
-                      ]
-                    }
-                  ]
                 }
               ]
             }
@@ -615,6 +573,7 @@
               "type": "EventVariableSlider",
               "eventVariableIndex": 7,
               "displayTitle": "Event Slider",
+              "description": "Tab slider - NV7",
               "displayScale": 10,
               "displayUnits": "Milli Seconds",
               "max": 255,
