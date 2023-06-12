@@ -5,6 +5,7 @@
       "type": "NodeVariableSlider",
       "nodeVariableIndex": 9,
       "displayTitle": "Feedback Delay",
+      "displaySubTitle": "Range 0.5 to 127.5 mS",
       "displayScale": 0.5,
       "displayUnits": "mS"
     },
@@ -16,7 +17,7 @@
           "type": "NodeVariableSlider",
           "nodeVariableIndex": 1,
           "displayTitle": "Pulse Duration",
-          "description": "Range 0 to 2,540 milliSeconds",
+          "displaySubTitle": "Range 20 to 2,540 mS, 0 = continuous",
           "displayScale": 20,
           "displayUnits": "mS",
           "dtartBit": 0,
@@ -39,7 +40,8 @@
         {
           "type": "NodeVariableBitSingle",
           "nodeVariableIndex": 10,
-          "displayTitle": "Startup: Last position, otherwise 0 position",
+          "displayTitle": "Startup: Enable last position",
+          "displaySubTitle": "0 position if not enabled",
           "bit": 0
         }
       ]
@@ -52,7 +54,7 @@
           "type": "NodeVariableSlider",
           "nodeVariableIndex": 2,
           "displayTitle": "Pulse Duration",
-          "description": "Range 0 to 2,540 milliSeconds",
+          "displaySubTitle": "Range 20 to 2,540 mS, 0 = continuous",
           "displayScale": 20,
           "displayUnits": "mS",
           "dtartBit": 0,
@@ -75,7 +77,8 @@
         {
           "type": "NodeVariableBitSingle",
           "nodeVariableIndex": 10,
-          "displayTitle": "Startup: Last position, otherwise 0 position",
+          "displayTitle": "Startup: Enable last position",
+          "displaySubTitle": "0 position if not enabled",
           "bit": 1
         }
       ]
@@ -88,7 +91,7 @@
           "type": "NodeVariableSlider",
           "nodeVariableIndex": 3,
           "displayTitle": "Pulse Duration",
-          "description": "Range 0 to 2,540 milliSeconds",
+          "displaySubTitle": "Range 20 to 2,540 mS, 0 = continuous",
           "displayScale": 20,
           "displayUnits": "mS",
           "dtartBit": 0,
@@ -111,7 +114,8 @@
         {
           "type": "NodeVariableBitSingle",
           "nodeVariableIndex": 10,
-          "displayTitle": "Startup: Last position, otherwise 0 position",
+          "displayTitle": "Startup: Enable last position",
+          "displaySubTitle": "0 position if not enabled",
           "bit": 2
         }
       ]
@@ -124,7 +128,7 @@
           "type": "NodeVariableSlider",
           "nodeVariableIndex": 4,
           "displayTitle": "Pulse Duration",
-          "description": "Range 0 to 2,540 milliSeconds",
+          "displaySubTitle": "Range 20 to 2,540 mS, 0 = continuous",
           "displayScale": 20,
           "displayUnits": "mS",
           "dtartBit": 0,
@@ -147,7 +151,8 @@
         {
           "type": "NodeVariableBitSingle",
           "nodeVariableIndex": 10,
-          "displayTitle": "Startup: Last position, otherwise 0 position",
+          "displayTitle": "Startup: Enable last position",
+          "displaySubTitle": "0 position if not enabled",
           "bit": 3
         }
       ]
@@ -160,7 +165,7 @@
           "type": "NodeVariableSlider",
           "nodeVariableIndex": 5,
           "displayTitle": "Pulse Duration",
-          "description": "Range 0 to 2,540 milliSeconds",
+          "displaySubTitle": "Range 20 to 2,540 mS, 0 = continuous",
           "displayScale": 20,
           "displayUnits": "mS",
           "dtartBit": 0,
@@ -183,7 +188,8 @@
         {
           "type": "NodeVariableBitSingle",
           "nodeVariableIndex": 10,
-          "displayTitle": "Startup: Last position, otherwise 0 position",
+          "displayTitle": "Startup: Enable last position",
+          "displaySubTitle": "0 position if not enabled",
           "bit": 4
         }
       ]
@@ -196,7 +202,7 @@
           "type": "NodeVariableSlider",
           "nodeVariableIndex": 6,
           "displayTitle": "Pulse Duration",
-          "description": "Range 0 to 2,540 milliSeconds",
+          "displaySubTitle": "Range 20 to 2,540 mS, 0 = continuous",
           "displayScale": 20,
           "displayUnits": "mS",
           "dtartBit": 0,
@@ -219,7 +225,8 @@
         {
           "type": "NodeVariableBitSingle",
           "nodeVariableIndex": 10,
-          "displayTitle": "Startup: Last position, otherwise 0 position",
+          "displayTitle": "Startup: Enable last position",
+          "displaySubTitle": "0 position if not enabled",
           "bit": 5
         }
       ]
@@ -232,7 +239,7 @@
           "type": "NodeVariableSlider",
           "nodeVariableIndex": 7,
           "displayTitle": "Pulse Duration",
-          "description": "Range 0 to 2,540 milliSeconds",
+          "displaySubTitle": "Range 20 to 2,540 mS, 0 = continuous",
           "displayScale": 20,
           "displayUnits": "mS",
           "dtartBit": 0,
@@ -255,7 +262,8 @@
         {
           "type": "NodeVariableBitSingle",
           "nodeVariableIndex": 10,
-          "displayTitle": "Startup: Last position, otherwise 0 position",
+          "displayTitle": "Startup: Enable last position",
+          "displaySubTitle": "0 position if not enabled",
           "bit": 6
         }
       ]
@@ -268,7 +276,7 @@
           "type": "NodeVariableSlider",
           "nodeVariableIndex": 8,
           "displayTitle": "Pulse Duration",
-          "description": "Range 0 to 2,540 milliSeconds",
+          "displaySubTitle": "Range 20 to 2,540 mS, 0 = continuous",
           "displayScale": 20,
           "displayUnits": "mS",
           "dtartBit": 0,
@@ -291,7 +299,8 @@
         {
           "type": "NodeVariableBitSingle",
           "nodeVariableIndex": 10,
-          "displayTitle": "Startup: Last position, otherwise 0 position",
+          "displayTitle": "Startup: Enable last position",
+          "displaySubTitle": "0 position if not enabled",
           "bit": 7
         }
       ]
