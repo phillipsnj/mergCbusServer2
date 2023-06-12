@@ -2,7 +2,7 @@
 	"0":{
 		"name":"Reserved"
 	},
-	"100":{
+	"1":{
 		"name":"Minimum Node Service",
 		"version":{ 
 			"0": {
