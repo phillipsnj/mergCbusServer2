@@ -21,8 +21,10 @@ class cbusAdmin extends EventEmitter {
         this.configFile = 'config/' + LAYOUT_PATH + '/nodeConfig.json'
         this.config = jsonfile.readFileSync(this.configFile)
         const merg = jsonfile.readFileSync('./config/mergConfig.json')
-//        super();
         this.merg = merg
+        const Service_Definitions = jsonfile.readFileSync('./config/Service_Definitions.json')
+        this.ServiceDefs = Service_Definitions
+
         winston.info({message: `mergAdminNode: Config = ${this.configFile}`});
         //winston.debug({message: `mergAdminNode: ${JSON.stringify(this.merg['modules'][32]['name'])}`});
 //        this.config = setup
@@ -293,10 +295,41 @@ class cbusAdmin extends EventEmitter {
                     this.saveNode(cbusMsg.nodeNumber)
                 }
             },
-            'AB': (cbusMsg) => {//Accessory On Long Event 1
+            'AB': (cbusMsg) => {//Heartbeat
                 winston.info({message: `Heartbeat ${cbusMsg.nodeNumber} ${Date.now()}`})
                 this.heartbeats[cbusMsg.nodeNumber] = Date.now()
                 //this.eventSend(cbusMsg, 'on', 'long')
+            },
+            'AC': (cbusMsg) => {//Service Discovery
+                winston.info({message: `SD ${cbusMsg.nodeNumber} ${cbusMsg.text}`})
+                const ref = cbusMsg.nodeNumber
+                if (cbusMsg.ServiceIndex > 0) {
+                  // all valid service indexes start from 1 - service index 0 returns count of services
+                  if (ref in this.config.nodes) {
+                    if (this.config.nodes[ref]["services"]) {
+                      let output = {
+                          "ServiceIndex": cbusMsg.ServiceIndex,
+                          "ServiceType": cbusMsg.ServiceType,
+                          "ServiceVersion": cbusMsg.ServiceVersion,
+                          "diagnostics": {}
+                      }
+                      if (this.ServiceDefs[cbusMsg.ServiceType]) {
+                        output["ServiceName"] = this.ServiceDefs[cbusMsg.ServiceType]['name']
+                      }
+                      else {
+                        output["ServiceName"] = "service type not found in ServiceDefs"
+                      }
+                      this.config.nodes[ref]["services"][cbusMsg.ServiceIndex] = output
+                      this.saveNode(cbusMsg.nodeNumber)
+                    }
+                    else {
+                          winston.warn({message: `mergAdminNode - SD: node config services does not exist for node ${cbusMsg.nodeNumber}`});
+                    }
+                  }
+                  else {
+                          winston.warn({message: `mergAdminNode - SD: node config does not exist for node ${cbusMsg.nodeNumber}`});
+                  }
+                }
             },
             'B0': (cbusMsg) => {//Accessory On Long Event 1
                 this.eventSend(cbusMsg, 'on', 'long')
@@ -387,6 +420,38 @@ class cbusAdmin extends EventEmitter {
             },
             'B9': (cbusMsg) => {//Accessory Off Short Event 1
                 this.eventSend(cbusMsg, 'off', 'short')
+            },
+            'C7': (cbusMsg) => {//Diagnostic
+                winston.info({message: `DGN: ${cbusMsg.text}`})
+                const ref = cbusMsg.nodeNumber
+                if (cbusMsg.ServiceIndex > 0) {
+                  // all valid service indexes start from 1 - service index 0 returns count of services
+                  if (ref in this.config.nodes) {
+                    if (this.config.nodes[ref]["services"][cbusMsg.ServiceIndex]) {
+                      const ServiceType = this.config.nodes[ref]["services"][cbusMsg.ServiceIndex]['ServiceType']
+                      const ServiceVersion = this.config.nodes[ref]["services"][cbusMsg.ServiceIndex]['ServiceVersion']
+                      let output = {
+                          "DiagnosticCode": cbusMsg.DiagnosticCode,
+                          "DiagnosticValue": cbusMsg.DiagnosticValue
+                      }
+                      if (this.ServiceDefs[ServiceType]) {
+                        if(this.ServiceDefs[ServiceType]['version'][ServiceVersion]){
+                          if(this.ServiceDefs[ServiceType]['version'][ServiceVersion]['diagnostics'][cbusMsg.DiagnosticCode]){
+                            output["DiagnosticName"] = this.ServiceDefs[ServiceType]['version'][ServiceVersion]['diagnostics'][cbusMsg.DiagnosticCode]['name']
+                          }
+                        }
+                      }
+                      this.config.nodes[ref]["services"][cbusMsg.ServiceIndex]['diagnostics'][cbusMsg.DiagnosticCode] = output
+                      this.saveNode(cbusMsg.nodeNumber)
+                    }
+                    else {
+                          winston.warn({message: `mergAdminNode - SD: node config services does not exist for node ${cbusMsg.nodeNumber}`});
+                    }
+                  }
+                  else {
+                          winston.warn({message: `mergAdminNode - SD: node config does not exist for node ${cbusMsg.nodeNumber}`});
+                  }
+                }
             },
             'D0': (cbusMsg) => {//Accessory On Long Event 2
                 this.eventSend(cbusMsg, 'on', 'long')
@@ -717,7 +782,7 @@ class cbusAdmin extends EventEmitter {
         let output = {}
         output['mnemonic'] = 'RQSD'
         output['nodeNumber'] = nodeId
-        output['ServiceNumber'] = service
+        output['ServiceIndex'] = service
         return output
         //return cbusLib.encodeRQSD(nodeNumber, ServiceNumber);
     }
@@ -726,7 +791,7 @@ class cbusAdmin extends EventEmitter {
         let output = {}
         output['mnemonic'] = 'RDGN'
         output['nodeNumber'] = nodeId
-        output['ServiceNumber'] = service
+        output['ServiceIndex'] = service
         output['DiagnosticCode'] = diagCode
         return output
         //return cbusLib.encodeRDGN(nodeNumber ServiceNumber, DiagnosticCode);
