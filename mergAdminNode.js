@@ -360,48 +360,41 @@ class cbusAdmin extends EventEmitter {
                 const ref = cbusMsg.nodeNumber
                 const moduleIdentifier = cbusMsg.encoded.toString().substr(13, 4).toUpperCase()
                 if (ref in this.config.nodes) {
-                    winston.debug({message: `mergAdminNode: PNN (B6) Node found ` + JSON.stringify(this.config.nodes[ref])})
-                    if (this.merg['modules'][moduleIdentifier]) {
-                        this.config.nodes[ref].module = this.merg['modules'][moduleIdentifier]['name']
-                        this.config.nodes[ref].component = this.merg['modules'][moduleIdentifier]['component']
-                    } else {
-                        this.config.nodes[ref].component = 'mergDefault'
-                        this.config.nodes[ref].module = 'Unknown'
-                    }
+                  // already exists in config file...
+                  winston.debug({message: `mergAdminNode: PNN (B6) Node found ` + JSON.stringify(this.config.nodes[ref])})
                 } else {
-                    let output = {
-                        "nodeNumber": cbusMsg.nodeNumber,
-                        "manufacturerId": cbusMsg.manufacturerId,
-                        "moduleId": cbusMsg.moduleId,
-                        "moduleIdentifier": moduleIdentifier,
-                        "flags": cbusMsg.flags,
-                        "consumer": false,
-                        "producer": false,
-                        "flim": false,
-                        "bootloader": false,
-                        "coe": false,
-                        "parameters": [],
-                        "nodeVariables": [],
-                        "consumedEvents": {},
-                        "status": true,
-                        "eventCount": 0,
-                        "services": {}
-                    }
-                    if (this.merg['modules'][moduleIdentifier]) {
-                        output['module'] = this.merg['modules'][moduleIdentifier]['name']
-                        output['component'] = this.merg['modules'][moduleIdentifier]['component']
-                        /*
-                        if (this.merg['modules'][moduleIdentifier]['component'] == 'mergDefault2') {
-                            const variableConfig = jsonfile.readFileSync('./config/'+this.merg['modules'][moduleIdentifier]['variableConfig'])
-                            output['variableConfig'] = variableConfig
-                        }
-                        */
-                    } else {
-                        winston.info({message: `mergAdminNode: Module Type ${cbusMsg.moduleId} not setup in  `})
-                        output['component'] = 'mergDefault'
-                        output['module'] = 'Unknown'
-                    }
-                    this.config.nodes[ref] = output
+                  // doesn't exist in config file, so create it
+                  let output = {
+                      "nodeNumber": cbusMsg.nodeNumber,
+                      "manufacturerId": cbusMsg.manufacturerId,
+                      "moduleId": cbusMsg.moduleId,
+                      "moduleIdentifier": moduleIdentifier,
+                      "flags": cbusMsg.flags,
+                      "consumer": false,
+                      "producer": false,
+                      "flim": false,
+                      "bootloader": false,
+                      "coe": false,
+                      "parameters": [],
+                      "nodeVariables": [],
+                      "consumedEvents": {},
+                      "status": true,
+                      "eventCount": 0,
+                      "services": {},
+                      "component": 'mergDefault2',
+                      "moduleName": 'Unknown',
+                      "NVsetNeedsLearnMode": false
+                  }
+                  this.config.nodes[ref] = output
+                }
+                // now update component & name if they exist in mergConfig
+                if (this.merg['modules'][moduleIdentifier]) {
+                  if (this.merg['modules'][moduleIdentifier]['name']) {
+                    this.config.nodes[ref].moduleName = this.merg['modules'][moduleIdentifier]['name']
+                  }
+                  if (this.merg['modules'][moduleIdentifier]['component']) {
+                    this.config.nodes[ref].component = this.merg['modules'][moduleIdentifier]['component']
+                  }
                 }
                 // always update the flags....
                 this.config.nodes[ref].flags = cbusMsg.flags
