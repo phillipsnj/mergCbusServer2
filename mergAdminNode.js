@@ -658,18 +658,18 @@ class cbusAdmin extends EventEmitter {
     checkVariableConfig(nodeId){
       if (this.config.nodes[nodeId].variableConfig == undefined) {
         // only proceed if variableConfig doesn't exist, if it does exist, then just return, nothing to see here...
-        var module = this.config.nodes[nodeId].module;                          // should be populated by PNN
+        var moduleName = this.config.nodes[nodeId].moduleName;                  // should be populated by PNN
         var moduleIdentifier = this.config.nodes[nodeId].moduleIdentifier;      // should be populated by PNN
         if (this.merg['modules'][moduleIdentifier]) {
           // if we get here then it's a module type we know about (present in mergConfig.json)
-          if (module == "Unknown") {
+          if (moduleName == "Unknown") {
             // we can't handle a module we don't know about, so just warn & skip rest
             winston.warn({message: 'mergAdminNode: Variable Config : module unknown'});
           } else {
             // ok, so we recognise the module, but only get variable config if component is mergDefault2
             if (this.merg['modules'][moduleIdentifier]['component'] == 'mergDefault2') {
               // build filename
-              var filename = module + "-" + moduleIdentifier               
+              var filename = moduleName + "-" + moduleIdentifier               
               // need major & minor version numbers to complete building of filename
               if ((this.config.nodes[nodeId].parameters[7] != undefined) && (this.config.nodes[nodeId].parameters[2] != undefined))
               {
