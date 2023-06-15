@@ -363,18 +363,12 @@ class cbusAdmin extends EventEmitter {
                   // already exists in config file...
                   winston.debug({message: `mergAdminNode: PNN (B6) Node found ` + JSON.stringify(this.config.nodes[ref])})
                 } else {
-                  // doesn't exist in config file, so create it
+                  // doesn't exist in config file, so create it (but note flag update/create done later)
                   let output = {
                       "nodeNumber": cbusMsg.nodeNumber,
                       "manufacturerId": cbusMsg.manufacturerId,
                       "moduleId": cbusMsg.moduleId,
                       "moduleIdentifier": moduleIdentifier,
-                      "flags": cbusMsg.flags,
-                      "consumer": false,
-                      "producer": false,
-                      "flim": false,
-                      "bootloader": false,
-                      "coe": false,
                       "parameters": [],
                       "nodeVariables": [],
                       "consumedEvents": {},
@@ -382,8 +376,7 @@ class cbusAdmin extends EventEmitter {
                       "eventCount": 0,
                       "services": {},
                       "component": 'mergDefault2',
-                      "moduleName": 'Unknown',
-                      "NVsetNeedsLearnMode": false
+                      "moduleName": 'Unknown'
                   }
                   this.config.nodes[ref] = output
                 }
@@ -396,7 +389,7 @@ class cbusAdmin extends EventEmitter {
                     this.config.nodes[ref].component = this.merg['modules'][moduleIdentifier]['component']
                   }
                 }
-                // always update the flags....
+                // always update/create the flags....
                 this.config.nodes[ref].flags = cbusMsg.flags
                 this.config.nodes[ref].flim = (cbusMsg.flags & 4) ? true : false
                 this.config.nodes[ref].consumer = (cbusMsg.flags & 1) ? true : false
