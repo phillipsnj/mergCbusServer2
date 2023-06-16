@@ -1,5 +1,6 @@
 {
-  "moduleName":"CANSERVO",
+  "moduleName":"CANSERVO8C",
+  "NVsetNeedsLearnMode": true,
   "nodeVariables": [
     {
       "type": "group",
