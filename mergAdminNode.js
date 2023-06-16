@@ -660,7 +660,7 @@ class cbusAdmin extends EventEmitter {
             winston.warn({message: 'mergAdminNode: Variable Config : module unknown'});
           } else {
             // ok, so we recognise the module, but only get variable config if component is mergDefault2
-            if (this.merg['modules'][moduleIdentifier]['component'] == 'mergDefault2') {
+            if (this.config.nodes[nodeId].component == 'mergDefault2') {
               // build filename
               var filename = moduleName + "-" + moduleIdentifier               
               // need major & minor version numbers to complete building of filename
@@ -679,7 +679,9 @@ class cbusAdmin extends EventEmitter {
                   winston.error({message: 'mergAdminNode: Variable Config: erro loading file ' + filename + ' ' + err});
                 }
               }
-            }
+            } else {
+				winston.warn({message: 'mergAdminNode: Check Variable Config : module component not suitable ' + this.config.nodes[nodeId].component});
+			}
           }
         } else {
             winston.warn({message: 'mergAdminNode: module not found in mergConfig ' + moduleIdentifier});
