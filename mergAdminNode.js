@@ -359,6 +359,7 @@ class cbusAdmin extends EventEmitter {
             'B6': (cbusMsg) => { //PNN Recieved from Node
                 const ref = cbusMsg.nodeNumber
                 const moduleIdentifier = cbusMsg.encoded.toString().substr(13, 4).toUpperCase()
+                
                 if (ref in this.config.nodes) {
                   // already exists in config file...
                   winston.debug({message: `mergAdminNode: PNN (B6) Node found ` + JSON.stringify(this.config.nodes[ref])})
@@ -389,6 +390,8 @@ class cbusAdmin extends EventEmitter {
                     this.config.nodes[ref].component = this.merg['modules'][moduleIdentifier]['component']
                   }
                 }
+                // force variableConfig to be reloaded
+                this.config.nodes[ref].variableConfig = undefined
                 // always update/create the flags....
                 this.config.nodes[ref].flags = cbusMsg.flags
                 this.config.nodes[ref].flim = (cbusMsg.flags & 4) ? true : false
@@ -540,7 +543,7 @@ class cbusAdmin extends EventEmitter {
     }
 
     action_message(cbusMsg) {
-        winston.info({message: "mergAdminNode: Opcode " + cbusMsg.opCode + ' processed'});
+        winston.info({message: "mergAdminNode: " + cbusMsg.mnemonic + " Opcode " + cbusMsg.opCode + ' processed'});
         if (this.actions[cbusMsg.opCode]) {
             this.actions[cbusMsg.opCode](cbusMsg);
         } else {
