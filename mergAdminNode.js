@@ -359,51 +359,40 @@ class cbusAdmin extends EventEmitter {
             'B6': (cbusMsg) => { //PNN Recieved from Node
                 const ref = cbusMsg.nodeNumber
                 const moduleIdentifier = cbusMsg.encoded.toString().substr(13, 4).toUpperCase()
+                
                 if (ref in this.config.nodes) {
-                    winston.debug({message: `mergAdminNode: PNN (B6) Node found ` + JSON.stringify(this.config.nodes[ref])})
-                    if (this.merg['modules'][moduleIdentifier]) {
-                        this.config.nodes[ref].module = this.merg['modules'][moduleIdentifier]['name']
-                        this.config.nodes[ref].component = this.merg['modules'][moduleIdentifier]['component']
-                    } else {
-                        this.config.nodes[ref].component = 'mergDefault'
-                        this.config.nodes[ref].module = 'Unknown'
-                    }
+                  // already exists in config file...
+                  winston.debug({message: `mergAdminNode: PNN (B6) Node found ` + JSON.stringify(this.config.nodes[ref])})
                 } else {
-                    let output = {
-                        "nodeNumber": cbusMsg.nodeNumber,
-                        "manufacturerId": cbusMsg.manufacturerId,
-                        "moduleId": cbusMsg.moduleId,
-                        "moduleIdentifier": moduleIdentifier,
-                        "flags": cbusMsg.flags,
-                        "consumer": false,
-                        "producer": false,
-                        "flim": false,
-                        "bootloader": false,
-                        "coe": false,
-                        "parameters": [],
-                        "nodeVariables": [],
-                        "consumedEvents": {},
-                        "status": true,
-                        "eventCount": 0,
-                        "services": {}
-                    }
-                    if (this.merg['modules'][moduleIdentifier]) {
-                        output['module'] = this.merg['modules'][moduleIdentifier]['name']
-                        output['component'] = this.merg['modules'][moduleIdentifier]['component']
-                        /*
-                        if (this.merg['modules'][moduleIdentifier]['component'] == 'mergDefault2') {
-                            const variableConfig = jsonfile.readFileSync('./config/'+this.merg['modules'][moduleIdentifier]['variableConfig'])
-                            output['variableConfig'] = variableConfig
-                        }
-                        */
-                    } else {
-                        winston.info({message: `mergAdminNode: Module Type ${cbusMsg.moduleId} not setup in  `})
-                        output['component'] = 'mergDefault'
-                        output['module'] = 'Unknown'
-                    }
-                    this.config.nodes[ref] = output
+                  // doesn't exist in config file, so create it (but note flag update/create done later)
+                  let output = {
+                      "nodeNumber": cbusMsg.nodeNumber,
+                      "manufacturerId": cbusMsg.manufacturerId,
+                      "moduleId": cbusMsg.moduleId,
+                      "moduleIdentifier": moduleIdentifier,
+                      "parameters": [],
+                      "nodeVariables": [],
+                      "consumedEvents": {},
+                      "status": true,
+                      "eventCount": 0,
+                      "services": {},
+                      "component": 'mergDefault2',
+                      "moduleName": 'Unknown'
+                  }
+                  this.config.nodes[ref] = output
                 }
-                // always update the flags....
+                // now update component & name if they exist in mergConfig
+                if (this.merg['modules'][moduleIdentifier]) {
+                  if (this.merg['modules'][moduleIdentifier]['name']) {
+                    this.config.nodes[ref].moduleName = this.merg['modules'][moduleIdentifier]['name']
+                  }
+                  if (this.merg['modules'][moduleIdentifier]['component']) {
+                    this.config.nodes[ref].component = this.merg['modules'][moduleIdentifier]['component']
+                  }
+                }
+                // force variableConfig to be reloaded
+                this.config.nodes[ref].variableConfig = undefined
+                // always update/create the flags....
                 this.config.nodes[ref].flags = cbusMsg.flags
                 this.config.nodes[ref].flim = (cbusMsg.flags & 4) ? true : false
                 this.config.nodes[ref].consumer = (cbusMsg.flags & 1) ? true : false
@@ -554,7 +543,7 @@ class cbusAdmin extends EventEmitter {
     }
 
     action_message(cbusMsg) {
-        winston.info({message: "mergAdminNode: Opcode " + cbusMsg.opCode + ' processed'});
+        winston.info({message: "mergAdminNode: " + cbusMsg.mnemonic + " Opcode " + cbusMsg.opCode + ' processed'});
         if (this.actions[cbusMsg.opCode]) {
             this.actions[cbusMsg.opCode](cbusMsg);
         } else {
@@ -665,18 +654,18 @@ class cbusAdmin extends EventEmitter {
     checkVariableConfig(nodeId){
       if (this.config.nodes[nodeId].variableConfig == undefined) {
         // only proceed if variableConfig doesn't exist, if it does exist, then just return, nothing to see here...
-        var module = this.config.nodes[nodeId].module;                          // should be populated by PNN
+        var moduleName = this.config.nodes[nodeId].moduleName;                  // should be populated by PNN
         var moduleIdentifier = this.config.nodes[nodeId].moduleIdentifier;      // should be populated by PNN
         if (this.merg['modules'][moduleIdentifier]) {
           // if we get here then it's a module type we know about (present in mergConfig.json)
-          if (module == "Unknown") {
+          if (moduleName == "Unknown") {
             // we can't handle a module we don't know about, so just warn & skip rest
             winston.warn({message: 'mergAdminNode: Variable Config : module unknown'});
           } else {
             // ok, so we recognise the module, but only get variable config if component is mergDefault2
-            if (this.merg['modules'][moduleIdentifier]['component'] == 'mergDefault2') {
+            if (this.config.nodes[nodeId].component == 'mergDefault2') {
               // build filename
-              var filename = module + "-" + moduleIdentifier               
+              var filename = moduleName + "-" + moduleIdentifier               
               // need major & minor version numbers to complete building of filename
               if ((this.config.nodes[nodeId].parameters[7] != undefined) && (this.config.nodes[nodeId].parameters[2] != undefined))
               {
@@ -693,7 +682,9 @@ class cbusAdmin extends EventEmitter {
                   winston.error({message: 'mergAdminNode: Variable Config: erro loading file ' + filename + ' ' + err});
                 }
               }
-            }
+            } else {
+				winston.warn({message: 'mergAdminNode: Check Variable Config : module component not suitable ' + this.config.nodes[nodeId].component});
+			}
           }
         } else {
             winston.warn({message: 'mergAdminNode: module not found in mergConfig ' + moduleIdentifier});

@@ -1,40 +1,32 @@
 {
   "modules": {
     "A500": {
-      "name": "Unregistered",
-      "component": "mergDefault2"
+      "name": "Unregistered"
     },
     "A501": {
-      "name": "CANACC4",
-      "component": "mergDefault2"
+      "name": "CANACC4"
     },
     "A502": {
-      "name": "CANACC5",
-      "component": "mergDefault2"
+      "name": "CANACC5"
     },
     "A503": {
-      "name": "CANACC8",
-      "component": "mergDefault2"
+      "name": "CANACC8"
     },
     "A504": {
-      "name": "CANACE3",
-      "component": "mergDefault2"
+      "name": "CANACE3"
     },
     "A505": {
-      "name": "CANACE8C",
-      "component": "mergDefault2"
+      "name": "CANACE8C"
     },
     "A506": {
       "name": "CANLED",
       "component": "mergDefault"
     },
     "A507": {
-      "name": "CANLED64",
-      "component": "mergDefault2"
+      "name": "CANLED64"
     },
     "A508": {
-      "name": "CANACC4_2",
-      "component": "mergDefault2"
+      "name": "CANACC4_2"
     },
     "A509": {
       "name": "CANCAB",
@@ -45,73 +37,59 @@
       "component": "cancmd"
     },
     "A50B": {
-      "name": "CANSERVO",
-      "component": "mergDefault2"
+      "name": "CANSERVO"
     },
     "A511": {
-      "name": "CANTOTI",
-      "component": "mergDefault2"
+      "name": "CANTOTI"
     },
     "A513": {
-      "name": "CANSERVO8C",
-      "component": "mergDefault2"
+      "name": "CANSERVO8C"
     },
     "A519": {
       "name": "CANETHER",
       "component": "mergDefault"
     },
     "A51D": {
-      "name": "CANPAN",
-      "component": "mergDefault2"
+      "name": "CANPAN"
     },
     "A51E": {
-      "name": "CANACE3C",
-      "component": "mergDefault2"
+      "name": "CANACE3C"
     },
     "A51F": {
-      "name": "CANPanel",
-      "component": "mergDefault2"
+      "name": "CANPanel"
     },
     "A520": {
       "name": "CANMIO",
       "component": "canmio"
     },
     "A521": {
-      "name": "CANACE8MIO",
-      "component": "mergDefault2"
+      "name": "CANACE8MIO"
     },
     "A522": {
       "name": "CANSOL",
       "component": "mergDefault"
     },
     "A532": {
-      "name": "CANMIO-SVO",
-      "component": "mergDefault2"
+      "name": "CANMIO-SVO"
     },
     "A533": {
-      "name": "CANMIO-INP",
-      "component": "mergDefault2"
+      "name": "CANMIO-INP"
     },
     "A534": {
-      "name": "CANMIO-OUT",
-      "component": "mergDefault2"
+      "name": "CANMIO-OUT"
     },
     "A535": {
-      "name": "CANBIP-OUT",
-      "component": "mergDefault2"
+      "name": "CANBIP-OUT"
     },
     "A53A": {
-      "name": "CANPiNODE",
-      "component": "mergDefault2",
-      "variableConfig": "test.json"
+      "name": "CANPiNODE"
     },
     "A53B": {
       "name": "CANDISP",
       "component": "canled64"
     },
     "A53E": {
-      "name": "CANINP",
-      "component": "mergDefault2"
+      "name": "CANINP"
     },
     "A53F": {
       "name": "CANOUT",
