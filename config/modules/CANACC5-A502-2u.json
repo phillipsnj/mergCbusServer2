@@ -1,5 +1,10 @@
 {
   "moduleName":"CANACC5",
+  "producedEventLogic":{
+    "condition": "gthan",
+    "ev": 3,
+    "value": 0
+  },
   "nodeVariables": [
     {
       "type": "NodeVariableSlider",
