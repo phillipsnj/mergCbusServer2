@@ -325,7 +325,8 @@
         {"bitPosition": 5, "label": "output 6"},
         {"bitPosition": 6, "label": "output 7"},
         {"bitPosition": 7, "label": "output 8"}
-      ]
+      ],
+      "visibilityLogic":{ "condition": "true", "item": "producedEvent" }
     },
     {
       "type": "EventVariableBitArray",
