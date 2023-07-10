@@ -326,7 +326,7 @@
         {"bitPosition": 6, "label": "output 7"},
         {"bitPosition": 7, "label": "output 8"}
       ],
-      "visibilityLogic":{ "condition": "true", "item": "producedEvent" }
+      "visibilityLogic":{ "condition": "false", "item": "producedEvent" }
     },
     {
       "type": "EventVariableBitArray",
@@ -341,11 +341,21 @@
         {"bitPosition": 5, "label": "output 6"},
         {"bitPosition": 6, "label": "output 7"},
         {"bitPosition": 7, "label": "output 8"}
-      ]
+      ],
+      "visibilityLogic":{ "condition": "false", "item": "producedEvent" }
+    },
+    {
+      "type": "EventVariableBitSingle",
+      "eventVariableIndex": 3,
+      "bit": 7,
+      "visibilityLogic":{ "condition": "false", "item": "producedEvent" },
+      "displayTitle": "Set as Feedback event",
+      "displaySubTitle": ""
     },
     {
       "type": "EventVariableBitArray",
       "eventVariableIndex": 3,
+      "visibilityLogic":{ "condition": "true", "item": "producedEvent" },
       "displayTitle": "Event actions",
       "bitCollection":[
         {"bitPosition": 7, "label": "enable event"},
@@ -356,7 +366,8 @@
     {
       "type": "EventVariableNumber",
       "eventVariableIndex": 3,
-      "displayTitle": "Output Number",
+      "visibilityLogic":{ "condition": "true", "item": "producedEvent" },
+      "displayTitle": "Servo Number",
       "startBit": 2,
       "endBit": 4,
       "displayOffset":1
@@ -364,6 +375,7 @@
     {
       "type": "EventVariableSelect",
       "eventVariableIndex": 3,
+      "visibilityLogic":{ "condition": "true", "item": "producedEvent" },
       "displayTitle": "Event position",
       "bitMask": 3,
       "options": [
