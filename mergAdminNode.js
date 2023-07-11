@@ -55,7 +55,7 @@ class cbusAdmin extends EventEmitter {
             for (let i = 0; i < outMsg.length; i++) {
 
                 //let cbusMsg = cbusLib.decode(outMsg[i].concat(";"))     // replace terminator removed by 'split' method
-                winston.info({message: `mergAdminNode: JSON Action >>>  ${outMsg[i]}`})
+                winston.debug({message: `mergAdminNode: CBUS Receive >>>  ${outMsg[i]}`})
                 //this.emit('cbusTraffic', {direction: 'In', raw: cbusMsg.encoded, translated: cbusMsg.text});
                 this.action_message(JSON.parse(outMsg[i]))
 
@@ -296,12 +296,11 @@ class cbusAdmin extends EventEmitter {
                 }
             },
             'AB': (cbusMsg) => {//Heartbeat
-                winston.info({message: `Heartbeat ${cbusMsg.nodeNumber} ${Date.now()}`})
+                winston.debug({message: `mergAdminNode: Heartbeat ${cbusMsg.nodeNumber} ${Date.now()}`})
                 this.heartbeats[cbusMsg.nodeNumber] = Date.now()
-                //this.eventSend(cbusMsg, 'on', 'long')
             },
             'AC': (cbusMsg) => {//Service Discovery
-                winston.info({message: `SD ${cbusMsg.nodeNumber} ${cbusMsg.text}`})
+                winston.info({message: `mergAdminNode: SD ${cbusMsg.nodeNumber} ${cbusMsg.text}`})
                 const ref = cbusMsg.nodeNumber
                 if (cbusMsg.ServiceIndex > 0) {
                   // all valid service indexes start from 1 - service index 0 returns count of services
@@ -580,7 +579,7 @@ class cbusAdmin extends EventEmitter {
 
             //let outMsg = cbusLib.decode(msg);
             //this.emit('cbusTraffic', {direction: 'Out', raw: outMsg.encoded, translated: outMsg.text});
-            winston.info({message: `mergAdminNode: CBUS send >> ${output} `});
+            //winston.info({message: `mergAdminNode: CBUS send >> ${output} `});
         }
 
     }

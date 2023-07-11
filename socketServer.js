@@ -97,6 +97,7 @@ exports.socketServer = function(NET_ADDRESS,LAYOUT_NAME,JSON_PORT,SOCKET_PORT) {
         })
         socket.on('REQUEST_ALL_NODE_EVENTS', function(data){
 			winston.info({message: `socketServer:  REQUEST_ALL_NODE_EVENTS ${JSON.stringify(data)}`});
+			node.removeNodeEvents(data.nodeId)
             node.cbusSend(node.NERD(data.nodeId))
         })
         socket.on('REQUEST_ALL_EVENT_VARIABLES', function(data){
@@ -148,6 +149,9 @@ exports.socketServer = function(NET_ADDRESS,LAYOUT_NAME,JSON_PORT,SOCKET_PORT) {
             node.cbusSend(node.teach_event(data.nodeId, data.eventName, 1, 0))
             node.cbusSend(node.NNULN(data.nodeId))
             node.cbusSend(node.NNULN(data.nodeId))
+            node.cbusSend(node.NERD(data.nodeId))
+            node.cbusSend(node.RQEVN(data.nodeId))
+			// refresh events
             node.cbusSend(node.NERD(data.nodeId))
             node.cbusSend(node.RQEVN(data.nodeId))
         })
