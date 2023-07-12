@@ -337,18 +337,18 @@ class cbusAdmin extends EventEmitter {
                 this.eventSend(cbusMsg, 'off', 'long')
             },
             'B5': (cbusMsg) => {// NEVAL -Read of EV value Response REVAL
-                if (this.config.nodes[cbusMsg.nodeNumber].consumedEvents[cbusMsg.eventIndex] != null) {
-                    if (this.config.nodes[cbusMsg.nodeNumber].consumedEvents[cbusMsg.eventIndex].variables[cbusMsg.eventVariableIndex] != null) {
-                        if (this.config.nodes[cbusMsg.nodeNumber].consumedEvents[cbusMsg.eventIndex].variables[cbusMsg.eventVariableIndex] != cbusMsg.eventVariableValue) {
+                if (this.config.nodes[cbusMsg.nodeNumber].storedEvents[cbusMsg.eventIndex] != null) {
+                    if (this.config.nodes[cbusMsg.nodeNumber].storedEvents[cbusMsg.eventIndex].variables[cbusMsg.eventVariableIndex] != null) {
+                        if (this.config.nodes[cbusMsg.nodeNumber].storedEvents[cbusMsg.eventIndex].variables[cbusMsg.eventVariableIndex] != cbusMsg.eventVariableValue) {
                             winston.debug({message: `mergAdminNode: Event Variable ${cbusMsg.variable} Value has Changed `});
-                            this.config.nodes[cbusMsg.nodeNumber].consumedEvents[cbusMsg.eventIndex].variables[cbusMsg.eventVariableIndex] = cbusMsg.eventVariableValue
+                            this.config.nodes[cbusMsg.nodeNumber].storedEvents[cbusMsg.eventIndex].variables[cbusMsg.eventVariableIndex] = cbusMsg.eventVariableValue
                             this.saveNode(cbusMsg.nodeNumber)
                         } else {
                             winston.debug({message: `mergAdminNode: NEVAL: Event Variable ${cbusMsg.eventVariableIndex} Value has not Changed `});
                         }
                     } else {
                         winston.debug({message: `mergAdminNode: NEVAL: Event Variable ${cbusMsg.variable} Does not exist on config - adding`});
-                        this.config.nodes[cbusMsg.nodeNumber].consumedEvents[cbusMsg.eventIndex].variables[cbusMsg.eventVariableIndex] = cbusMsg.eventVariableValue
+                        this.config.nodes[cbusMsg.nodeNumber].storedEvents[cbusMsg.eventIndex].variables[cbusMsg.eventVariableIndex] = cbusMsg.eventVariableValue
                         this.saveNode(cbusMsg.nodeNumber)
                     }
                 } else {
@@ -371,7 +371,7 @@ class cbusAdmin extends EventEmitter {
                       "moduleIdentifier": moduleIdentifier,
                       "parameters": [],
                       "nodeVariables": [],
-                      "consumedEvents": {},
+                      "storedEvents": {},
                       "status": true,
                       "eventCount": 0,
                       "services": {},
@@ -489,8 +489,8 @@ class cbusAdmin extends EventEmitter {
                 // ENRSP Format: [<MjPri><MinPri=3><CANID>]<F2><NN hi><NN lo><EN3><EN2><EN1><EN0><EN#>
                 //winston.debug({message: `mergAdminNode: ENSRP (F2) Response to NERD : Node : ${msg.nodeId()} Action : ${msg.actionId()} Action Number : ${msg.actionEventId()}`});
                 const ref = cbusMsg.eventIndex
-                if (!(ref in this.config.nodes[cbusMsg.nodeNumber].consumedEvents)) {
-                    this.config.nodes[cbusMsg.nodeNumber].consumedEvents[cbusMsg.eventIndex] = {
+                if (!(ref in this.config.nodes[cbusMsg.nodeNumber].storedEvents)) {
+                    this.config.nodes[cbusMsg.nodeNumber].storedEvents[cbusMsg.eventIndex] = {
                         "eventIdentifier": cbusMsg.eventIdentifier,
                         "eventIndex": cbusMsg.eventIndex,
                         "node": cbusMsg.nodeNumber,
@@ -551,7 +551,7 @@ class cbusAdmin extends EventEmitter {
     }
 
     removeNodeEvents(nodeId) {
-        this.config.nodes[nodeId].consumedEvents = {}
+        this.config.nodes[nodeId].storedEvents = {}
         this.saveConfig()
     }
 
@@ -788,7 +788,7 @@ class cbusAdmin extends EventEmitter {
     }
 
     update_event(nodeId, event, eventIndex, variableId, value){
-        this.config.nodes[nodeId].consumedEvents[eventIndex].variables[variableId] = value
+        this.config.nodes[nodeId].storedEvents[eventIndex].variables[variableId] = value
         return this.EVLRN(nodeId, event, variableId, value)
     }
 
@@ -804,8 +804,8 @@ class cbusAdmin extends EventEmitter {
         //let nodeNumber = parseInt(event.substr(0, 4), 16)
         //winston.info({message: `mergAdminNode: EVLRN ${event} ${eventIndex} ${variableId} ${value} ` })
         //winston.info({message: `mergAdminNode: Test ${JSON.stringify(this.config.nodes[nodeId])}` })
-        //this.config.nodes[nodeId].consumedEvents[eventIndex].variables[variableId] = value
-        //this.config.nodes[parseInt(event.substr(0, 4), 16)].consumedEvents[eventIndex].variables[variableId] = value
+        //this.config.nodes[nodeId].storedEvents[eventIndex].variables[variableId] = value
+        //this.config.nodes[parseInt(event.substr(0, 4), 16)].storedEvents[eventIndex].variables[variableId] = value
         this.saveNode(nodeId)
         let output = {}
         output['mnemonic'] = 'EVLRN'
