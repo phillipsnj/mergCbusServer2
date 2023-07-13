@@ -783,6 +783,7 @@ class cbusAdmin extends EventEmitter {
         output['nodeNumber'] = nodeId
         output['ServiceIndex'] = service
         output['DiagnosticCode'] = diagCode
+        winston.info({message: 'mergAdminNode: RDGN : ' + JSON.stringify(output)})
         return output
         //return cbusLib.encodeRDGN(nodeNumber ServiceNumber, DiagnosticCode);
     }

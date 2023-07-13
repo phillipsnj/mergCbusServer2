@@ -76,7 +76,8 @@ exports.socketServer = function(NET_ADDRESS,LAYOUT_NAME,JSON_PORT,SOCKET_PORT) {
         })
         socket.on('REQUEST_DIAGNOSTICS', function(data){
             winston.info({message: `socketServer:  REQUEST_DIAGNOSTICS ${JSON.stringify(data)}`});
-            node.cbusSend(node.RDGN(data.nodeId, 0, 0))
+            if (data.serviceIndex == undefined){data.serviceIndex = 0;}
+            node.cbusSend(node.RDGN(data.nodeId, data.serviceIndex, 0))
         })
         socket.on('REQUEST_NODE_VARIABLE', function(data){
 			winston.info({message: `socketServer:  REQUEST_NODE_VARIABLE ${JSON.stringify(data)}`});
