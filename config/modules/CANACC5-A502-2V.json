@@ -3,7 +3,7 @@
   "producedEventLogic":{
     "condition": "gthan",
     "ev": 3,
-    "value": 0
+    "value": 127
   },
   "nodeVariables": [
     {
@@ -358,16 +358,14 @@
       "visibilityLogic":{ "condition": "true", "item": "producedEvent" },
       "displayTitle": "Event actions",
       "bitCollection":[
-        {"bitPosition": 7, "label": "enable event"},
-        {"bitPosition": 6, "label": "reverse polarity of end point events"},
-        {"bitPosition": 5, "label": "reverse polarity of mid point event"}
+        {"bitPosition": 7, "label": "enable event"}
       ]
     },
     {
       "type": "EventVariableNumber",
       "eventVariableIndex": 3,
       "visibilityLogic":{ "condition": "true", "item": "producedEvent" },
-      "displayTitle": "Servo Number",
+      "displayTitle": "Output select",
       "startBit": 2,
       "endBit": 4,
       "displayOffset":1
@@ -376,13 +374,12 @@
       "type": "EventVariableSelect",
       "eventVariableIndex": 3,
       "visibilityLogic":{ "condition": "true", "item": "producedEvent" },
-      "displayTitle": "Event position",
+      "displayTitle": "Event",
       "bitMask": 3,
       "options": [
-        {"label": "event sent at ON end", "value": 0},
-        {"label": "event sent when at OFF end", "value": 1},
-        {"label": "event sent at mid travel", "value": 2},
-        {"label": "Start of Day (SoD) event", "value": 3}
+        {"label": "On event", "value": 0},
+        {"label": "Off event", "value": 1},
+        {"label": "Do nothing", "value": 3}
       ]
     }
   ]

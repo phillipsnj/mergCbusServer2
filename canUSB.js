@@ -3,7 +3,8 @@ const { SerialPort } = require("serialport");
 const { ReadlineParser } = require('@serialport/parser-readline')
 //const MockBinding = require('@serialport/binding-mock')
 const winston = require('winston');
-//const parsers = serialport.parsers
+let cbusLib = require('cbuslibrary')
+
 
 
 /**
@@ -15,6 +16,8 @@ const winston = require('winston');
 * @return {Object} returns the serial port object thats been created
 *
 */
+
+
 exports.canUSB = function (USB_PORT, NET_PORT, NET_ADDRESS) {
 
     const serialPort = new SerialPort({
@@ -25,7 +28,6 @@ exports.canUSB = function (USB_PORT, NET_PORT, NET_ADDRESS) {
         stopBits: 1
     })
 
-    //const parser = new parsers.Readline({
     const parser = new ReadlineParser({
         delimiter: ';'
     })
@@ -54,8 +56,9 @@ exports.canUSB = function (USB_PORT, NET_PORT, NET_ADDRESS) {
         for (let i = 0; i < outMsg.length - 1; i++) {
             let message = getValidMessage(outMsg[i]);    // rebuild message as string
             if (message) {
+                let cbusMsg = cbusLib.decode(message)
+                winston.info({message: `${USB_PORT} -> Transmit : ${message} ${cbusMsg.mnemonic} Opcode ${cbusMsg.opCode}`})
                 serialPort.write(message)
-                //winston.info({message: `${USB_PORT} -> CbusServer Message Received : ${message}`})
             }
         }
     })
@@ -65,10 +68,10 @@ exports.canUSB = function (USB_PORT, NET_PORT, NET_ADDRESS) {
     })
     
     parser.on('data', function (data) {
-        //winston.info({message: `${USB_PORT} -> Message Parsed : ${message}`})
         let message = getValidMessage(data);    // rebuild message as string
         if (message) {
-            winston.info({message: `${USB_PORT} -> Message Parsed : ${message}`})
+            let cbusMsg = cbusLib.decode(message)
+            winston.info({message: `${USB_PORT} -> Receive : ${message} ${cbusMsg.mnemonic} Opcode ${cbusMsg.opCode}`})
             client.write(message)
         }
     })
