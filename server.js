@@ -33,7 +33,15 @@ SerialPort.list().then(ports => {
 
     ports.forEach(function(port) {
         if (port.vendorId != undefined && port.vendorId.toString().toUpperCase() == '04D8' && port.productId.toString().toUpperCase() == 'F80C') {
+            // CANUSB4
             canUSB.canUSB(port.path, NET_PORT, NET_ADDRESS)
+        } else if (port.vendorId != undefined && port.vendorId.toString().toUpperCase() == '0403' && port.productId.toString().toUpperCase() == '6001') {
+            // Old CANUSB
+            canUSB.canUSB(port.path, NET_PORT, NET_ADDRESS)
+        } else {
+            console.log("Cannot connect to port path="+port.path+
+                        " vendorId="+port.vendorId+" productId="+port.productId+
+                       " serialNumber="+port.serialNumber+" manufacturer="+port.manufacturer);
         }
     })
 })
