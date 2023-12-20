@@ -110,7 +110,17 @@
     "2A02":{
       "name": "MERGLCB",
       "component": "mergLcbDefault"
+    },
+    "FA62": {
+      "name": "4in4out"
+    },
+    "FA63": {
+      "name": "1in1out"
+    },
+    "FAFE": {
+      "name": "SERGC"
     }
+
   },
   "cbusErrors": {
     "1": "Command Not Supported",
