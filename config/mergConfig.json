@@ -112,13 +112,13 @@
       "component": "mergLcbDefault"
     },
     "FA62": {
-      "name": "4in4out"
+      "name": "CAN4in4out"
     },
     "FA63": {
-      "name": "1in1out"
+      "name": "CAN1in1out"
     },
     "FAFE": {
-      "name": "SERGC"
+      "name": "SER1in1out"
     }
 
   },
