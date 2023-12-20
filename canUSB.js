@@ -48,7 +48,7 @@ exports.canUSB = function (USB_PORT, NET_PORT, NET_ADDRESS) {
     const client = new net.Socket()
 
     client.connect(NET_PORT, NET_ADDRESS, function () {
-        winston.info({message: `canUSB4 : Client Connected to ${USB_PORT}`})
+        winston.info({message: `Client Connected to ${USB_PORT}`})
     })
 
     client.on('data', function (data) {
@@ -59,19 +59,21 @@ exports.canUSB = function (USB_PORT, NET_PORT, NET_ADDRESS) {
                 let cbusMsg = cbusLib.decode(message)
                 winston.info({message: `${USB_PORT} -> Transmit : ${message} ${cbusMsg.mnemonic} Opcode ${cbusMsg.opCode}`})
                 serialPort.write(message)
-            }
+                winston.debug({message: `${USB_PORT} Tx ${message}`})
+              }
         }
     })
 
     serialPort.on("open", function () {
-        winston.info({message: `canUSB4 Serial Port : ${USB_PORT} Open`})
+        winston.info({message: `${USB_PORT} Open`})
     })
     
     parser.on('data', function (data) {
-        let message = getValidMessage(data);    // rebuild message as string
+      winston.debug({message: `${USB_PORT} Rx ${data}`})
+      let message = getValidMessage(data);    // rebuild message as string
         if (message) {
             let cbusMsg = cbusLib.decode(message)
-            winston.info({message: `${USB_PORT} -> Receive : ${message} ${cbusMsg.mnemonic} Opcode ${cbusMsg.opCode}`})
+            winston.info({message: `${USB_PORT} <- Receive : ${message} ${cbusMsg.mnemonic} Opcode ${cbusMsg.opCode}`})
             client.write(message)
         }
     })
