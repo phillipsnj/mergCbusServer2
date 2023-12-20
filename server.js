@@ -50,6 +50,8 @@ async function run_main(){
     winston.info({message: 'Starting cbusServer...\n'});
   }
 
+  await sleep(2000);   // allow time for connection to establish
+
   jsonServer.jsonServer(NET_PORT, JSON_PORT, NET_ADDRESS)
   socketServer.socketServer(NET_ADDRESS, LAYOUT_NAME,JSON_PORT, SERVER_PORT)
 /*
