@@ -66,7 +66,7 @@ var options = {
   console: {
     level: 'info',
     handleExceptions: true,
-	format: consoleTimeStampFirst
+	format: messageOnly
   },
 };
 
